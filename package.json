@@ -1,0 +1,34 @@
+{
+  "name": "@radixdlt/connect-button",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist/connect-button.mjs",
+  "exports": {
+    ".": "./dist/connect-button.mjs"
+  },
+  "types": "types/connect-button.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "release": "yarn build && npx semantic-release"
+  },
+  "dependencies": {
+    "lit": "^2.4.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.3",
+    "vite": "^3.2.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/radixdlt/connect-button.git"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
