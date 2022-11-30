@@ -1,7 +1,6 @@
 {
   "name": "@radixdlt/connect-button",
   "version": "0.0.0",
-  "type": "module",
   "main": "dist/connect-button.mjs",
   "exports": {
     ".": "./dist/connect-button.mjs"
