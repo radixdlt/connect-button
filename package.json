@@ -15,12 +15,15 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "release": "yarn build && npx semantic-release"
+    "prepare": "npx husky install"
   },
   "dependencies": {
     "lit": "^2.4.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "husky": "^8.0.2",
     "typescript": "^4.9.3",
     "vite": "^3.2.4"
   },
@@ -30,5 +33,10 @@
   },
   "publishConfig": {
     "access": "restricted"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }
