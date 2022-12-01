@@ -1,5 +1,4 @@
-import '../src/connect-button'
-import { configure, setState, getMethods } from '../src/connect-button'
+import { configure, setState, getMethods } from '../src'
 
 const { getWalletData, sendTransaction, destroy } = configure({
   dAppId: 'dashboard',

@@ -1,10 +1,8 @@
-import { LitElement, css, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
 import WalletSdk, { WalletSdk as WalletSdkType } from '@radixdlt/wallet-sdk'
 import { Subject, Subscription, tap } from 'rxjs'
 
-const onConnectSubject = new Subject<void>()
-const onDestroySubject = new Subject<void>()
+export const onConnectSubject = new Subject<void>()
+export const onDestroySubject = new Subject<void>()
 
 let walletSdk: WalletSdkType
 
@@ -80,66 +78,4 @@ export const setState = ({
   const connectButton = getConnectButtonElement()
   connectButton.connected = connected
   connectButton.loading = loading
-}
-
-@customElement('connect-button')
-export class ConnectButton extends LitElement {
-  @property({ type: Boolean })
-  connected = false
-
-  @property({ type: Boolean })
-  loading = false
-
-  get buttonText() {
-    if (this.loading) {
-      return 'Connecting...'
-    } else if (this.connected) {
-      return 'Connected'
-    } else {
-      return 'Connect'
-    }
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback()
-    onDestroySubject.next()
-  }
-
-  private onClick() {
-    onConnectSubject.next()
-  }
-
-  render() {
-    return html`
-      <div class="wrapper">
-        <button @click=${this.onClick} part="button">${this.buttonText}</button>
-      </div>
-    `
-  }
-
-  static styles = css`
-    button {
-      border-radius: 8px;
-      border: 1px solid transparent;
-      padding: 0.6em 1.2em;
-      font-size: 1em;
-      font-weight: 500;
-      font-family: inherit;
-      cursor: pointer;
-      transition: border-color 0.25s;
-    }
-    button:hover {
-      border-color: #646cff;
-    }
-    button:focus,
-    button:focus-visible {
-      outline: 4px auto -webkit-focus-ring-color;
-    }
-  `
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'connect-button': ConnectButton
-  }
 }
