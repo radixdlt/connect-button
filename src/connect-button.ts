@@ -11,8 +11,6 @@ let walletSdk: WalletSdkType
 const onConnect$ = onConnectSubject.asObservable()
 const onDestroy$ = onDestroySubject.asObservable()
 
-let subscription: Subscription | undefined
-
 export const configure = (
   input: Parameters<typeof WalletSdk>[0] & {
     onConnect: () => void
@@ -38,7 +36,7 @@ export const configure = (
     getWalletData: walletSdk.request,
     sendTransaction: walletSdk.sendTransaction,
     destroy: () => {
-      subscription?.unsubscribe()
+      subscriptions?.unsubscribe()
     },
   }
 }
