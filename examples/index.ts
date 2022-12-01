@@ -1,17 +1,39 @@
 import '../src/connect-button'
-import { configure, setState } from '../src/connect-button'
+import { configure, setState, getMethods } from '../src/connect-button'
 
-const { getWalletData, destroy } = configure({
+const { getWalletData, sendTransaction, destroy } = configure({
   dAppId: 'dashboard',
   logLevel: 'DEBUG',
   onConnect: async () => {
     setState({ loading: true, connected: false })
-    const result = await getWalletData({
+    await getWalletData({
       oneTimeAccountsWithoutProofOfOwnership: {},
-    })
+    }).andThen(({ oneTimeAccounts }) =>
+      sendTransaction({
+        version: 1,
+        transactionManifest: `
+          CREATE_RESOURCE Enum("Fungible", 18u8) Map<String, String>("description", "Dedo test token", "name", "Dedo", "symbol", "DEDO") Map<Enum, Tuple>() Some(Enum("Fungible", Decimal("15000")));
+          CALL_METHOD ComponentAddress("${oneTimeAccounts[0].address}") "deposit_batch" Expression("ENTIRE_WORKTOP");`,
+      }).andThen(sendTx)
+    )
     setState({ loading: false, connected: true })
   },
   onDestroy: () => {
     destroy()
   },
 })
+
+const sendTx = () => {
+  return getMethods()
+    .getWalletData({
+      oneTimeAccountsWithoutProofOfOwnership: {},
+    })
+    .andThen(({ oneTimeAccounts }) =>
+      sendTransaction({
+        version: 1,
+        transactionManifest: `
+        CREATE_RESOURCE Enum("Fungible", 18u8) Map<String, String>("description", "Dedo test token", "name", "Dedo", "symbol", "DEDO") Map<Enum, Tuple>() Some(Enum("Fungible", Decimal("15000")));
+        CALL_METHOD ComponentAddress("${oneTimeAccounts[0].address}") "deposit_batch" Expression("ENTIRE_WORKTOP");`,
+      }).map(() => {})
+    )
+}

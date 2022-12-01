@@ -11,6 +11,8 @@ let walletSdk: WalletSdkType
 const onConnect$ = onConnectSubject.asObservable()
 const onDestroy$ = onDestroySubject.asObservable()
 
+let buttonApi: ReturnType<typeof configure> | undefined
+
 export const configure = (
   input: Parameters<typeof WalletSdk>[0] & {
     onConnect: () => void
@@ -32,7 +34,7 @@ export const configure = (
       .subscribe()
   )
 
-  return {
+  buttonApi = {
     getWalletData: walletSdk.request,
     sendTransaction: walletSdk.sendTransaction,
     destroy: () => {
@@ -40,6 +42,22 @@ export const configure = (
       walletSdk.destroy()
     },
   }
+
+  return {
+    getWalletData: walletSdk.request,
+    sendTransaction: walletSdk.sendTransaction,
+    destroy: () => {
+      subscriptions?.unsubscribe()
+      walletSdk.destroy()
+      buttonApi = undefined
+    },
+  }
+}
+
+export const getMethods = () => {
+  if (!buttonApi) throw new Error('connect button has not been configured')
+
+  return buttonApi
 }
 
 const getConnectButtonElement = () => {
