@@ -1,3 +1,4 @@
+import './style.css'
 import { configure, setState, getMethods } from '../src'
 
 const { getWalletData, sendTransaction, destroy } = configure({

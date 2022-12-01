@@ -5,7 +5,7 @@
   "exports": {
     ".": "./dist/connect-button.mjs"
   },
-  "types": "types/connect-button.d.ts",
+  "types": "types/index.d.ts",
   "files": [
     "dist",
     "types"
