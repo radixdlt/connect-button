@@ -11,13 +11,14 @@
     "types"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "vite serve examples",
     "build": "tsc && vite build",
     "prepare": "npx husky install"
   },
   "dependencies": {
     "@radixdlt/wallet-sdk": "^0.3.3",
-    "lit": "^2.4.1"
+    "lit": "^2.4.1",
+    "rxjs": "^7.5.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",

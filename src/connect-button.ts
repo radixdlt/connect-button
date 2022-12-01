@@ -1,6 +1,53 @@
 import { LitElement, css, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import WalletSdk, { WalletSdk as WalletSdkType } from '@radixdlt/wallet-sdk'
+import { Subject, tap } from 'rxjs'
+
+type WalletRequestParams = Parameters<WalletSdkType['request']>
+
+const onConnectSubject = new Subject<void>()
+
+let walletSdk: WalletSdkType
+
+const onConnect$ = onConnectSubject.asObservable()
+
+export const configure = (
+  input: Parameters<typeof WalletSdk>[0] & { onConnect: () => void }
+) => {
+  const { onConnect, ...rest } = input
+  walletSdk = WalletSdk(rest)
+
+  const subscription = onConnect$.pipe(tap(onConnect)).subscribe()
+
+  return {
+    getWalletData: (
+      input: WalletRequestParams[0],
+      callback?: WalletRequestParams[1]
+    ) => walletSdk.request(input, callback),
+    sendTransaction: walletSdk.sendTransaction,
+    destroy: () => subscription.unsubscribe(),
+  }
+}
+
+const getConnectButtonElement = () => {
+  const connectButtonElement = document.querySelector('connect-button')
+  if (!connectButtonElement) {
+    throw new Error('connect button not found')
+  }
+  return connectButtonElement
+}
+
+export const setState = ({
+  connected,
+  loading,
+}: {
+  connected: boolean
+  loading: boolean
+}) => {
+  const connectButton = getConnectButtonElement()
+  connectButton.connected = connected
+  connectButton.loading = loading
+}
 
 @customElement('connect-button')
 export class ConnectButton extends LitElement {
@@ -9,49 +56,6 @@ export class ConnectButton extends LitElement {
 
   @property({ type: Boolean })
   loading = false
-
-  @property({ type: Number, attribute: 'network-id' })
-  networkId: number | undefined = undefined
-
-  @property({ type: String, attribute: 'dapp-id' })
-  dAppId: string | undefined = undefined
-
-  walletSdk: WalletSdkType | undefined
-
-  private getWalletSdk() {
-    if (!this.walletSdk) throw new Error('Wallet SDK not found')
-
-    return this.walletSdk
-  }
-
-  connectedCallback() {
-    super.connectedCallback()
-
-    if (!this.dAppId) {
-      throw new Error('dAppId not defined')
-    }
-
-    this.walletSdk = WalletSdk({
-      logLevel: 'debug',
-      networkId: this.networkId,
-      dAppId: this.dAppId,
-    })
-  }
-
-  constructor() {
-    super()
-  }
-
-  private onClick() {
-    this.loading = true
-    this.getWalletSdk()
-      .request({ oneTimeAccountsWithoutProofOfOwnership: {} })
-      .map(({ oneTimeAccounts }) => {
-        console.log(JSON.stringify(oneTimeAccounts, null, 2))
-        this.connected = true
-        this.loading = false
-      })
-  }
 
   get buttonText() {
     if (this.loading) {
@@ -63,9 +67,13 @@ export class ConnectButton extends LitElement {
     }
   }
 
+  private onClick() {
+    onConnectSubject.next()
+  }
+
   render() {
     return html`
-      <div class="card">
+      <div class="wrapper">
         <button @click=${this.onClick} part="button">${this.buttonText}</button>
       </div>
     `
@@ -79,7 +87,6 @@ export class ConnectButton extends LitElement {
       font-size: 1em;
       font-weight: 500;
       font-family: inherit;
-      background-color: #1a1a1a;
       cursor: pointer;
       transition: border-color 0.25s;
     }
