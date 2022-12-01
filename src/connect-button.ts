@@ -1,26 +1,45 @@
 import { LitElement, css, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import WalletSdk, { WalletSdk as WalletSdkType } from '@radixdlt/wallet-sdk'
-import { Subject, tap } from 'rxjs'
+import { Subject, Subscription, tap } from 'rxjs'
 
 const onConnectSubject = new Subject<void>()
+const onDestroySubject = new Subject<void>()
 
 let walletSdk: WalletSdkType
 
 const onConnect$ = onConnectSubject.asObservable()
+const onDestroy$ = onDestroySubject.asObservable()
+
+let subscription: Subscription | undefined
 
 export const configure = (
-  input: Parameters<typeof WalletSdk>[0] & { onConnect: () => void }
+  input: Parameters<typeof WalletSdk>[0] & {
+    onConnect: () => void
+    onDestroy?: () => void
+  }
 ) => {
-  const { onConnect, ...rest } = input
+  const { onConnect, onDestroy, ...rest } = input
   walletSdk = WalletSdk(rest)
 
-  const subscription = onConnect$.pipe(tap(onConnect)).subscribe()
+  const subscriptions = new Subscription()
+  subscriptions.add(onConnect$.pipe(tap(onConnect)).subscribe())
+  subscriptions.add(
+    onDestroy$
+      .pipe(
+        tap(() => {
+          if (onDestroy) onDestroy()
+        })
+      )
+      .subscribe()
+  )
 
   return {
     getWalletData: walletSdk.request,
     sendTransaction: walletSdk.sendTransaction,
-    destroy: () => subscription.unsubscribe(),
+    destroy: () => {
+      subscription?.unsubscribe()
+    },
   }
 }
 
@@ -60,6 +79,11 @@ export class ConnectButton extends LitElement {
     } else {
       return 'Connect'
     }
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    onDestroySubject.next()
   }
 
   private onClick() {

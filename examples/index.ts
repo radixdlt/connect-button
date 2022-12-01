@@ -1,16 +1,17 @@
-console.log('heya!')
 import '../src/connect-button'
 import { configure, setState } from '../src/connect-button'
 
-const { getWalletData } = configure({
+const { getWalletData, destroy } = configure({
   dAppId: 'dashboard',
   logLevel: 'DEBUG',
-  onConnect: () => {
+  onConnect: async () => {
     setState({ loading: true, connected: false })
-    getWalletData({
+    const result = await getWalletData({
       oneTimeAccountsWithoutProofOfOwnership: {},
-    }).map((result) => {
-      setState({ loading: false, connected: true })
     })
+    setState({ loading: false, connected: true })
+  },
+  onDestroy: () => {
+    destroy()
   },
 })
