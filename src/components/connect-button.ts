@@ -1,7 +1,10 @@
-import { LitElement, css, html } from 'lit'
+import { LitElement, css, html, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { onConnectSubject, onDestroySubject } from '../api'
 import './loading-spinner'
+import bgConnect from '../assets/bg-connect.svg'
+import bgConnected from '../assets/bg-connected.svg'
+import { color } from '../styles'
 
 @customElement('connect-button')
 export class ConnectButton extends LitElement {
@@ -28,11 +31,19 @@ export class ConnectButton extends LitElement {
     onConnectSubject.next()
   }
 
+  get classes() {
+    const classList: string[] = []
+
+    if (!this.loading) classList.push(this.connected ? 'connected' : 'connect')
+
+    return classList.join(' ')
+  }
+
   render() {
     return html`
       <div class="wrapper">
-        <button @click=${this.onClick} part="button">
-          ${this.loading ? html`<loading-spinner />` : html`${this.buttonText}`}
+        <button @click=${this.onClick} part="button" class=${this.classes}>
+          ${this.loading ? html`<loading-spinner />` : html``}
         </button>
       </div>
     `
@@ -49,22 +60,32 @@ export class ConnectButton extends LitElement {
     button {
       width: 100%;
       height: 100%;
-      border-radius: 8px;
+      border-radius: 12px;
       border: 1px solid transparent;
       font-size: 1rem;
       font-weight: 500;
       font-family: inherit;
       cursor: pointer;
       transition: border-color 0.25s;
-      background: #060f8f;
+      background-color: ${unsafeCSS(color.radixBlue)};
       color: white;
+      text-shadow: 0px 0.732394px 5.85915px rgba(0, 0, 0, 0.7);
+      background-color: ${unsafeCSS(color.radixBlue)};
+    }
+    .connect {
+      background: url(${unsafeCSS(bgConnect)}) center no-repeat;
+      background-color: ${unsafeCSS(color.radixBlue)};
+    }
+    .connected {
+      background: url(${unsafeCSS(bgConnected)}) no-repeat;
+      background-size: cover;
     }
     button:hover {
-      border-color: #646cff;
+      border-color: none;
     }
     button:focus,
     button:focus-visible {
-      outline: 4px auto -webkit-focus-ring-color;
+      outline: 0px auto -webkit-focus-ring-color;
     }
   `
 }
