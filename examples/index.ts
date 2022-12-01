@@ -1,5 +1,4 @@
 console.log('heya!')
-import { switchMap } from 'rxjs'
 import '../src/connect-button'
 import { configure, setState } from '../src/connect-button'
 

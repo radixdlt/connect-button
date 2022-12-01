@@ -3,8 +3,6 @@ import { customElement, property } from 'lit/decorators.js'
 import WalletSdk, { WalletSdk as WalletSdkType } from '@radixdlt/wallet-sdk'
 import { Subject, tap } from 'rxjs'
 
-type WalletRequestParams = Parameters<WalletSdkType['request']>
-
 const onConnectSubject = new Subject<void>()
 
 let walletSdk: WalletSdkType
@@ -20,10 +18,7 @@ export const configure = (
   const subscription = onConnect$.pipe(tap(onConnect)).subscribe()
 
   return {
-    getWalletData: (
-      input: WalletRequestParams[0],
-      callback?: WalletRequestParams[1]
-    ) => walletSdk.request(input, callback),
+    getWalletData: walletSdk.request,
     sendTransaction: walletSdk.sendTransaction,
     destroy: () => subscription.unsubscribe(),
   }
