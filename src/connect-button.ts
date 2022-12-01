@@ -41,6 +41,7 @@ export const configure = (
       subscriptions?.unsubscribe()
       walletSdk.destroy()
     },
+    onConnect$,
   }
 
   return {
@@ -51,6 +52,7 @@ export const configure = (
       walletSdk.destroy()
       buttonApi = undefined
     },
+    onConnect$,
   }
 }
 
