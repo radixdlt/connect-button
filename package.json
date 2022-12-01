@@ -16,6 +16,7 @@
     "prepare": "npx husky install"
   },
   "dependencies": {
+    "@radixdlt/wallet-sdk": "^0.3.3",
     "lit": "^2.4.1"
   },
   "devDependencies": {

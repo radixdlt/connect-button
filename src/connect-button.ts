@@ -1,93 +1,77 @@
-import { LitElement, css, html } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import litLogo from "./assets/lit.svg";
+import { LitElement, css, html } from 'lit'
+import { customElement, property } from 'lit/decorators.js'
+import WalletSdk, { WalletSdk as WalletSdkType } from '@radixdlt/wallet-sdk'
 
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
-@customElement("connect-button")
+@customElement('connect-button')
 export class ConnectButton extends LitElement {
-  /**
-   * Copy for the read the docs hint.
-   */
-  @property()
-  docsHint = "Click on the Vite and Lit logos to learn more";
+  @property({ type: Boolean })
+  connected = false
 
-  /**
-   * The number of times the button has been clicked.
-   */
-  @property({ type: Number })
-  count = 0;
+  @property({ type: Boolean })
+  loading = false
+
+  @property({ type: Number, attribute: 'network-id' })
+  networkId: number | undefined = undefined
+
+  @property({ type: String, attribute: 'dapp-id' })
+  dAppId: string | undefined = undefined
+
+  walletSdk: WalletSdkType | undefined
+
+  private getWalletSdk() {
+    if (!this.walletSdk) throw new Error('Wallet SDK not found')
+
+    return this.walletSdk
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+
+    if (!this.dAppId) {
+      throw new Error('dAppId not defined')
+    }
+
+    this.walletSdk = WalletSdk({
+      logLevel: 'debug',
+      networkId: this.networkId,
+      dAppId: this.dAppId,
+    })
+  }
+
+  constructor() {
+    super()
+  }
+
+  private onClick() {
+    this.loading = true
+    this.getWalletSdk()
+      .request({ oneTimeAccountsWithoutProofOfOwnership: {} })
+      .map(({ oneTimeAccounts }) => {
+        console.log(JSON.stringify(oneTimeAccounts, null, 2))
+        this.connected = true
+        this.loading = false
+      })
+  }
+
+  get buttonText() {
+    if (this.loading) {
+      return 'Connecting...'
+    } else if (this.connected) {
+      return 'Connected'
+    } else {
+      return 'Connect'
+    }
+  }
 
   render() {
     return html`
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://lit.dev" target="_blank">
-          <img src=${litLogo} class="logo lit" alt="Lit logo" />
-        </a>
-      </div>
-      <slot></slot>
       <div class="card">
-        <button @click=${this._onClick} part="button">
-          count is ${this.count}
-        </button>
+        <button @click=${this.onClick} part="button">${this.buttonText}</button>
       </div>
-      <p class="read-the-docs">${this.docsHint}</p>
-    `;
-  }
-
-  private _onClick() {
-    this.count++;
+    `
   }
 
   static styles = css`
-    :host {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 2rem;
-      text-align: center;
-    }
-
-    .logo {
-      height: 6em;
-      padding: 1.5em;
-      will-change: filter;
-    }
-    .logo:hover {
-      filter: drop-shadow(0 0 2em #646cffaa);
-    }
-    .logo.lit:hover {
-      filter: drop-shadow(0 0 2em #325cffaa);
-    }
-
-    .card {
-      padding: 2em;
-    }
-
-    .read-the-docs {
-      color: #888;
-    }
-
-    h1 {
-      font-size: 3.2em;
-      line-height: 1.1;
-    }
-
-    a {
-      font-weight: 500;
-      color: #646cff;
-      text-decoration: inherit;
-    }
-    a:hover {
-      color: #535bf2;
-    }
-
     button {
       border-radius: 8px;
       border: 1px solid transparent;
@@ -106,20 +90,11 @@ export class ConnectButton extends LitElement {
     button:focus-visible {
       outline: 4px auto -webkit-focus-ring-color;
     }
-
-    @media (prefers-color-scheme: light) {
-      a:hover {
-        color: #747bff;
-      }
-      button {
-        background-color: #f9f9f9;
-      }
-    }
-  `;
+  `
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "connect-button": ConnectButton;
+    'connect-button': ConnectButton
   }
 }
