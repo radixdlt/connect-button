@@ -37,6 +37,7 @@ export const configure = (
     sendTransaction: walletSdk.sendTransaction,
     destroy: () => {
       subscriptions?.unsubscribe()
+      walletSdk.destroy()
     },
   }
 }
