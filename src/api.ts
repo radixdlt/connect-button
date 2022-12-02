@@ -12,7 +12,7 @@ type RadixConnectButtonApi = {
   sendTransaction: WalletSdkType['sendTransaction']
   setState: (input: Partial<ButtonState>) => void
   destroy: () => void
-  onConnect$?: Observable<void>
+  onConnect$: Observable<void>
 }
 
 export const onConnectSubject = new Subject<void>()
