@@ -5,8 +5,9 @@ import './loading-spinner'
 import bgConnect from '../assets/bg-connect.svg'
 import bgConnected from '../assets/bg-connected.svg'
 import { color } from '../styles'
+import { config } from '../config'
 
-@customElement('connect-button')
+@customElement(config.elementTag)
 export class ConnectButton extends LitElement {
   @property({ type: Boolean })
   connected = false
@@ -92,6 +93,6 @@ export class ConnectButton extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'connect-button': ConnectButton
+    [config.elementTag]: ConnectButton
   }
 }

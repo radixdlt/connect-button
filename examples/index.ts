@@ -1,43 +1,26 @@
 import './style.css'
-import { configure, setState, getMethods } from '../src'
+import { configure, getMethods } from '../src'
 
-const { getWalletData, sendTransaction, destroy } = configure({
+configure({
   dAppId: 'dashboard',
   logLevel: 'DEBUG',
-  onConnect: async () => {
+  onConnect: ({ setState, getWalletData }) => {
     setState({ loading: true, connected: false })
-    await getWalletData({
+    getWalletData({
       oneTimeAccountsWithoutProofOfOwnership: {},
     })
-      .map((response) => {
+      .map(({ oneTimeAccounts }) => {
         setState({ loading: false, connected: true })
-        return response
+        return oneTimeAccounts[0].address
       })
-      .andThen(({ oneTimeAccounts }) =>
-        sendTransaction({
-          version: 1,
-          transactionManifest: `
-          CREATE_RESOURCE Enum("Fungible", 18u8) Map<String, String>("description", "Dedo test token", "name", "Dedo", "symbol", "DEDO") Map<Enum, Tuple>() Some(Enum("Fungible", Decimal("15000")));
-          CALL_METHOD ComponentAddress("${oneTimeAccounts[0].address}") "deposit_batch" Expression("ENTIRE_WORKTOP");`,
-        }).andThen(sendTx)
-      )
-  },
-  onDestroy: () => {
-    destroy()
+      .andThen(sendTx)
   },
 })
 
-const sendTx = () => {
-  return getMethods()
-    .getWalletData({
-      oneTimeAccountsWithoutProofOfOwnership: {},
-    })
-    .andThen(({ oneTimeAccounts }) =>
-      sendTransaction({
-        version: 1,
-        transactionManifest: `
-        CREATE_RESOURCE Enum("Fungible", 18u8) Map<String, String>("description", "Dedo test token", "name", "Dedo", "symbol", "DEDO") Map<Enum, Tuple>() Some(Enum("Fungible", Decimal("15000")));
-        CALL_METHOD ComponentAddress("${oneTimeAccounts[0].address}") "deposit_batch" Expression("ENTIRE_WORKTOP");`,
-      })
-    )
-}
+const sendTx = (address: string) =>
+  getMethods().sendTransaction({
+    version: 1,
+    transactionManifest: `
+      CREATE_RESOURCE Enum("Fungible", 18u8) Map<String, String>("description", "Dedo test token", "name", "Dedo", "symbol", "DEDO") Map<Enum, Tuple>() Some(Enum("Fungible", Decimal("15000")));
+      CALL_METHOD ComponentAddress("${address}") "deposit_batch" Expression("ENTIRE_WORKTOP");`,
+  })
