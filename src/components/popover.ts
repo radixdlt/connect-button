@@ -21,6 +21,7 @@ export class Popover extends LitElement {
       border-radius: 12px;
       border: 1px solid ${color.radixGrey4};
       padding: 1.13rem;
+      z-index: 9999;
     }
 
     #arrow,
