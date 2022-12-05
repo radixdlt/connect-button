@@ -1,11 +1,14 @@
 import { LitElement, css, html, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { onConnectSubject, onDestroySubject } from '../api'
-import './loading-spinner'
-import bgConnect from '../assets/bg-connect.svg'
-import bgConnected from '../assets/bg-connected.svg'
-import { color } from '../styles'
+import { onConnectSubject, onDestroySubject, onDisconnectSubject } from '../api'
 import { config } from '../config'
+import './loading-spinner'
+import './popover'
+import './button'
+import logoGradient from '../assets/logo-gradient.png'
+import infoIcon from '../assets/icon-info.svg'
+import { color } from '../styles'
+import { filter, fromEvent, Subscription, tap } from 'rxjs'
 
 @customElement(config.elementTag)
 export class ConnectButton extends LitElement {
@@ -15,37 +18,92 @@ export class ConnectButton extends LitElement {
   @property({ type: Boolean })
   loading = false
 
-  get buttonText() {
-    if (this.connected) {
-      return 'Connected'
-    } else {
-      return 'Connect'
-    }
+  @property({ type: Boolean })
+  showPopover = false
+
+  private subscriptions = new Subscription()
+
+  constructor() {
+    super()
+    this.subscriptions.add(
+      fromEvent<MouseEvent>(window, 'click')
+        .pipe(
+          filter(() => this.showPopover),
+          filter((event) => !this.contains(event.target as HTMLElement)),
+          tap(() => {
+            this.showPopover = false
+          })
+        )
+        .subscribe()
+    )
+  }
+
+  private onConnect() {
+    onConnectSubject.next()
+    this.loading = true
+    this.showPopover = false
+  }
+
+  private togglePopover() {
+    this.showPopover = !this.showPopover
+  }
+
+  connectButtonTemplate() {
+    return this.loading
+      ? html`<radix-button loading class="no-logo" />`
+      : html`<radix-button
+          class=${this.connected ? 'gradient' : ''}
+          @onClick=${this.togglePopover}
+          >${this.connected ? 'Connected' : 'Connect'}</radix-button
+        >`
   }
 
   disconnectedCallback() {
     super.disconnectedCallback()
     onDestroySubject.next()
+    this.subscriptions.unsubscribe()
   }
 
-  private onClick() {
-    onConnectSubject.next()
+  updated(changedProperties: Map<string, any>) {
+    if (changedProperties.has('connected') && this.loading) {
+      this.loading = false
+    }
   }
 
-  get classes() {
-    const classList: string[] = []
+  onDisconnectWallet() {
+    onDisconnectSubject.next()
+    this.showPopover = false
+  }
 
-    if (!this.loading) classList.push(this.connected ? 'connected' : 'connect')
+  private notConnectedTemplate() {
+    return html`<div class="connect--wrapper">
+        <img class="logo" src=${logoGradient} />
+        <span class="connect--text">Connect your Radix Wallet</span>
+      </div>
+      <radix-button @onClick=${this.onConnect}>Connect Now</radix-button>
+      <a href=${config.links['What is a radix wallet?']} target="_blank"
+        >What is a Radix Wallet?</a
+      >`
+  }
 
-    return classList.join(' ')
+  popoverTemplate() {
+    return this.showPopover
+      ? html`<radix-popover class="popover">
+          ${this.connected
+            ? html`<radix-button
+                class="no-logo text"
+                @onClick=${this.onDisconnectWallet}
+                >Disconnect Wallet</radix-button
+              >`
+            : this.notConnectedTemplate()}
+        </radix-popover>`
+      : ''
   }
 
   render() {
     return html`
-      <div class="wrapper">
-        <button @click=${this.onClick} part="button" class=${this.classes}>
-          ${this.loading ? html`<loading-spinner />` : html``}
-        </button>
+      <div class="main--wrapper">
+        ${this.connectButtonTemplate()} ${this.popoverTemplate()}
       </div>
     `
   }
@@ -53,40 +111,45 @@ export class ConnectButton extends LitElement {
   static styles = css`
     :host {
       font-family: 'IBM Plex Sans';
+      position: relative;
     }
-    .wrapper {
-      width: 138px;
-      height: 42px;
+    .main--wrapper {
+      width: 8.6rem;
     }
-    button {
-      width: 100%;
-      height: 100%;
-      border-radius: 12px;
-      border: 1px solid transparent;
-      font-size: 1rem;
-      font-weight: 500;
-      font-family: inherit;
-      cursor: pointer;
-      transition: border-color 0.25s;
-      background-color: ${unsafeCSS(color.radixBlue)};
-      color: white;
-      text-shadow: 0px 0.732394px 5.85915px rgba(0, 0, 0, 0.7);
-      background-color: ${unsafeCSS(color.radixBlue)};
+    .popover {
+      position: absolute;
+      top: calc(100% + 1rem);
+      right: calc(100% - 8.6rem);
     }
-    .connect {
-      background: url(${unsafeCSS(bgConnect)}) center no-repeat;
-      background-color: ${unsafeCSS(color.radixBlue)};
+    .connect--wrapper {
+      display: flex;
+      margin-bottom: 1.5rem;
     }
-    .connected {
-      background: url(${unsafeCSS(bgConnected)}) no-repeat;
-      background-size: cover;
+    .connect--text {
+      color: ${color.radixGrey1};
+      font-style: normal;
+      font-weight: 700;
+      font-size: 1.1rem;
+      width: 10rem;
+      margin-left: 0.9rem;
+      font-weight: 600;
     }
-    button:hover {
-      border-color: none;
+    .logo {
+      width: 3rem;
+      align-self: center;
     }
-    button:focus,
-    button:focus-visible {
-      outline: 0px auto -webkit-focus-ring-color;
+    a::before {
+      position: relative;
+      top: 0.2rem;
+      padding-right: 0.2rem;
+      content: url(${unsafeCSS(infoIcon)});
+    }
+    a {
+      margin-top: 1.2rem;
+      text-decoration: none;
+      color: ${color.radixBlue};
+      font-weight: 600;
+      display: block;
     }
   `
 }

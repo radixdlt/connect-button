@@ -3,17 +3,20 @@ import { configure, getMethods } from '../src'
 
 configure({
   dAppId: 'dashboard',
+  networkId: 34,
   logLevel: 'DEBUG',
   onConnect: ({ setState, getWalletData }) => {
-    setState({ loading: true, connected: false })
     getWalletData({
       oneTimeAccountsWithoutProofOfOwnership: {},
     })
       .map(({ oneTimeAccounts }) => {
-        setState({ loading: false, connected: true })
+        setState({ connected: true })
         return oneTimeAccounts[0].address
       })
       .andThen(sendTx)
+  },
+  onDisconnect: ({ setState }) => {
+    setState({ connected: false })
   },
 })
 

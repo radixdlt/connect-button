@@ -16,9 +16,11 @@ type RadixConnectButtonApi = {
 }
 
 export const onConnectSubject = new Subject<void>()
+export const onDisconnectSubject = new Subject<void>()
 export const onDestroySubject = new Subject<void>()
 
 const onConnect$ = onConnectSubject.asObservable()
+const onDisconnect$ = onDisconnectSubject.asObservable()
 const onDestroy$ = onDestroySubject.asObservable()
 
 let walletSdk: WalletSdkType | undefined
@@ -27,19 +29,14 @@ let buttonApi: RadixConnectButtonApi | undefined
 export const configure = (
   input: Parameters<typeof WalletSdk>[0] & {
     onConnect: (buttonApi: RadixConnectButtonApi) => void
+    onDisconnect: (buttonApi: RadixConnectButtonApi) => void
     onDestroy?: () => void
   }
 ) => {
-  const { onConnect, onDestroy, ...rest } = input
+  const { onConnect, onDestroy, onDisconnect, ...rest } = input
   walletSdk = WalletSdk(rest)
 
-  const setState = ({
-    connected,
-    loading,
-  }: Partial<{
-    connected: boolean
-    loading: boolean
-  }>) => {
+  const setState = ({ connected, loading }: Partial<ButtonState>) => {
     const connectButton = getConnectButtonElement()
     if (connected != null) connectButton.connected = connected
     if (loading != null) connectButton.loading = loading
@@ -59,6 +56,9 @@ export const configure = (
   const subscriptions = new Subscription()
   subscriptions.add(
     onConnect$.pipe(tap(() => onConnect(buttonApi!))).subscribe()
+  )
+  subscriptions.add(
+    onDisconnect$.pipe(tap(() => onDisconnect(buttonApi!))).subscribe()
   )
   subscriptions.add(
     onDestroy$
