@@ -1,6 +1,11 @@
 import { LitElement, css, html, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { onConnectSubject, onDestroySubject, onDisconnectSubject } from '../api'
+import {
+  onCancelSubject,
+  onConnectSubject,
+  onDestroySubject,
+  onDisconnectSubject,
+} from '../api'
 import { config } from '../config'
 import './loading-spinner'
 import './popover'
@@ -44,13 +49,23 @@ export class ConnectButton extends LitElement {
     this.showPopover = false
   }
 
+  private cancelConnect() {
+    onCancelSubject.next()
+    this.loading = false
+    this.showPopover = false
+  }
+
   private togglePopover() {
     this.showPopover = !this.showPopover
   }
 
   connectButtonTemplate() {
     return this.loading
-      ? html`<radix-button loading class="no-logo" />`
+      ? html`<radix-button
+          loading
+          class="no-logo"
+          @onClick=${this.togglePopover}
+        />`
       : html`<radix-button
           class=${this.connected ? 'gradient' : ''}
           @onClick=${this.togglePopover}
@@ -76,14 +91,16 @@ export class ConnectButton extends LitElement {
   }
 
   private notConnectedTemplate() {
-    return html`<div class="connect--wrapper">
-        <img class="logo" src=${logoGradient} />
-        <span class="connect--text">Connect your Radix Wallet</span>
-      </div>
-      <radix-button @onClick=${this.onConnect}>Connect Now</radix-button>
-      <a href=${config.links['What is a radix wallet?']} target="_blank"
-        >What is a Radix Wallet?</a
-      >`
+    return this.loading
+      ? html`<radix-button @onClick=${this.cancelConnect}>Cancel</radix-button>`
+      : html`<div class="connect--wrapper">
+            <img class="logo" src=${logoGradient} />
+            <span class="connect--text">Connect your Radix Wallet</span>
+          </div>
+          <radix-button @onClick=${this.onConnect}>Connect Now</radix-button>
+          <a href=${config.links['What is a radix wallet?']} target="_blank"
+            >What is a Radix Wallet?</a
+          >`
   }
 
   popoverTemplate() {
@@ -149,7 +166,7 @@ export class ConnectButton extends LitElement {
       text-decoration: none;
       color: ${color.radixBlue};
       font-weight: 600;
-      display: block;
+      display: inline-block;
     }
   `
 }

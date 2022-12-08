@@ -43,6 +43,10 @@ export class RadixButton extends LitElement {
       background-color: ${color.radixBlue};
     }
 
+    :host(:not([disabled],.disabled)) > button {
+      cursor: pointer;
+    }
+
     button::before {
       content: url(${unsafeCSS(logo)});
     }
