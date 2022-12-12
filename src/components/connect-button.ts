@@ -14,6 +14,7 @@ import logoGradient from '../assets/logo-gradient.png'
 import infoIcon from '../assets/icon-info.svg'
 import { color } from '../styles'
 import { filter, fromEvent, Subscription, tap } from 'rxjs'
+import { encodedFontString } from './encoded-font-string'
 
 @customElement(config.elementTag)
 export class ConnectButton extends LitElement {
@@ -27,9 +28,11 @@ export class ConnectButton extends LitElement {
   showPopover = false
 
   private subscriptions = new Subscription()
+  private readonly fontStyleAttribute = 'rdx-font-ibm-plex-sans'
 
   constructor() {
     super()
+    this.injectFontCSS()
     this.subscriptions.add(
       fromEvent<MouseEvent>(window, 'click')
         .pipe(
@@ -41,6 +44,17 @@ export class ConnectButton extends LitElement {
         )
         .subscribe()
     )
+  }
+
+  private injectFontCSS() {
+    if (this.shouldSkipFontInjection()) {
+      return
+    }
+
+    const style = document.createElement('style')
+    style.setAttribute(this.fontStyleAttribute, '')
+    style.textContent = encodedFontString
+    document.head.append(style)
   }
 
   private onConnect() {
@@ -125,6 +139,13 @@ export class ConnectButton extends LitElement {
     `
   }
 
+  private shouldSkipFontInjection(): boolean {
+    return (
+      !!document.head.querySelector(`style[${this.fontStyleAttribute}]`) ||
+      document.fonts.check('16px IBM Plex Sans')
+    )
+  }
+
   static styles = css`
     :host {
       font-family: 'IBM Plex Sans';
@@ -145,7 +166,6 @@ export class ConnectButton extends LitElement {
     .connect--text {
       color: ${color.radixGrey1};
       font-style: normal;
-      font-weight: 700;
       font-size: 1.1rem;
       width: 10rem;
       margin-left: 0.9rem;
@@ -165,6 +185,7 @@ export class ConnectButton extends LitElement {
       margin-top: 1.2rem;
       text-decoration: none;
       color: ${color.radixBlue};
+      font-size: 1rem;
       font-weight: 600;
       display: inline-block;
     }
