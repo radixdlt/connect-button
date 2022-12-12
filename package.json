@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "main": "dist/connect-button.mjs",
   "exports": {
-    ".": "./dist/connect-button.mjs"
+    ".": "./dist/connect-button.mjs",
+    "./font": "./dist/style.css"
   },
   "types": "types/index.d.ts",
   "files": [
