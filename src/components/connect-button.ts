@@ -14,7 +14,6 @@ import logoGradient from '../assets/logo-gradient.png'
 import infoIcon from '../assets/icon-info.svg'
 import { color } from '../styles'
 import { filter, fromEvent, Subscription, tap } from 'rxjs'
-import { encodedFontString } from './encoded-font-string'
 
 @customElement(config.elementTag)
 export class ConnectButton extends LitElement {
@@ -28,7 +27,8 @@ export class ConnectButton extends LitElement {
   showPopover = false
 
   private subscriptions = new Subscription()
-  private readonly fontStyleAttribute = 'rdx-font-ibm-plex-sans'
+
+  private readonly fontGoogleApiHref = 'https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600'
 
   constructor() {
     super()
@@ -51,10 +51,10 @@ export class ConnectButton extends LitElement {
       return
     }
 
-    const style = document.createElement('style')
-    style.setAttribute(this.fontStyleAttribute, '')
-    style.textContent = encodedFontString
-    document.head.append(style)
+    const link = document.createElement('link')
+    link.setAttribute('rel', 'stylesheet')
+    link.setAttribute('href', this.fontGoogleApiHref)
+    document.head.append(link)
   }
 
   private onConnect() {
@@ -141,7 +141,7 @@ export class ConnectButton extends LitElement {
 
   private shouldSkipFontInjection(): boolean {
     return (
-      !!document.head.querySelector(`style[${this.fontStyleAttribute}]`) ||
+      !!document.head.querySelector(`link[href|="${this.fontGoogleApiHref}"]`) ||
       document.fonts.check('16px IBM Plex Sans')
     )
   }
