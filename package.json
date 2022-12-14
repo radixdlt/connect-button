@@ -1,7 +1,25 @@
 {
   "name": "@radixdlt/connect-button",
+  "description": "Radix Connect button repository",
   "version": "0.0.0",
+  "homepage": "https://developers.radixdlt.com",
+  "keywords": [
+    "radix",
+    "connect",
+    "button",
+    "dlt",
+    "web3",
+    "dApp",
+    "crypto",
+    "DeFi"
+  ],
+  "authors": [
+    "Alex Stelea <alex.stelea@rdx.works>",
+    "Dawid Sowa <dawid.sowa@rdx.works>"
+  ],
+  "bugs": "https://github.com/radixdlt/connect-button/issues",
   "main": "dist/connect-button.mjs",
+  "license": "Apache-2.0",
   "exports": {
     ".": "./dist/connect-button.mjs",
     "./font": "./dist/style.css"
