@@ -1,14 +1,14 @@
 import './style.css'
-import { configure, getMethods } from '../src'
+import { configure, getMethods, requestBuilder, requestItem } from '../src'
 
 configure({
   dAppId: 'dashboard',
   networkId: 34,
   logLevel: 'DEBUG',
   onConnect: ({ setState, getWalletData }) => {
-    getWalletData({
-      oneTimeAccountsWithoutProofOfOwnership: {},
-    })
+    getWalletData(
+      requestBuilder(requestItem.oneTimeAccounts.withoutProofOfOwnership(1))
+    )
       .map(({ oneTimeAccounts }) => {
         setState({ connected: true })
         return oneTimeAccounts[0].address
