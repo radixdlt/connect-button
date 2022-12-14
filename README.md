@@ -7,6 +7,7 @@ A framework agnostic web component to help developers to connect to Radix. The c
   - [Getting started](#getting-started)
     - [Configuration](#configuration)
     - [API](#api)
+  - [Examples](#examples)
 
 # Installation
 
@@ -111,3 +112,9 @@ type RadixConnectButtonApi = {
 - setState – Sets the state of the button
 - destroy – Cleanup function to destroy the configuration instance
 - onConnect$ – Observable that emits when the user clicks on the connect button
+
+## Examples
+
+- Vue 3 - [@radixdlt/vue-connect-button](https://github.com/radixdlt/vue-connect-button)
+- Angular 15 - [@radixdlt/angular-connect-button](https://github.com/radixdlt/angular-connect-button)
+- React 18 - [@radixdlt/react-connect-button](https://github.com/radixdlt/react-connect-button)
