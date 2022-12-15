@@ -29,7 +29,8 @@ export class ConnectButton extends LitElement {
 
   private subscriptions = new Subscription()
 
-  private readonly fontGoogleApiHref = 'https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600'
+  private readonly fontGoogleApiHref =
+    'https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600'
 
   constructor() {
     super()
@@ -75,20 +76,26 @@ export class ConnectButton extends LitElement {
   }
 
   connectButtonTemplate() {
-    return this.loading && !this.connected
-      ? html`<radix-button
+    const buttonText = this.connected ? 'Connected' : 'Connect'
+    const showLoadingButton = this.loading && !this.connected
+    const connectButtonClasses = `
+      ${this.loading ? 'no-logo' : ''} 
+      ${this.connected ? 'gradient' : ''}
+    `
+    const smallLoadingIndicator = this.loading
+      ? html`<loading-spinner class="small"></loading-spinner>`
+      : ''
+
+    return showLoadingButton
+      ? html` <radix-button
           loading
           class="no-logo"
           @onClick=${this.togglePopover}
         />`
       : html`<radix-button
-          class="${this.connected ? 'gradient' : ''} ${this.loading
-            ? 'no-logo'
-            : ''}"
+          class="${connectButtonClasses}"
           @onClick=${this.togglePopover}
-          >${this.loading
-            ? html`<loading-spinner class="small"></loading-spinner>`
-            : ''}${this.connected ? 'Connected' : 'Connect'}</radix-button
+          >${smallLoadingIndicator} ${buttonText}</radix-button
         >`
   }
 
@@ -97,7 +104,6 @@ export class ConnectButton extends LitElement {
     onDestroySubject.next()
     this.subscriptions.unsubscribe()
   }
-
 
   onDisconnectWallet() {
     onDisconnectSubject.next()
@@ -141,8 +147,9 @@ export class ConnectButton extends LitElement {
 
   private shouldSkipFontInjection(): boolean {
     return (
-      !!document.head.querySelector(`link[href|="${this.fontGoogleApiHref}"]`) ||
-      document.fonts.check('16px IBM Plex Sans')
+      !!document.head.querySelector(
+        `link[href|="${this.fontGoogleApiHref}"]`
+      ) || document.fonts.check('16px IBM Plex Sans')
     )
   }
 
@@ -172,7 +179,6 @@ export class ConnectButton extends LitElement {
       font-weight: 600;
     }
     loading-spinner.small {
-      margin-right: 0.25rem;
       display: inline-block;
       vertical-align: top;
     }
