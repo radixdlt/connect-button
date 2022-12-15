@@ -19,7 +19,7 @@ import { getConnectedState } from '../storage'
 @customElement(config.elementTag)
 export class ConnectButton extends LitElement {
   @property({ type: Boolean })
-  connected = getConnectedState() || false
+  connected = getConnectedState()
 
   @property({ type: Boolean })
   loading = false
