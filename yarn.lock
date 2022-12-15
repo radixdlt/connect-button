@@ -224,10 +224,10 @@
   resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-1.4.2.tgz#65d659e89d1a7e2f4f2b547182aef0a224f4adb7"
   integrity sha512-VMOxsWh/QDwrxPsgkSQnuZ+8mfNy1OTjzzUdLBvvZtpahwPTHTeVZ51RZRqO4xfKVrR+btIPA8D01IL3xeG66w==
 
-"@radixdlt/wallet-sdk@0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@radixdlt/wallet-sdk/-/wallet-sdk-0.5.0.tgz#cf2c62b620c6826a439a9eb0b14fbd9407cf663e"
-  integrity sha512-m5AabOP/DE/6lU/ppd8FLPvRbUK+z4n5Tuqu0vC0oFuYdYfCRwmu8Jlk1p/s3irEvjZ4TbMyUpklavzHo8indA==
+"@radixdlt/wallet-sdk@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@radixdlt/wallet-sdk/-/wallet-sdk-0.5.1.tgz#390912c04ebef3bfc42200d4be46ce77fc07ddf3"
+  integrity sha512-DXHtg7kqaO0EsaGyIMipAt0HWw1ehbjAylWLz8WcOnACKh87ZHXZUiUv/a3z46co/pwp/c2sSLTX8HlqLCrc0Q==
   dependencies:
     lodash.flow "^3.5.0"
     loglevel "^1.8.1"
