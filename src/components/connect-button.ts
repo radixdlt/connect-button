@@ -14,11 +14,12 @@ import logoGradient from '../assets/logo-gradient.png'
 import infoIcon from '../assets/icon-info.svg'
 import { color } from '../styles'
 import { filter, fromEvent, Subscription, tap } from 'rxjs'
+import { getConnectedState } from '../storage'
 
 @customElement(config.elementTag)
 export class ConnectButton extends LitElement {
   @property({ type: Boolean })
-  connected = false
+  connected = getConnectedState()
 
   @property({ type: Boolean })
   loading = false
@@ -28,7 +29,8 @@ export class ConnectButton extends LitElement {
 
   private subscriptions = new Subscription()
 
-  private readonly fontGoogleApiHref = 'https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600'
+  private readonly fontGoogleApiHref =
+    'https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600'
 
   constructor() {
     super()
@@ -74,16 +76,26 @@ export class ConnectButton extends LitElement {
   }
 
   connectButtonTemplate() {
-    return this.loading
-      ? html`<radix-button
+    const buttonText = this.connected ? 'Connected' : 'Connect'
+    const showLoadingButton = this.loading && !this.connected
+    const connectButtonClasses = `
+      ${this.loading ? 'no-logo' : ''} 
+      ${this.connected ? 'gradient' : ''}
+    `
+    const smallLoadingIndicator = this.loading
+      ? html`<loading-spinner class="small"></loading-spinner>`
+      : ''
+
+    return showLoadingButton
+      ? html` <radix-button
           loading
           class="no-logo"
           @onClick=${this.togglePopover}
         />`
       : html`<radix-button
-          class=${this.connected ? 'gradient' : ''}
+          class="${connectButtonClasses}"
           @onClick=${this.togglePopover}
-          >${this.connected ? 'Connected' : 'Connect'}</radix-button
+          >${smallLoadingIndicator} ${buttonText}</radix-button
         >`
   }
 
@@ -91,12 +103,6 @@ export class ConnectButton extends LitElement {
     super.disconnectedCallback()
     onDestroySubject.next()
     this.subscriptions.unsubscribe()
-  }
-
-  updated(changedProperties: Map<string, any>) {
-    if (changedProperties.has('connected') && this.loading) {
-      this.loading = false
-    }
   }
 
   onDisconnectWallet() {
@@ -141,8 +147,9 @@ export class ConnectButton extends LitElement {
 
   private shouldSkipFontInjection(): boolean {
     return (
-      !!document.head.querySelector(`link[href|="${this.fontGoogleApiHref}"]`) ||
-      document.fonts.check('16px IBM Plex Sans')
+      !!document.head.querySelector(
+        `link[href|="${this.fontGoogleApiHref}"]`
+      ) || document.fonts.check('16px IBM Plex Sans')
     )
   }
 
@@ -170,6 +177,10 @@ export class ConnectButton extends LitElement {
       width: 10rem;
       margin-left: 0.9rem;
       font-weight: 600;
+    }
+    loading-spinner.small {
+      display: inline-block;
+      vertical-align: top;
     }
     .logo {
       width: 3rem;

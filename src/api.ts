@@ -1,13 +1,14 @@
 import WalletSdk, { WalletSdk as WalletSdkType } from '@radixdlt/wallet-sdk'
 import { Observable, Subject, Subscription, tap } from 'rxjs'
 import { config } from './config'
+import { storeConnectedState } from './storage'
 
 type ButtonState = {
   connected: boolean
   loading: boolean
 }
 
-type RadixConnectButtonApi = {
+export type RadixConnectButtonApi = {
   getWalletData: WalletSdkType['request']
   sendTransaction: WalletSdkType['sendTransaction']
   setState: (input: Partial<ButtonState>) => void
@@ -32,21 +33,29 @@ let buttonApi: RadixConnectButtonApi | undefined
 
 export const configure = (
   input: Parameters<typeof WalletSdk>[0] & {
+    initialState?: Partial<ButtonState>
     onConnect: (buttonApi: RadixConnectButtonApi) => void
     onDisconnect: (buttonApi: RadixConnectButtonApi) => void
     onCancel?: () => void
     onDestroy?: () => void
   }
 ) => {
-  const { onConnect, onDestroy, onDisconnect, onCancel, ...rest } = input
+  const { onConnect, onDestroy, onDisconnect, onCancel, initialState, ...rest } = input
   walletSdk = WalletSdk(rest)
 
   let cancelOngoingRequestFn: () => void
 
   const setState = ({ connected, loading }: Partial<ButtonState>) => {
     const connectButton = getConnectButtonElement()
-    if (connected != null) connectButton.connected = connected
+    if (connected != null) {
+      connectButton.connected = connected
+      storeConnectedState(connected)
+    }
     if (loading != null) connectButton.loading = loading
+  }
+
+  if (initialState) {
+    setState(initialState)
   }
 
   buttonApi = {

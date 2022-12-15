@@ -76,6 +76,7 @@ configure({
 type ConfigurationInput = {
   dAppId: string
   networkId?: number
+  initialState?: Partial<ButtonState>
   onConnect: (api: RadixConnectButtonApi) => void
   onDisconnect: (api: RadixConnectButtonApi) => void
   onCancel?: () => void
@@ -85,6 +86,7 @@ type ConfigurationInput = {
 
 - **requires** dAppId - Specifies the dApp that is interacting with the wallet. Used in dApp verification process on the wallet side.
 - **optional** networkId - Specifies which network to use, defaults to mainnet (0x01)
+- **optional** initialState - Forces initial connected and / or loading state for button
 - **requires** onConnect - Callback that triggers when user clicks connect now button
 - **requires** onDisconnect - Callback that triggers when user clicks disconnect wallet button
 - **optional** onCancel - Callback that triggers when user cancels connect request

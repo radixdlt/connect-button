@@ -1,7 +1,17 @@
 import './style.css'
-import { configure, getMethods, requestBuilder, requestItem } from '../src'
+import {
+  configure,
+  getMethods,
+  requestBuilder,
+  requestItem,
+  RadixConnectButtonApi,
+} from '../src'
 
-configure({
+window.radixConnectButtonApi = configure({
+  initialState: {
+    connected: false,
+    loading: false,
+  },
   dAppId: 'dashboard',
   networkId: 11,
   logLevel: 'DEBUG',
@@ -14,16 +24,27 @@ configure({
         return oneTimeAccounts[0].address
       })
       .andThen(sendTx)
+      .map(() => setState({ loading: false }))
+      .mapErr(() => setState({ loading: false }))
   },
   onDisconnect: ({ setState }) => {
     setState({ connected: false })
   },
 })
 
-const sendTx = (address: string) =>
-  getMethods().sendTransaction({
+const sendTx = (address: string) => {
+  const faucet =
+    'component_tdx_b_1qftacppvmr9ezmekxqpq58en0nk954x0a7jv2zz0hc7qdxyth4'
+  return getMethods().sendTransaction({
     version: 1,
     transactionManifest: `
-      CREATE_RESOURCE Enum("Fungible", 18u8) Map<String, String>("description", "Dedo test token", "name", "Dedo", "symbol", "DEDO") Map<Enum, Tuple>() Some(Enum("Fungible", Decimal("15000")));
+      CALL_METHOD ComponentAddress("${faucet}") "free";
       CALL_METHOD ComponentAddress("${address}") "deposit_batch" Expression("ENTIRE_WORKTOP");`,
   })
+}
+
+declare global {
+  interface Window {
+    radixConnectButtonApi: RadixConnectButtonApi
+  }
+}
