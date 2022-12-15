@@ -23,6 +23,11 @@ export class LoadingSpinner extends LitElement {
       margin-top: 0.1rem;
     }
 
+    :host(.small) {
+      width: 1rem;
+      height: 1rem;
+    }
+
     @keyframes rotation {
       0% {
         transform: rotate(0deg);

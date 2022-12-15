@@ -14,11 +14,12 @@ import logoGradient from '../assets/logo-gradient.png'
 import infoIcon from '../assets/icon-info.svg'
 import { color } from '../styles'
 import { filter, fromEvent, Subscription, tap } from 'rxjs'
+import { getConnectedState } from '../storage'
 
 @customElement(config.elementTag)
 export class ConnectButton extends LitElement {
   @property({ type: Boolean })
-  connected = false
+  connected = getConnectedState() || false
 
   @property({ type: Boolean })
   loading = false
@@ -74,16 +75,20 @@ export class ConnectButton extends LitElement {
   }
 
   connectButtonTemplate() {
-    return this.loading
+    return this.loading && !this.connected
       ? html`<radix-button
           loading
           class="no-logo"
           @onClick=${this.togglePopover}
         />`
       : html`<radix-button
-          class=${this.connected ? 'gradient' : ''}
+          class="${this.connected ? 'gradient' : ''} ${this.loading
+            ? 'no-logo'
+            : ''}"
           @onClick=${this.togglePopover}
-          >${this.connected ? 'Connected' : 'Connect'}</radix-button
+          >${this.loading
+            ? html`<loading-spinner class="small"></loading-spinner>`
+            : ''}${this.connected ? 'Connected' : 'Connect'}</radix-button
         >`
   }
 
@@ -93,11 +98,6 @@ export class ConnectButton extends LitElement {
     this.subscriptions.unsubscribe()
   }
 
-  updated(changedProperties: Map<string, any>) {
-    if (changedProperties.has('connected') && this.loading) {
-      this.loading = false
-    }
-  }
 
   onDisconnectWallet() {
     onDisconnectSubject.next()
@@ -170,6 +170,11 @@ export class ConnectButton extends LitElement {
       width: 10rem;
       margin-left: 0.9rem;
       font-weight: 600;
+    }
+    loading-spinner.small {
+      margin-right: 0.25rem;
+      display: inline-block;
+      vertical-align: top;
     }
     .logo {
       width: 3rem;
