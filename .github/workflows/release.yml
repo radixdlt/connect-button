@@ -21,7 +21,7 @@ jobs:
       - name: Authenticate with private NPM package
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMJS_TOKEN }}" > ~/.npmrc
       - name: Install dependencies
-        run: yarn
+        run: yarn --frozen-lockfile
       - name: Prepare
         run: yarn build
       - name: Release
