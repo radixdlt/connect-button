@@ -3,7 +3,7 @@ import { configure, getMethods, requestBuilder, requestItem } from '../src'
 
 configure({
   dAppId: 'dashboard',
-  networkId: 34,
+  networkId: 11,
   logLevel: 'DEBUG',
   onConnect: ({ setState, getWalletData }) => {
     getWalletData(

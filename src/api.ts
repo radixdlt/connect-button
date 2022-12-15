@@ -15,6 +15,8 @@ type RadixConnectButtonApi = {
   onConnect$: Observable<void>
 }
 
+type RequestParams = Parameters<WalletSdkType['request']>
+
 export const onConnectSubject = new Subject<void>()
 export const onDisconnectSubject = new Subject<void>()
 export const onDestroySubject = new Subject<void>()
@@ -39,6 +41,8 @@ export const configure = (
   const { onConnect, onDestroy, onDisconnect, onCancel, ...rest } = input
   walletSdk = WalletSdk(rest)
 
+  let cancelOngoingRequestFn: () => void
+
   const setState = ({ connected, loading }: Partial<ButtonState>) => {
     const connectButton = getConnectButtonElement()
     if (connected != null) connectButton.connected = connected
@@ -58,7 +62,24 @@ export const configure = (
 
   const subscriptions = new Subscription()
   subscriptions.add(
-    onConnect$.pipe(tap(() => onConnect(buttonApi!))).subscribe()
+    onConnect$
+      .pipe(
+        tap(() => {
+          const api = buttonApi!
+          api.getWalletData = (
+            input: RequestParams[0],
+            callbacks: RequestParams[1]
+          ) =>
+            walletSdk!.request(input, {
+              ...callbacks,
+              requestControl: ({ cancelRequest }) => {
+                cancelOngoingRequestFn = cancelRequest
+              },
+            })
+          return onConnect(api)
+        })
+      )
+      .subscribe()
   )
   subscriptions.add(
     onDisconnect$.pipe(tap(() => onDisconnect(buttonApi!))).subscribe()
@@ -67,6 +88,7 @@ export const configure = (
     onCancel$
       .pipe(
         tap(() => {
+          cancelOngoingRequestFn()
           if (onCancel) onCancel()
         })
       )
