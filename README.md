@@ -1,6 +1,11 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
-A framework agnostic web component to help developers to connect to Radix. The connect button API acts as a wrapper to the wallet SDK and exposes its methods.
+The √ Connect Button is a framework agnostic web component to help developers connect users and their Radix Wallet to their dApps.
+
+It appears as a consistent, Radix-branded UI element that helps users identify your dApp website as a Radix dApp and compatible with the Radix Wallet – and it automatically provides a consistent user experience for users to connect with their wallet and see the current status of the connection between dApp and Radix Wallet.
+
+The √ Connect Button API acts as a wrapper to the [Wallet SDK](https://github.com/radixdlt/wallet-sdk) and exposes its methods while adding additional methods.
+
 
 - [Installation](#installation)
 - [Usage](#usage)
