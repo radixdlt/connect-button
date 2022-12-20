@@ -50,9 +50,6 @@
     "type": "git",
     "url": "https://github.com/radixdlt/connect-button.git"
   },
-  "publishConfig": {
-    "access": "restricted"
-  },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
