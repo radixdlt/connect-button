@@ -82,7 +82,7 @@ export class ConnectButton extends LitElement {
       ${this.loading ? 'no-logo' : ''} 
       ${this.connected ? 'gradient' : ''}
     `
-    const smallLoadingIndicator = this.loading
+    const smallLoadingIndicator = this.loading && !this.connected
       ? html`<loading-spinner class="small"></loading-spinner>`
       : ''
 
