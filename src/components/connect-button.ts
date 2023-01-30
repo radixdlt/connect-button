@@ -1,11 +1,5 @@
 import { LitElement, css, html, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import {
-  onCancelSubject,
-  onConnectSubject,
-  onDestroySubject,
-  onDisconnectSubject,
-} from '../api'
 import { config } from '../config'
 import './loading-spinner'
 import './popover'
@@ -14,18 +8,23 @@ import logoGradient from '../assets/logo-gradient.png'
 import infoIcon from '../assets/icon-info.svg'
 import { color } from '../styles'
 import { filter, fromEvent, Subscription, tap } from 'rxjs'
-import { getConnectedState } from '../storage'
 
 @customElement(config.elementTag)
 export class ConnectButton extends LitElement {
   @property({ type: Boolean })
-  connected = getConnectedState()
+  connected = false
 
   @property({ type: Boolean })
   loading = false
 
   @property({ type: Boolean })
   showPopover = false
+
+  @property({ type: Function })
+  onConnect = () => {}
+
+  @property({ type: Function })
+  onDisconnect = () => {}
 
   private subscriptions = new Subscription()
 
@@ -40,9 +39,7 @@ export class ConnectButton extends LitElement {
         .pipe(
           filter(() => this.showPopover),
           filter((event) => !this.contains(event.target as HTMLElement)),
-          tap(() => {
-            this.showPopover = false
-          })
+          tap(() => (this.showPopover = false))
         )
         .subscribe()
     )
@@ -57,18 +54,6 @@ export class ConnectButton extends LitElement {
     link.setAttribute('rel', 'stylesheet')
     link.setAttribute('href', this.fontGoogleApiHref)
     document.head.append(link)
-  }
-
-  private onConnect() {
-    onConnectSubject.next()
-    this.loading = true
-    this.showPopover = false
-  }
-
-  private cancelConnect() {
-    onCancelSubject.next()
-    this.loading = false
-    this.showPopover = false
   }
 
   private togglePopover() {
@@ -99,28 +84,25 @@ export class ConnectButton extends LitElement {
         >`
   }
 
-  disconnectedCallback() {
-    super.disconnectedCallback()
-    onDestroySubject.next()
-    this.subscriptions.unsubscribe()
-  }
-
-  onDisconnectWallet() {
-    onDisconnectSubject.next()
-    this.showPopover = false
-  }
-
   private notConnectedTemplate() {
-    return this.loading
-      ? html`<radix-button @onClick=${this.cancelConnect}>Cancel</radix-button>`
-      : html`<div class="connect--wrapper">
-            <img class="logo" src=${logoGradient} />
-            <span class="connect--text">Connect your Radix Wallet</span>
-          </div>
-          <radix-button @onClick=${this.onConnect}>Connect Now</radix-button>
-          <a href=${config.links['What is a radix wallet?']} target="_blank"
-            >What is a Radix Wallet?</a
-          >`
+    return html`<div class="connect--wrapper">
+        <img class="logo" src=${logoGradient} />
+        <span class="connect--text">Connect your Radix Wallet</span>
+      </div>
+      <radix-button @onClick=${this.onConnect}>Connect Now</radix-button>
+      <a href=${config.links['What is a radix wallet?']} target="_blank"
+        >What is a Radix Wallet?</a
+      >`
+    // return this.loading
+    //   ? html`<radix-button @onClick=${this.cancelConnect}>Cancel</radix-button>`
+    //   : html`<div class="connect--wrapper">
+    //         <img class="logo" src=${logoGradient} />
+    //         <span class="connect--text">Connect your Radix Wallet</span>
+    //       </div>
+    //       <radix-button @onClick=${this.onConnect}>Connect Now</radix-button>
+    //       <a href=${config.links['What is a radix wallet?']} target="_blank"
+    //         >What is a Radix Wallet?</a
+    //       >`
   }
 
   popoverTemplate() {
@@ -129,7 +111,7 @@ export class ConnectButton extends LitElement {
           ${this.connected
             ? html`<radix-button
                 class="no-logo text"
-                @onClick=${this.onDisconnectWallet}
+                @onClick=${this.onDisconnect}
                 >Disconnect Wallet</radix-button
               >`
             : this.notConnectedTemplate()}
