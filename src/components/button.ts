@@ -1,13 +1,42 @@
 import { LitElement, css, html, unsafeCSS } from 'lit'
+import { classMap } from 'lit/directives/class-map.js'
 import { customElement, property } from 'lit/decorators.js'
 import { color } from '../styles'
 import bgConnected from '../assets/bg-connected.svg'
 import logo from '../assets/logo.svg'
+import './loading-spinner'
+import '../../fonts.css'
+
+export type RadixButtonProps = {
+  loading: boolean
+}
 
 @customElement('radix-button')
 export class RadixButton extends LitElement {
-  @property({ type: Boolean })
+  @property({
+    type: Boolean,
+  })
   loading = false
+
+  @property({
+    type: Boolean,
+  })
+  gradient = false
+
+  @property({
+    type: Boolean,
+  })
+  logo = false
+
+  @property({
+    type: Boolean,
+  })
+  fullWidth = false
+
+  @property({
+    type: Boolean,
+  })
+  text = false
 
   private onClick(event: MouseEvent) {
     this.dispatchEvent(
@@ -20,7 +49,16 @@ export class RadixButton extends LitElement {
   }
 
   render() {
-    return html` <button part="button" @click=${this.onClick}>
+    return html` <button
+        class=${classMap({
+          logo: this.logo && !this.loading,
+          gradient: this.gradient,
+          'full-width': this.fullWidth,
+          text: this.text,
+        })}
+        part="button"
+        @click=${this.onClick}
+      >
         ${this.loading
           ? html`<loading-spinner />`
           : html`<slot></slot>`}</button
@@ -29,7 +67,7 @@ export class RadixButton extends LitElement {
 
   static styles = css`
     button {
-      width: 100%;
+      display: inline-block;
       height: 2.6rem;
       border-radius: 12px;
       border: 1px solid transparent;
@@ -43,11 +81,16 @@ export class RadixButton extends LitElement {
       background-color: ${color.radixBlue};
     }
 
-    :host(:not([disabled],.disabled)) > button {
+    button.full-width {
+      display: block;
+      width: 100%;
+    }
+
+    :host(:not([disabled], .disabled)) > button {
       cursor: pointer;
     }
 
-    button::before {
+    button.logo::before {
       content: url(${unsafeCSS(logo)});
     }
 
@@ -55,13 +98,13 @@ export class RadixButton extends LitElement {
       content: '';
     }
 
-    :host(.gradient) > button {
+    button.gradient {
       background: url(${unsafeCSS(bgConnected)}) no-repeat;
       background-size: cover;
       width: 8.6rem;
     }
 
-    :host(.text) > button {
+    button.text {
       background: none;
       color: ${color.radixBlue};
       text-shadow: 0px 0px 0px;
