@@ -5,7 +5,6 @@ import { color } from '../styles'
 import bgConnected from '../assets/bg-connected.svg'
 import logo from '../assets/logo.svg'
 import './loading-spinner'
-import '../../fonts.css'
 
 export type RadixButtonProps = {
   loading: boolean
