@@ -74,6 +74,15 @@ export class ConnectButton extends LitElement {
     )
   }
 
+  connectedCallback(): void {
+    this.dispatchEvent(
+      new CustomEvent('onRender', {
+        bubbles: true,
+        composed: true,
+      })
+    )
+  }
+
   disconnectedCallback(): void {
     this.dispatchEvent(
       new CustomEvent('onDestroy', {
@@ -111,6 +120,14 @@ export class ConnectButton extends LitElement {
           composed: true,
         })
       )
+  }
+
+  private formatAccountAddress(address: string) {
+    return `${address.slice(0, 4)}...${address.slice(-6)}`
+  }
+
+  private formatAccountLabel(label: string) {
+    return label.length > 14 ? `${label.slice(0, 12).trimEnd()}...` : label
   }
 
   private connectButtonTemplate() {
@@ -203,14 +220,6 @@ export class ConnectButton extends LitElement {
       </div>`
 
     return ''
-  }
-
-  private formatAccountAddress(address: string) {
-    return `${address.slice(0, 4)}...${address.slice(-6)}`
-  }
-
-  private formatAccountLabel(label: string) {
-    return label.length > 14 ? `${label.slice(0, 12).trimEnd()}...` : label
   }
 
   private accountListTemplate() {
@@ -338,40 +347,40 @@ export class ConnectButton extends LitElement {
     .wrapper.persona {
       display: flex;
     }
-    .account.gradient-1 {
+    .account.gradient-0 {
       background: linear-gradient(276.58deg, #01e2a0 -0.6%, #052cc0 102.8%);
     }
-    .account.gradient-2 {
+    .account.gradient-1 {
       background: linear-gradient(276.33deg, #ff43ca -14.55%, #052cc0 102.71%);
     }
-    .account.gradient-3 {
+    .account.gradient-2 {
       background: linear-gradient(276.33deg, #20e4ff -14.55%, #052cc0 102.71%);
     }
-    .account.gradient-4 {
+    .account.gradient-3 {
       background: linear-gradient(94.8deg, #00ab84 -1.2%, #052cc0 103.67%);
     }
-    .account.gradient-5 {
+    .account.gradient-4 {
       background: linear-gradient(94.62deg, #ce0d98 -10.14%, #052cc0 104.1%);
     }
-    .account.gradient-6 {
+    .account.gradient-5 {
       background: linear-gradient(276.33deg, #052cc0 -14.55%, #0dcae4 102.71%);
     }
-    .account.gradient-7 {
+    .account.gradient-6 {
       background: linear-gradient(90.89deg, #003057 -2.21%, #03d597 102.16%);
     }
-    .account.gradient-8 {
+    .account.gradient-7 {
       background: linear-gradient(276.23deg, #f31dbe -2.1%, #003057 102.67%);
     }
-    .account.gradient-9 {
+    .account.gradient-8 {
       background: linear-gradient(276.48deg, #003057 -0.14%, #052cc0 102.77%);
     }
-    .account.gradient-10 {
+    .account.gradient-9 {
       background: linear-gradient(276.32deg, #1af4b5 -5.15%, #0ba97d 102.7%);
     }
-    .account.gradient-11 {
+    .account.gradient-10 {
       background: linear-gradient(276.23deg, #e225b3 -2.1%, #7e0d5f 102.67%);
     }
-    .account.gradient-12 {
+    .account.gradient-11 {
       background: linear-gradient(276.48deg, #1f48e2 -0.14%, #040b72 102.77%);
     }
     .account:last-of-type {
