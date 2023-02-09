@@ -109,6 +109,7 @@ export class RadixRequestItem extends LitElement {
       font-size: 0.9rem;
       line-height: 1rem;
       margin-left: 0.75rem;
+      white-space: nowrap;
     }
     .text.request:first-letter {
       text-transform: uppercase;
@@ -125,6 +126,10 @@ export class RadixRequestItem extends LitElement {
     .text.error {
       align-self: center;
       font-size: 0.75rem;
+      margin-left: 1rem;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
     .text.transaction {
       align-self: center;
