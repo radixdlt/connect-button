@@ -20,7 +20,7 @@ export class Popover extends LitElement {
       box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.25);
       border-radius: 12px;
       border: 1px solid ${color.radixGrey4};
-      padding: 1.13rem;
+      padding: 1.13rem 1.13rem 0 1.13rem;
       z-index: 9999;
     }
 
