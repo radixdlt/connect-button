@@ -54,7 +54,6 @@ export class RadixRequestItem extends LitElement {
       this.item.status === 'success' &&
       this.transactionExplorerBaseUrl
     ) {
-      debugger
       return html`<a
         target="_blank"
         href="${this.transactionExplorerBaseUrl}${this.item
