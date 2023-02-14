@@ -53,7 +53,8 @@ export class RadixRequestItem extends LitElement {
       this.item?.type === 'sendTransaction' &&
       this.item.status === 'success' &&
       this.transactionExplorerBaseUrl
-    )
+    ) {
+      debugger
       return html`<a
         target="_blank"
         href="${this.transactionExplorerBaseUrl}${this.item
@@ -64,6 +65,7 @@ export class RadixRequestItem extends LitElement {
           6
         )}...${this.item.transactionIntentHash.slice(-5)}</a
       >`
+    }
 
     return ''
   }

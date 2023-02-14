@@ -2,17 +2,13 @@
 
 The √ Connect Button is a framework agnostic web component to help developers connect users and their Radix Wallet to their dApps.
 
-It appears as a consistent, Radix-branded UI element that helps users identify your dApp website as a Radix dApp and compatible with the Radix Wallet – and it automatically provides a consistent user experience for users to connect with their wallet and see the current status of the connection between dApp and Radix Wallet.
-
-The √ Connect Button API acts as a wrapper to the [Wallet SDK](https://github.com/radixdlt/wallet-sdk) and exposes its methods while adding additional methods.
-
+It appears as a consistent, Radix-branded UI element that helps users identify your dApp website as a Radix dApp. When used with [Radix dApp Toolkit](https://github.com/radixdlt/radix-dapp-toolkit) it is compatible with the Radix Wallet – and it automatically provides a consistent user experience for users to connect with their wallet and see the current status of the connection between dApp and Radix Wallet.
 
 - [Installation](#installation)
 - [Usage](#usage)
   - [Getting started](#getting-started)
-    - [Configuration](#configuration)
-    - [API](#api)
-  - [Examples](#examples)
+    - [Properties](#properties)
+    - [Events](#events)
 
 # Installation
 
@@ -48,80 +44,56 @@ Add the `<radix-connect-button />` element in your HTML code and call the config
 </html>
 ```
 
-### Configuration
-
-The connect button needs to be configured before use.
-
-`configure(input: ConfigurationInput) => RadixConnectButtonApi`
+### Properties
 
 ```typescript
-import {
-  configure,
-  requestBuilder,
-  requestItem,
-} from '@radixdlt/connect-button'
+const radixConnectButton = document.querySelector('radix-connect-button')!
 
-configure({
-  dAppId: 'dashboard',
-  networkId: 0x01,
-  onConnect: ({ setState, getWalletData }) => {
-    getWalletData(
-      requestBuilder(requestItem.oneTimeAccounts.withoutProofOfOwnership(1))
-    ).map(({ oneTimeAccounts }) => {
-      setState({ connected: true })
-    })
-  },
-  onDisconnect: ({ setState }) => {
-    setState({ connected: false })
-  },
-})
+const handleConnect = () => {
+  radixConnectButton.loading = true
+  radixConnectButton.connecting = true
+}
+
+radixConnectButton.addEventListener('onConnect', handleConnect)
 ```
 
 ```typescript
-type ConfigurationInput = {
-  dAppId: string
-  networkId?: number
-  initialState?: Partial<ButtonState>
-  onConnect: (api: RadixConnectButtonApi) => void
-  onDisconnect: (api: RadixConnectButtonApi) => void
-  onCancel?: () => void
-  onDestroy?: () => void
+type ConnectButtonProperties = {
+  personaLabel: string
+  dAppName: string
+  loading: boolean
+  connected: boolean
+  connecting: boolean
+  showPopover: boolean
+  showNotification: boolean
+  requestItems: RequestItem[]
+  accounts: Account[]
 }
 ```
 
-- **requires** dAppId - Specifies the dApp that is interacting with the wallet. Used in dApp verification process on the wallet side.
-- **optional** networkId - Specifies which network to use, defaults to mainnet (0x01)
-- **optional** initialState - Forces initial connected and / or loading state for button
-- **requires** onConnect - Callback that triggers when user clicks connect now button
-- **requires** onDisconnect - Callback that triggers when user clicks disconnect wallet button
-- **optional** onCancel - Callback that triggers when user cancels connect request
-- **optional** onDestroy - Callback that triggers when button is removed from the DOM. Useful for cleaning up registered event listeners and subscriptions.
+- personaLabel - label of the connected persona
+- dAppName - name of the dApp
+- loading - set loading state
+- connected - set connected state
+- connecting - set connecting state
+- showPopover - display connect button popover
+- showNotification - display an icon that indicates that a request item has been updated
+- requestItems - displays a list of maximum 3 request items in the popover
+- accounts - displays a list of connected accounts
 
-### API
+### Events
 
 ```typescript
-type RadixConnectButtonApi = {
-  getWalletData: WalletSdkType['request']
-  sendTransaction: WalletSdkType['sendTransaction']
-  setState: (
-    input: Partial<{
-      connected: boolean
-      loading: boolean
-    }>
-  ) => void
-  destroy: () => void
-  onConnect$: Observable<void>
+type ConnectButtonEvents = {
+  onConnect: () => void
+  onDisconnect: () => void
+  onCancelRequestItem: (event: CustomEvent<{ id: string }>) => void
+  onDestroy: () => void
+  onShowPopover: () => void
 }
 ```
 
-- getWalletData – uses [wallet SDK request method](https://github.com/radixdlt/wallet-sdk#get-wallet-data)
-- sendTransaction – uses [wallet SDK sendTransaction method](https://github.com/radixdlt/wallet-sdk#send-transaction)
-- setState – Sets the state of the button
-- destroy – Cleanup function to destroy the configuration instance
-- onConnect$ – Observable that emits when the user clicks on the connect button
-
-## Examples
-
-- Vue 3 - [@radixdlt/vue-connect-button](https://github.com/radixdlt/vue-connect-button)
-- Angular 15 - [@radixdlt/angular-connect-button](https://github.com/radixdlt/angular-connect-button)
-- React 18 - [@radixdlt/react-connect-button](https://github.com/radixdlt/react-connect-button)
+- onConnect - triggers when user clicks connect now button
+- onDisconnect - triggers when user clicks disconnect wallet button
+- onCancel - triggers when user cancels connect request
+- onDestroy - triggers when button is removed from the DOM. Useful for cleaning up registered event listeners and subscriptions.
