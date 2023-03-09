@@ -37,6 +37,11 @@ export class RadixButton extends LitElement {
   })
   text = false
 
+  @property({
+    type: Boolean,
+  })
+  secondary = false
+
   private onClick(event: MouseEvent) {
     this.dispatchEvent(
       new CustomEvent('onClick', {
@@ -54,6 +59,7 @@ export class RadixButton extends LitElement {
           gradient: this.gradient,
           'full-width': this.fullWidth,
           text: this.text,
+          secondary: this.secondary,
         })}
         part="button"
         @click=${this.onClick}
@@ -106,6 +112,12 @@ export class RadixButton extends LitElement {
     button.text {
       background: none;
       color: ${color.radixBlue};
+      text-shadow: 0px 0px 0px;
+    }
+
+    button.text.secondary {
+      background: none;
+      color: ${color.radixGrey2};
       text-shadow: 0px 0px 0px;
     }
 
