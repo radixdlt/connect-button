@@ -223,6 +223,28 @@ export class ConnectButton extends LitElement {
     return ''
   }
 
+  private updateSharedDataTemplate() {
+    if (this.connected && this.accounts.length)
+      return html`<div class="wrapper update-shared-data">
+        <radix-button
+          class="button update-shared-data"
+          secondary
+          text
+          @onClick=${() => {
+            this.dispatchEvent(
+              new CustomEvent('onUpdateSharedData', {
+                bubbles: true,
+                composed: true,
+              })
+            )
+          }}
+          >Update shared data</radix-button
+        >
+      </div>`
+
+    return ''
+  }
+
   private accountListTemplate() {
     return html`<div class="wrapper account-list">
       ${this.accounts.map(
@@ -269,7 +291,7 @@ export class ConnectButton extends LitElement {
     if (!this.showPopover) return ''
 
     return html`<radix-popover class="popover"
-      >${this.requestItemsTemplate()}${this.personaTemplate()}${this.sharedDataTemplate()}${this.disconnectWalletTemplate()}${this.connectTemplate()}</radix-popover
+      >${this.requestItemsTemplate()}${this.personaTemplate()}${this.sharedDataTemplate()}${this.updateSharedDataTemplate()}${this.disconnectWalletTemplate()}${this.connectTemplate()}</radix-popover
     >`
   }
 
@@ -343,6 +365,9 @@ export class ConnectButton extends LitElement {
       margin-bottom: 1rem;
     }
     .wrapper.disconnect-wallet {
+      text-align: center;
+    }
+    .wrapper.update-shared-data {
       text-align: center;
     }
     .wrapper.persona {
@@ -447,6 +472,10 @@ export class ConnectButton extends LitElement {
       content: url(${unsafeCSS(infoIcon)});
     }
     .button.disconnect-wallet {
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+    .button.update-shared-data {
       margin-bottom: 0.5rem;
       display: inline-block;
     }
