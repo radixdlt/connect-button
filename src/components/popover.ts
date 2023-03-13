@@ -46,6 +46,11 @@ export class Popover extends LitElement {
       content: '';
       transform: rotate(45deg);
     }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+    }
   `
 }
 

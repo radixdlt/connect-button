@@ -204,43 +204,42 @@ export class ConnectButton extends LitElement {
 
   private disconnectWalletTemplate() {
     if (this.connected)
-      return html`<div class="wrapper disconnect-wallet">
-        <radix-button
-          class="button disconnect-wallet"
-          text
-          @onClick=${() => {
-            this.dispatchEvent(
-              new CustomEvent('onDisconnect', {
-                bubbles: true,
-                composed: true,
-              })
-            )
-          }}
-          >Disconnect Wallet</radix-button
-        >
-      </div>`
+      return html`<radix-button
+        text
+        mb="0.5"
+        alignSelf="center"
+        @onClick=${() => {
+          this.dispatchEvent(
+            new CustomEvent('onDisconnect', {
+              bubbles: true,
+              composed: true,
+            })
+          )
+        }}
+        >Disconnect Wallet</radix-button
+      >`
 
     return ''
   }
 
   private updateSharedDataTemplate() {
     if (this.connected && this.accounts.length)
-      return html`<div class="wrapper update-shared-data">
-        <radix-button
-          class="button update-shared-data"
-          secondary
-          text
-          @onClick=${() => {
-            this.dispatchEvent(
-              new CustomEvent('onUpdateSharedData', {
-                bubbles: true,
-                composed: true,
-              })
-            )
-          }}
-          >Update shared data</radix-button
-        >
-      </div>`
+      return html`<radix-button
+        secondary
+        text
+        mb="0"
+        fontWeight="400"
+        alignSelf="center"
+        @onClick=${() => {
+          this.dispatchEvent(
+            new CustomEvent('onUpdateSharedData', {
+              bubbles: true,
+              composed: true,
+            })
+          )
+        }}
+        >Update shared data</radix-button
+      >`
 
     return ''
   }
@@ -364,12 +363,6 @@ export class ConnectButton extends LitElement {
     .wrapper.sharing {
       margin-bottom: 1rem;
     }
-    .wrapper.disconnect-wallet {
-      text-align: center;
-    }
-    .wrapper.update-shared-data {
-      text-align: center;
-    }
     .wrapper.persona {
       display: flex;
     }
@@ -470,14 +463,6 @@ export class ConnectButton extends LitElement {
       top: 0.2rem;
       padding-right: 0.2rem;
       content: url(${unsafeCSS(infoIcon)});
-    }
-    .button.disconnect-wallet {
-      margin-bottom: 0.5rem;
-      display: inline-block;
-    }
-    .button.update-shared-data {
-      margin-bottom: 0.5rem;
-      display: inline-block;
     }
     .icon.user {
       background: white;
