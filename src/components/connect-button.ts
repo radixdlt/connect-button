@@ -11,7 +11,7 @@ import userIcon from '../assets/icon-user.svg'
 import linkIcon from '../assets/icon-link.svg'
 import { color } from '../styles'
 import { filter, fromEvent, Subscription, tap } from 'rxjs'
-import { Account, RequestItem } from '../_types'
+import { Account, PersonaData, RequestItem } from '../_types'
 import { RadixRequestItem } from './request-item'
 
 @customElement(config.elementTag)
@@ -41,6 +41,11 @@ export class ConnectButton extends LitElement {
   @property({ type: Array })
   accounts: Account[] = []
 
+  @property({
+    type: Array,
+  })
+  personaData: PersonaData[] = []
+
   @property({ type: Object })
   explorer: { baseUrl: string; transactionPath: string; accountsPath: string } =
     {
@@ -54,6 +59,10 @@ export class ConnectButton extends LitElement {
 
   @property({ type: String })
   personaLabel: string = ''
+
+  get hasSharedData(): boolean {
+    return !!(this.accounts.length || this.personaData.length)
+  }
 
   private subscriptions = new Subscription()
 
@@ -269,7 +278,6 @@ export class ConnectButton extends LitElement {
   private sharedDataTemplate() {
     if (this.accounts.length && this.connected)
       return html`<div class="wrapper sharing">
-        <span class="text sharing">You're sharing with ${this.dAppName}:</span>
         ${this.accountListTemplate()}
       </div> `
 
@@ -278,10 +286,18 @@ export class ConnectButton extends LitElement {
 
   private personaTemplate() {
     if (this.personaLabel && this.connected)
-      return html`<div class="wrapper persona">
-        <span class="icon user"></span>
-        <span class="text persona-label">${this.personaLabel}</span>
-      </div>`
+      return html`<span class="text sharing"
+          >You're sharing with ${this.dAppName}:</span
+        >
+        <div class="wrapper persona">
+          <i class="icon user"></i>
+          <div class="wrapper persona-data">
+            <span class="text persona-label">${this.personaLabel}</span>
+            ${this.personaData.map(
+              (data) => html`<div class="text persona-data">${data.value}</div>`
+            )}
+          </div>
+        </div>`
 
     return ''
   }
@@ -358,13 +374,14 @@ export class ConnectButton extends LitElement {
       padding: 0.5rem;
       border-radius: 12px;
       background: #e2e5ed;
-      display: inline-block;
+      display: flex;
     }
     .wrapper.sharing {
       margin-bottom: 1rem;
     }
-    .wrapper.persona {
-      display: flex;
+    .wrapper.persona-data {
+      align-self: center;
+      margin-left: 1rem;
     }
     .account.gradient-0 {
       background: linear-gradient(276.58deg, #01e2a0 -0.6%, #052cc0 102.8%);
@@ -439,8 +456,7 @@ export class ConnectButton extends LitElement {
       white-space: nowrap;
     }
     .text.persona-label {
-      align-self: center;
-      margin-left: 1rem;
+      font-weight: 600;
     }
     loading-spinner.small {
       display: inline-block;
@@ -472,6 +488,7 @@ export class ConnectButton extends LitElement {
       text-align: center;
       border-radius: 50%;
       margin-left: 1rem;
+      align-self: center;
     }
     .icon.user::before {
       position: relative;
