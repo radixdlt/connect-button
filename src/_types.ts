@@ -1,5 +1,16 @@
 export type Account = { label: string; address: string; appearanceId: number }
 
+export const personaDataField = {
+  givenName: 'givenName',
+  familyName: 'familyName',
+  emailAddress: 'emailAddress',
+  phoneNumber: 'phoneNumber',
+} as const
+
+export type PersonaDataField = keyof typeof personaDataField
+
+export type PersonaData = { field: PersonaDataField; value: string }
+
 export const RequestStatus = {
   pending: 'pending',
   success: 'success',

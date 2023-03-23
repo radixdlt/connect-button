@@ -68,6 +68,7 @@ type ConnectButtonProperties = {
   showNotification: boolean
   requestItems: RequestItem[]
   accounts: Account[]
+  personaData: PersonaData[]
 }
 ```
 
