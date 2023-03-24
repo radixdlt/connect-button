@@ -511,7 +511,7 @@ export class ConnectButton extends LitElement {
       position: absolute;
       border-radius: 50%;
       right: 0.5rem;
-      top: calc(100% - 0.5rem);
+      bottom: calc(100% - 0.5rem);
     }
   `
 }
