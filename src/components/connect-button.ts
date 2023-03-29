@@ -331,6 +331,7 @@ export class ConnectButton extends LitElement {
       font-family: 'IBM Plex Sans';
       position: relative;
       display: inline-block;
+      color: #333333;
     }
     .popover {
       position: absolute;
