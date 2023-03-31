@@ -1,5 +1,6 @@
 import { LitElement, css, html, unsafeCSS } from 'lit'
 import { classMap } from 'lit/directives/class-map.js'
+import { styleMap } from 'lit/directives/style-map.js'
 import { customElement, property } from 'lit/decorators.js'
 import { color } from '../styles'
 import bgConnected from '../assets/bg-connected.svg'
@@ -37,6 +38,26 @@ export class RadixButton extends LitElement {
   })
   text = false
 
+  @property({
+    type: Boolean,
+  })
+  secondary = false
+
+  @property({
+    type: Number,
+  })
+  mb = 0
+
+  @property({
+    type: Number,
+  })
+  fontWeight = 500
+
+  @property({
+    type: String,
+  })
+  alignSelf = 'auto'
+
   private onClick(event: MouseEvent) {
     this.dispatchEvent(
       new CustomEvent('onClick', {
@@ -54,6 +75,11 @@ export class RadixButton extends LitElement {
           gradient: this.gradient,
           'full-width': this.fullWidth,
           text: this.text,
+          secondary: this.secondary,
+        })}
+        style=${styleMap({
+          marginBottom: `${this.mb}rem`,
+          fontWeight: `${this.fontWeight}`,
         })}
         part="button"
         @click=${this.onClick}
@@ -65,6 +91,10 @@ export class RadixButton extends LitElement {
   }
 
   static styles = css`
+    :host([alignSelf='center']) {
+      align-self: center;
+    }
+
     button {
       display: inline-block;
       height: 2.6rem;
@@ -106,6 +136,12 @@ export class RadixButton extends LitElement {
     button.text {
       background: none;
       color: ${color.radixBlue};
+      text-shadow: 0px 0px 0px;
+    }
+
+    button.text.secondary {
+      background: none;
+      color: ${color.radixGrey2};
       text-shadow: 0px 0px 0px;
     }
 

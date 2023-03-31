@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/web-components'
 import { html } from 'lit-html'
-import { Account, RequestItem } from '../_types'
+import { Account, PersonaData, RequestItem } from '../_types'
 import './connect-button'
 import { ConnectButton } from './connect-button'
 import './connect-button.stories.css'
@@ -26,6 +26,7 @@ const Button = (args: any) => {
           ?showNotification=${args.showNotification}
           .requestItems=${args.requestItems}
           .accounts=${args.accounts}
+          .personaData=${args.personaData}
           @onCancelRequestItem=${(event: CustomEvent<{ id: string }>) => {
             const connectButton = getConnectButton()
             connectButton.requestItems = connectButton.requestItems.map(
@@ -82,6 +83,25 @@ const accounts: Account[] = [
   },
 ]
 
+const personaData: PersonaData[] = [
+  {
+    field: 'givenName',
+    value: 'Matthew',
+  },
+  {
+    field: 'familyName',
+    value: 'Hines',
+  },
+  {
+    field: 'emailAddress',
+    value: 'matt@radmatt.io',
+  },
+  {
+    field: 'phoneNumber',
+    value: '123 123 1234',
+  },
+]
+
 export const initial = Template.bind({})
 // More on args: https://storybook.js.org/docs/web-components/writing-stories/args
 initial.args = {
@@ -132,6 +152,7 @@ connected.args = {
     },
   ],
   accounts,
+  personaData,
   personaLabel: 'RadMatt',
   render: true,
 }

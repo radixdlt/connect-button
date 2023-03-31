@@ -68,6 +68,7 @@ type ConnectButtonProperties = {
   showNotification: boolean
   requestItems: RequestItem[]
   accounts: Account[]
+  personaData: PersonaData[]
 }
 ```
 
@@ -90,6 +91,7 @@ type ConnectButtonEvents = {
   onCancelRequestItem: (event: CustomEvent<{ id: string }>) => void
   onDestroy: () => void
   onShowPopover: () => void
+  onUpdateSharedData: () => void
 }
 ```
 
