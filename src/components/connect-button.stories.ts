@@ -228,11 +228,13 @@ manyRequests.args = {
       id: crypto.randomUUID(),
       type: 'dataRequest',
       status: 'pending',
+      showCancel: true,
     },
     {
       id: crypto.randomUUID(),
       type: 'sendTransaction',
       status: 'pending',
+      showCancel: true,
     },
   ],
   accounts,
