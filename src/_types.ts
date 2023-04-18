@@ -37,6 +37,7 @@ export type WalletRequest<
   type: RequestType
   status: Status
   id: string
+  showCancel?: boolean
 } & T
 
 type WalletFailRequest<RequestType extends RequestItemTypes> = WalletRequest<

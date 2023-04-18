@@ -1,5 +1,5 @@
 import { LitElement, css, html, unsafeCSS } from 'lit'
-import { customElement, property, state } from 'lit/decorators.js'
+import { customElement, property } from 'lit/decorators.js'
 import './loading-spinner'
 import loadingIcon from '../assets/icon-loading.svg'
 import successIcon from '../assets/icon-success.svg'
@@ -24,9 +24,6 @@ export class RadixRequestItem extends LitElement {
   })
   transactionExplorerBaseUrl?: string
 
-  @state()
-  features = { cancel: false }
-
   private onCancel() {
     this.dispatchEvent(
       new CustomEvent('onCancel', {
@@ -38,12 +35,7 @@ export class RadixRequestItem extends LitElement {
   }
 
   private actionsTemplate() {
-    if (
-      this.item &&
-      ['dataRequest', 'loginRequest'].includes(this.item.type) &&
-      this.item.status === 'pending' &&
-      this.features.cancel
-    )
+    if (this.item && this.item.status === 'pending' && this.item.showCancel)
       return html`<button @click=${this.onCancel} class="text cancel">
         Cancel
       </button>`
