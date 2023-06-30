@@ -22,7 +22,7 @@ const createButton = (args: any) => html`
     ?connected=${args.connected}
     ?compact=${args.compact}
     ?full-width=${args.fullWidth}
-    >${args.text}</radix-button
+    ><div>${args.text}</div></radix-button
   >
 `
 
@@ -79,7 +79,7 @@ export const Primary: Story = {
       ?connected=${args.connected}
       ?compact=${args.compact}
       ?full-width=${args.fullWidth}
-      >${args.text}</radix-button
+      ><div>${args.connected ? args.text : 'Connect'}</div></radix-button
     >`,
   argTypes: {
     theme: {
@@ -96,7 +96,7 @@ export const Primary: Story = {
     borderRadius: 0,
     theme: 'radix-blue',
     connected: false,
-    text: 'Connect',
+    text: 'Matthew Hine',
     fullWidth: false,
   },
 }
@@ -126,6 +126,7 @@ export const Themes: Story = {
         ${createRow({
           ...args,
           connected: true,
+          text: 'Matthew Hine',
         })}
       </div>
     </div>`,
