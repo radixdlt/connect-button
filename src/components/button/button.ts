@@ -1,12 +1,12 @@
 import { LitElement, css, html, unsafeCSS } from 'lit'
 import { classMap } from 'lit/directives/class-map.js'
-import { styleMap } from 'lit/directives/style-map.js'
 import { customElement, property } from 'lit/decorators.js'
 import '../loading-spinner'
 import { themeCSS, Theme } from '../../styles/theme'
 import logo from '../../assets/logo.svg'
 import Gradient from '../../assets/gradient.svg'
 import CompactGradient from '../../assets/compact-gradient.svg'
+import AvatarPlaceholder from '../../assets/avatar-placeholder.svg'
 import {
   BUTTON_COMPACT_MIN_WIDTH,
   BUTTON_MIN_HEIGHT,
@@ -70,10 +70,6 @@ export class RadixButton extends LitElement {
           logo: !this.loading,
           gradient: this.connected,
         })}
-        style=${styleMap({
-          minHeight: `${BUTTON_MIN_HEIGHT}px`,
-          minWidth: `${BUTTON_COMPACT_MIN_WIDTH}px`,
-        })}
       >
         ${renderContent()}
       </button>
@@ -87,6 +83,7 @@ export class RadixButton extends LitElement {
         width: var(--radix-connect-button-width, auto);
         display: block;
         container-type: inline-size;
+        user-select: none;
       }
 
       :host([full-width]) > button {
@@ -98,6 +95,16 @@ export class RadixButton extends LitElement {
         display: inline-block;
       }
 
+      ::slotted(*) {
+        overflow: hidden;
+        display: block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: left;
+        width: auto;
+        padding-right: 6px;
+      }
+
       button {
         width: var(--radix-connect-button-width, auto);
         height: var(--radix-connect-button-height, auto);
@@ -107,12 +114,21 @@ export class RadixButton extends LitElement {
         color: var(--theme-text-color);
         container-type: inline-size;
         font-size: 16px;
-        display: inline-flex;
-        justify-content: center;
+        align-content: center;
         align-items: center;
         font-family: inherit;
         font-weight: 500;
         transition: background-color 0.1s cubic-bezier(0.45, 0, 0.55, 1);
+        min-width: ${BUTTON_COMPACT_MIN_WIDTH}px;
+        min-height: ${BUTTON_MIN_HEIGHT}px;
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+      }
+
+      button::before {
+        -webkit-mask-position: center;
+        mask-position: center;
       }
 
       button:hover {
@@ -136,7 +152,6 @@ export class RadixButton extends LitElement {
         mask-size: contain;
         -webkit-mask-size: contain;
         font-size: 16px;
-        margin-right: 0.5rem;
       }
 
       button.gradient.logo::before {
@@ -156,6 +171,13 @@ export class RadixButton extends LitElement {
         background-color: var(--color-radix-blue-2);
         color: var(--color-light);
         background-image: url(${unsafeCSS(Gradient)});
+        grid-template-columns: 36px 1fr;
+      }
+
+      button.gradient::before {
+        mask-image: url(${unsafeCSS(AvatarPlaceholder)});
+        -webkit-mask-image: url(${unsafeCSS(AvatarPlaceholder)});
+        font-size: 26px;
       }
 
       button.gradient:hover {
@@ -167,20 +189,20 @@ export class RadixButton extends LitElement {
         outline: 0px auto -webkit-focus-ring-color;
       }
 
-      @container (max-width: ${BUTTON_MIN_WIDTH}px) {
+      @container (max-width: ${BUTTON_MIN_WIDTH - 1}px) {
         button {
-          text-indent: -999px;
-          font-size: 0px;
-          line-height: 0;
           width: var(--radix-connect-button-height, ${BUTTON_MIN_HEIGHT}px);
+          max-width: ${BUTTON_MIN_WIDTH - 16}px;
+          max-height: ${BUTTON_MIN_WIDTH - 16}px;
+          justify-content: center;
         }
         button.gradient {
           background-image: url(${unsafeCSS(CompactGradient)});
         }
       }
       @container (max-width: ${BUTTON_MIN_WIDTH - 16}px) {
-        button.logo::before {
-          margin-right: 0rem;
+        ::slotted(*) {
+          display: none;
         }
       }
     `,
