@@ -5,6 +5,7 @@ import '../../styles/variables.css'
 import './story.css'
 import './button'
 import { BUTTON_MIN_HEIGHT, BUTTON_MIN_WIDTH } from '../../constants'
+import { RadixButtonStatus } from './button'
 
 type Story = StoryObj
 
@@ -22,6 +23,7 @@ const createButton = (args: any) => html`
     ?connected=${args.connected}
     ?compact=${args.compact}
     ?full-width=${args.fullWidth}
+    status=${args.status}
     ><div>${args.text}</div></radix-button
   >
 `
@@ -76,6 +78,7 @@ export const Primary: Story = {
     </style>
     <radix-button
       theme=${args.theme}
+      status=${args.status}
       ?connected=${args.connected}
       ?compact=${args.compact}
       ?full-width=${args.fullWidth}
@@ -89,15 +92,25 @@ export const Primary: Story = {
     text: {
       control: 'text',
     },
+    status: {
+      options: [
+        RadixButtonStatus.default,
+        RadixButtonStatus.pending,
+        RadixButtonStatus.success,
+        RadixButtonStatus.error,
+      ],
+      control: 'select',
+    },
   },
   args: {
     width: BUTTON_MIN_WIDTH,
     height: BUTTON_MIN_HEIGHT,
     borderRadius: 0,
     theme: 'radix-blue',
-    connected: false,
+    connected: true,
     text: 'Matthew Hine',
     fullWidth: false,
+    status: RadixButtonStatus.default,
   },
 }
 
@@ -135,12 +148,21 @@ export const Themes: Story = {
       options: ['radix-blue', 'black', 'white-with-outline', 'white'],
       control: 'select',
     },
+    status: {
+      options: [
+        RadixButtonStatus.default,
+        RadixButtonStatus.pending,
+        RadixButtonStatus.success,
+        RadixButtonStatus.error,
+      ],
+      control: 'select',
+    },
     text: {
       control: 'text',
     },
   },
   args: {
-    theme: 'radix-blue',
     text: 'Connect',
+    status: RadixButtonStatus.default,
   },
 }

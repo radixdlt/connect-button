@@ -1,7 +1,6 @@
 import { LitElement, css, html, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { config } from '../config'
-import './loading-spinner'
 import './popover'
 import './button/button'
 import './request-item'

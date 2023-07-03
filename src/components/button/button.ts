@@ -1,20 +1,35 @@
 import { LitElement, css, html, unsafeCSS } from 'lit'
 import { classMap } from 'lit/directives/class-map.js'
 import { customElement, property } from 'lit/decorators.js'
-import '../loading-spinner'
+import {
+  LoadingSpinner,
+  loadingSpinnerCSS,
+} from '../loading-spinner/loading-spinner'
 import { themeCSS, Theme } from '../../styles/theme'
 import logo from '../../assets/logo.svg'
 import Gradient from '../../assets/gradient.svg'
 import CompactGradient from '../../assets/compact-gradient.svg'
 import AvatarPlaceholder from '../../assets/avatar-placeholder.svg'
+import SuccessIcon from '../../assets/success.svg'
+import ErrorIcon from '../../assets/error.svg'
+
 import {
   BUTTON_COMPACT_MIN_WIDTH,
   BUTTON_MIN_HEIGHT,
   BUTTON_MIN_WIDTH,
 } from '../../constants'
 
+export const RadixButtonStatus = {
+  pending: 'pending',
+  success: 'success',
+  error: 'error',
+  default: 'default',
+} as const
+
+export type RadixButtonStatus = keyof typeof RadixButtonStatus
+
 export type RadixButtonProps = {
-  loading: boolean
+  status: RadixButtonStatus
   connected: boolean
   fullWidth: boolean
   theme: Theme
@@ -23,9 +38,10 @@ export type RadixButtonProps = {
 @customElement('radix-button')
 export class RadixButton extends LitElement {
   @property({
-    type: Boolean,
+    type: String,
+    reflect: true,
   })
-  loading = false
+  status: RadixButtonStatus = RadixButtonStatus.default
 
   @property({
     type: Boolean,
@@ -56,19 +72,24 @@ export class RadixButton extends LitElement {
 
   render() {
     const renderContent = () => {
-      if (this.loading) {
-        return html`<loading-spinner />`
+      if (this.status === RadixButtonStatus.pending && this.connected) {
+        return html`${LoadingSpinner} <slot></slot>`
+      } else if (this.status === RadixButtonStatus.pending) {
+        return LoadingSpinner
       }
 
       return html`<slot></slot>`
     }
 
+    const showLogo = this.status !== 'pending' && !this.connected
+    const showGradient = this.connected
+
     return html`
       <button
         @click=${this.onClick}
         class=${classMap({
-          logo: !this.loading,
-          gradient: this.connected,
+          logo: showLogo,
+          gradient: showGradient,
         })}
       >
         ${renderContent()}
@@ -78,6 +99,7 @@ export class RadixButton extends LitElement {
 
   static styles = [
     themeCSS,
+    loadingSpinnerCSS,
     css`
       :host {
         width: var(--radix-connect-button-width, auto);
@@ -135,18 +157,14 @@ export class RadixButton extends LitElement {
         background-color: var(--theme-background-hover);
       }
 
-      :host(:not([disabled], .disabled)) > button {
-        cursor: pointer;
-      }
-
       button.logo::before {
+        mask-image: url(${unsafeCSS(logo)});
+        -webkit-mask-image: url(${unsafeCSS(logo)});
         background-color: var(--theme-text-color);
         content: '';
         min-height: 0.94em;
         min-width: 1.25em;
         display: block;
-        mask-image: url(${unsafeCSS(logo)});
-        -webkit-mask-image: url(${unsafeCSS(logo)});
         mask-repeat: no-repeat;
         -webkit-mask-repeat: no-repeat;
         mask-size: contain;
@@ -158,8 +176,8 @@ export class RadixButton extends LitElement {
         background-color: var(--color-light);
       }
 
-      :host(.no-logo) > button::before {
-        content: '';
+      :host([status='pending']) > button.gradient::before {
+        display: none;
       }
 
       button.gradient {
@@ -175,9 +193,35 @@ export class RadixButton extends LitElement {
       }
 
       button.gradient::before {
+        content: '';
+        min-height: 0.94em;
+        min-width: 1.25em;
+        display: block;
+        mask-repeat: no-repeat;
+        -webkit-mask-repeat: no-repeat;
+        mask-size: contain;
+        -webkit-mask-size: contain;
+        background-color: var(--color-light);
         mask-image: url(${unsafeCSS(AvatarPlaceholder)});
         -webkit-mask-image: url(${unsafeCSS(AvatarPlaceholder)});
         font-size: 26px;
+      }
+
+      :host([status='success']) > button,
+      :host([status='error']) > button {
+        gap: 2px;
+      }
+
+      :host([status='success']) > button::before {
+        mask-image: url(${unsafeCSS(SuccessIcon)});
+        -webkit-mask-image: url(${unsafeCSS(SuccessIcon)});
+        font-size: 29px;
+      }
+
+      :host([status='error']) > button::before {
+        mask-image: url(${unsafeCSS(ErrorIcon)});
+        -webkit-mask-image: url(${unsafeCSS(ErrorIcon)});
+        font-size: 29px;
       }
 
       button.gradient:hover {

@@ -1,6 +1,5 @@
 import { LitElement, css, html, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import './loading-spinner'
 import loadingIcon from '../assets/icon-loading.svg'
 import successIcon from '../assets/icon-success.svg'
 import errorIcon from '../assets/icon-error.svg'
