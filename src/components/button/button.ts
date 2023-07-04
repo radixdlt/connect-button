@@ -131,9 +131,9 @@ export class RadixButton extends LitElement {
         width: var(--radix-connect-button-width, auto);
         height: var(--radix-connect-button-height, auto);
         border-radius: var(--radix-connect-button-border-radius, 0);
-        background-color: var(--theme-background);
-        border: 1px solid var(--theme-border-color);
-        color: var(--theme-text-color);
+        background-color: var(--radix-connect-button-background);
+        border: 1px solid var(--radix-connect-button-border-color);
+        color: var(--radix-connect-button-text-color);
         container-type: inline-size;
         font-size: 16px;
         align-content: center;
@@ -154,13 +154,13 @@ export class RadixButton extends LitElement {
       }
 
       button:hover {
-        background-color: var(--theme-background-hover);
+        background-color: var(--radix-connect-button-background-hover);
       }
 
       button.logo::before {
         mask-image: url(${unsafeCSS(logo)});
         -webkit-mask-image: url(${unsafeCSS(logo)});
-        background-color: var(--theme-text-color);
+        background-color: var(--radix-connect-button-text-color);
         content: '';
         min-height: 0.94em;
         min-width: 1.25em;

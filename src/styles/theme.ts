@@ -11,6 +11,13 @@ export const theme = {
 
 export type Theme = keyof typeof theme
 
+export const mode = {
+  light: 'light',
+  dark: 'dark',
+} as const
+
+export type Mode = keyof typeof mode
+
 export const themeCSS = css`
   :host {
     font-family: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont,
@@ -18,31 +25,60 @@ export const themeCSS = css`
       'Helvetica Neue', sans-serif;
   }
 
+  :host([mode='light']) {
+    --radix-popover-background: color-mix(in srgb, #f4f5f9 20%, transparent);
+    --radix-popover-background-hover: var(--color-radix-blue-1);
+    --radix-popover-border-color: var(--color-radix-blue-2);
+    --radix-popover-text-color: var(--color-grey-1);
+
+    --radix-popover-tabs-background: color-mix(
+      in srgb,
+      var(--color-grey-2) 30%,
+      transparent
+    );
+    --radix-popover-tabs-button-active-background: var(--color-light);
+  }
+
+  :host([mode='dark']) {
+    --radix-popover-background: color-mix(in srgb, #f4f5f9 20%, transparent);
+    --radix-popover-background-hover: var(--color-radix-blue-1);
+    --radix-popover-border-color: var(--color-radix-blue-2);
+    --radix-popover-text-color: var(--color-light);
+
+    --radix-popover-tabs-background: color-mix(
+      in srgb,
+      var(--color-dark) 60%,
+      transparent
+    );
+    --radix-popover-tabs-button-active-text-color: var(--color-light);
+    --radix-popover-tabs-button-active-background: #515151;
+  }
+
   :host([theme='radix-blue']) {
-    --theme-background: var(--color-radix-blue-2);
-    --theme-background-hover: var(--color-radix-blue-1);
-    --theme-border-color: var(--color-radix-blue-2);
-    --theme-text-color: var(--color-light);
+    --radix-connect-button-background: var(--color-radix-blue-2);
+    --radix-connect-button-background-hover: var(--color-radix-blue-1);
+    --radix-connect-button-border-color: var(--color-radix-blue-2);
+    --radix-connect-button-text-color: var(--color-light);
   }
 
   :host([theme='black']) {
-    --theme-background: var(--color-dark);
-    --theme-background-hover: #3e3e3e;
-    --theme-border-color: var(--color-dark);
-    --theme-text-color: var(--color-light);
+    --radix-connect-button-background: var(--color-dark);
+    --radix-connect-button-background-hover: #3e3e3e;
+    --radix-connect-button-border-color: var(--color-dark);
+    --radix-connect-button-text-color: var(--color-light);
   }
 
   :host([theme='white-with-outline']) {
-    --theme-background: var(--color-light);
-    --theme-background-hover: var(--color-grey-5);
-    --theme-border-color: var(--color-dark);
-    --theme-text-color: var(--color-dark);
+    --radix-connect-button-background: var(--color-light);
+    --radix-connect-button-background-hover: var(--color-grey-5);
+    --radix-connect-button-border-color: var(--color-dark);
+    --radix-connect-button-text-color: var(--color-dark);
   }
 
   :host([theme='white']) {
-    --theme-background: var(--color-light);
-    --theme-background-hover: var(--color-grey-5);
-    --theme-border-color: var(--color-light);
-    --theme-text-color: var(--color-dark);
+    --radix-connect-button-background: var(--color-light);
+    --radix-connect-button-background-hover: var(--color-grey-5);
+    --radix-connect-button-border-color: var(--color-light);
+    --radix-connect-button-text-color: var(--color-dark);
   }
 `
