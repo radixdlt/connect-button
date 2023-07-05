@@ -35,20 +35,20 @@ export const loadingSpinnerCSS = css`
     height: 23.5px;
     min-width: 23.5px;
     min-height: 23.5px;
-    border: 2px solid var(--theme-text-color);
+    border: 2px solid var(--radix-connect-button-text-color);
     border-left-color: color-mix(
       in srgb,
-      var(--theme-text-color) 30%,
+      var(--radix-connect-button-text-color) 30%,
       transparent
     );
     border-top-color: color-mix(
       in srgb,
-      var(--theme-text-color) 30%,
+      var(--radix-connect-button-text-color) 30%,
       transparent
     );
     border-bottom-color: color-mix(
       in srgb,
-      var(--theme-text-color) 30%,
+      var(--radix-connect-button-text-color) 30%,
       transparent
     );
     border-radius: 50%;
