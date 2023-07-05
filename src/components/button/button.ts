@@ -149,8 +149,17 @@ export class RadixButton extends LitElement {
       }
 
       button::before {
+        min-height: 0.94em;
+        min-width: 1.25em;
+        display: block;
         -webkit-mask-position: center;
-        mask-position: center;
+        mask-position: center right;
+        mask-repeat: no-repeat;
+        -webkit-mask-repeat: no-repeat;
+        mask-size: contain;
+        -webkit-mask-size: contain;
+        background-color: var(--radix-connect-button-text-color);
+        width: 32px;
       }
 
       button:hover {
@@ -158,17 +167,9 @@ export class RadixButton extends LitElement {
       }
 
       button.logo::before {
+        content: '';
         mask-image: url(${unsafeCSS(logo)});
         -webkit-mask-image: url(${unsafeCSS(logo)});
-        background-color: var(--radix-connect-button-text-color);
-        content: '';
-        min-height: 0.94em;
-        min-width: 1.25em;
-        display: block;
-        mask-repeat: no-repeat;
-        -webkit-mask-repeat: no-repeat;
-        mask-size: contain;
-        -webkit-mask-size: contain;
         font-size: 16px;
       }
 
@@ -194,34 +195,22 @@ export class RadixButton extends LitElement {
 
       button.gradient::before {
         content: '';
-        min-height: 0.94em;
-        min-width: 1.25em;
-        display: block;
-        mask-repeat: no-repeat;
-        -webkit-mask-repeat: no-repeat;
-        mask-size: contain;
-        -webkit-mask-size: contain;
         background-color: var(--color-light);
         mask-image: url(${unsafeCSS(AvatarPlaceholder)});
         -webkit-mask-image: url(${unsafeCSS(AvatarPlaceholder)});
         font-size: 26px;
       }
 
-      :host([status='success']) > button,
-      :host([status='error']) > button {
-        gap: 2px;
-      }
-
       :host([status='success']) > button::before {
         mask-image: url(${unsafeCSS(SuccessIcon)});
         -webkit-mask-image: url(${unsafeCSS(SuccessIcon)});
-        font-size: 29px;
+        font-size: 26px;
       }
 
       :host([status='error']) > button::before {
         mask-image: url(${unsafeCSS(ErrorIcon)});
         -webkit-mask-image: url(${unsafeCSS(ErrorIcon)});
-        font-size: 29px;
+        font-size: 26px;
       }
 
       button.gradient:hover {
