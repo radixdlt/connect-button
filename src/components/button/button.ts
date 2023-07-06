@@ -9,7 +9,7 @@ import { themeCSS, Theme } from '../../styles/theme'
 import logo from '../../assets/logo.svg'
 import Gradient from '../../assets/gradient.svg'
 import CompactGradient from '../../assets/compact-gradient.svg'
-import AvatarPlaceholder from '../../assets/avatar-placeholder.svg'
+import AvatarPlaceholder from '../../assets/button-avatar-placeholder.svg'
 import SuccessIcon from '../../assets/success.svg'
 import ErrorIcon from '../../assets/error.svg'
 
@@ -134,7 +134,6 @@ export class RadixButton extends LitElement {
         background-color: var(--radix-connect-button-background);
         border: 1px solid var(--radix-connect-button-border-color);
         color: var(--radix-connect-button-text-color);
-        container-type: inline-size;
         font-size: 16px;
         align-content: center;
         align-items: center;
@@ -190,14 +189,20 @@ export class RadixButton extends LitElement {
         background-color: var(--color-radix-blue-2);
         color: var(--color-light);
         background-image: url(${unsafeCSS(Gradient)});
-        grid-template-columns: 36px 1fr;
       }
 
       button.gradient::before {
         content: '';
         background-color: var(--color-light);
+      }
+
+      :host([status='default']) > button.gradient::before {
         mask-image: url(${unsafeCSS(AvatarPlaceholder)});
         -webkit-mask-image: url(${unsafeCSS(AvatarPlaceholder)});
+        mask-size: contain;
+        -webkit-mask-size: contain;
+        mask-position: center;
+        -webkit-mask-position: center;
         font-size: 26px;
       }
 
@@ -222,18 +227,16 @@ export class RadixButton extends LitElement {
         outline: 0px auto -webkit-focus-ring-color;
       }
 
-      @container (max-width: ${BUTTON_MIN_WIDTH - 1}px) {
+      @container (width < ${BUTTON_MIN_WIDTH}px) {
         button {
           width: var(--radix-connect-button-height, ${BUTTON_MIN_HEIGHT}px);
-          max-width: ${BUTTON_MIN_WIDTH - 16}px;
-          max-height: ${BUTTON_MIN_WIDTH - 16}px;
+          max-width: ${BUTTON_MIN_WIDTH}px;
+          max-height: ${BUTTON_MIN_WIDTH}px;
           justify-content: center;
         }
         button.gradient {
           background-image: url(${unsafeCSS(CompactGradient)});
         }
-      }
-      @container (max-width: ${BUTTON_MIN_WIDTH - 16}px) {
         ::slotted(*) {
           display: none;
         }
