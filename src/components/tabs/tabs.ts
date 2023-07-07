@@ -55,14 +55,15 @@ export class RadixTabs extends LitElement {
     themeCSS,
     css`
       :host {
-        display: inline-block;
+        display: block;
+        width: 100%;
         user-select: none;
       }
 
       .tabs {
-        width: 400px;
+        width: calc(100% - 10px);
         display: grid;
-        grid-template-columns: 190px 190px;
+        grid-template-columns: 1fr 1fr;
         justify-content: space-between;
         padding: 5px;
         border-radius: 12px;
@@ -79,7 +80,7 @@ export class RadixTabs extends LitElement {
         border-radius: 8px;
         font-weight: 600;
         color: var(--radix-popover-text-color);
-        width: 190px;
+        width: 100%;
         height: 48px;
         z-index: 1;
         margin: 0;
@@ -87,7 +88,7 @@ export class RadixTabs extends LitElement {
       }
 
       .active-indicator {
-        width: 190px;
+        width: calc(50% - 15px);
         height: 48px;
         border-radius: 8px;
         position: absolute;
