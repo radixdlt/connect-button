@@ -1,7 +1,7 @@
 import { LitElement, css, html, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { config } from '../config'
-import './popover'
+import './popover/popover'
 import './button/button'
 import './request-item'
 import logoGradient from '../assets/logo-gradient.png'
