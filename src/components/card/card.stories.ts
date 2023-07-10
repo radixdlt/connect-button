@@ -88,7 +88,7 @@ export const PersonaCard: Story = {
         <radix-persona-card
           avatarUrl=${args.avatarUrl}
           mode=${args.mode}
-          persona="VanDammeStelea"
+          persona=${args.persona}
           .personaData=${personaData.slice(0, args.personaDataRows)}
         />
       </radix-popover>
@@ -103,5 +103,6 @@ export const PersonaCard: Story = {
     mode: 'light',
     avatarUrl: 'https://picsum.photos/200',
     personaDataRows: 2,
+    persona: 'VanDammeStelea',
   },
 }
