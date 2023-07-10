@@ -1,6 +1,7 @@
 import { html, css, LitElement, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { styleMap } from 'lit/directives/style-map.js'
+import { classMap } from 'lit/directives/class-map.js'
 import { Mode, themeCSS } from '../../styles/theme'
 import './card'
 import AvatarPlaceholder from '../../assets/avatar-placeholder.svg'
@@ -36,7 +37,12 @@ export class RadixPersonaCard extends LitElement {
 
   render() {
     return html`<radix-card mode=${this.mode}>
-      <div class="persona-card">
+      <div
+        class=${classMap({
+          center: this.personaData.length < 2,
+          'persona-card': true,
+        })}
+      >
         <div class="placeholder">
           <div
             class="avatar"
@@ -87,9 +93,18 @@ export class RadixPersonaCard extends LitElement {
         align-items: flex-start;
       }
 
+      .persona-card.center {
+        align-items: center;
+      }
+
       .persona {
         font-size: 18px;
         font-weight: 600;
+      }
+
+      ul {
+        margin-top: 10px;
+        margin-bottom: 0;
       }
 
       li {
