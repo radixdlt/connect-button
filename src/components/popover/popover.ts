@@ -135,7 +135,7 @@ export class RadixPopover extends LitElement {
       }
 
       #radix-popover-content {
-        width: 440px;
+        width: 400px;
         display: flex;
         justify-content: flex-start;
         align-items: center;

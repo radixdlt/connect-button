@@ -37,6 +37,11 @@ export const themeCSS = css`
       transparent
     );
     --radix-popover-tabs-button-active-background: var(--color-light);
+
+    --radix-card-background: var(--color-light);
+    --radix-card-text-color: var(--color-grey-1);
+
+    --radix-avatar-border-color: var(--color-grey-5);
   }
 
   :host([mode='dark']) {
@@ -52,6 +57,11 @@ export const themeCSS = css`
     );
     --radix-popover-tabs-button-active-text-color: var(--color-light);
     --radix-popover-tabs-button-active-background: #515151;
+
+    --radix-card-background: #515151;
+    --radix-card-text-color: var(--color-light);
+
+    --radix-avatar-border-color: #656565;
   }
 
   :host([theme='radix-blue']) {
