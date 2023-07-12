@@ -64,7 +64,7 @@ const accounts = [
 ]
 
 export const Primary: Story = {
-  render: (args) =>
+  render: () =>
     html`
       ${accounts.map(
         ([label, address], index) =>

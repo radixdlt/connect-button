@@ -1,7 +1,7 @@
 import { html, css, LitElement } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import { Mode, themeCSS } from '../../styles/theme'
-import '../tabs/tabs'
+import '../tabs-menu/tabs-menu'
 import { encodeBase64 } from '../../helpers/encode-base64'
 
 @customElement('radix-popover')
@@ -44,20 +44,18 @@ export class RadixPopover extends LitElement {
   }
 
   drawPopover() {
+    const fill = this.mode === 'light' ? '#D9D9D9' : '#000000'
+    const height = this.height
+    const startX = 13
+    const startY = 15
+    const endX = 440
+    const endY = this.height
+    const borderRadius = 12
+    const halfBorderRadius = borderRadius / 2
+
     const shadow = `
-      <filter id="shadow" x="-5" y="-21" width="520" height="530" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
-        <feGaussianBlur in="BackgroundImageFix" stdDeviation="20" />
-        <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_27_446" />
-        <feColorMatrix in="SourceAlpha" type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-        <feOffset dy="16" />
-        <feGaussianBlur stdDeviation="17.5" />
-        <feComposite in2="hardAlpha" operator="out" />
-        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.28 0" />
-        <feBlend mode="normal" in2="effect1_backgroundBlur_27_446"
-            result="effect2_dropShadow_27_446" />
-        <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_27_446" result="shape" />
+      <filter id="shadow" color-interpolation-filters="sRGB">
+        <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.5"/>
       </filter>`
 
     const gradient = `
@@ -74,26 +72,36 @@ export class RadixPopover extends LitElement {
       L ${x} 1
       L ${x + width} ${y}`
 
-    const height = this.height + 20
-    const fill = this.mode === 'light' ? '#D9D9D9' : '#000000'
-
+    // filter="url(#shadow)"
     const svg = `
-    <svg viewBox="0 0 510 509" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 441 ${
+      height + 1
+    }"  fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"  >
         <path
             d="${[
-              `M 42 20`,
-              drawArrow(400, 20, 15),
-              `L 468 20`,
-              `C 474 20 480 26 480 32`,
-              `L 480 ${height - 12}`,
-              `C 480 ${height - 6} 474 ${height} 468 ${height}`,
-              `L 42 ${height}`,
-              `C 36 ${height} 30 ${height - 6} 30 ${height - 12}`,
-              `L 30 32`,
-              `C 30 26 36 20 42 20`,
+              `M ${startX} ${startY}`,
+              drawArrow(350, startY, 17.5),
+              `L ${endX - borderRadius} ${startY}`,
+              `C ${endX - halfBorderRadius} ${startY} ${endX} ${
+                startY + halfBorderRadius
+              } ${endX} ${startY + borderRadius}`,
+              `L ${endX} ${endY - borderRadius}`,
+              `C ${endX} ${endY - halfBorderRadius} ${
+                endX - halfBorderRadius
+              } ${endY} ${endX - borderRadius} ${endY}`,
+              `L ${startX} ${endY}`,
+              `C ${startX - halfBorderRadius} ${endY} ${
+                startX - borderRadius
+              } ${endY - halfBorderRadius} ${startX - borderRadius} ${
+                endY - borderRadius
+              }`,
+              `L ${startX - borderRadius} ${startY + borderRadius}`,
+              `C ${startX - borderRadius} ${startY + halfBorderRadius} ${
+                startX - halfBorderRadius
+              } ${startY} ${startX} ${startY}`,
               `Z`,
             ].join(' ')}"
-            filter="url(#shadow)"
+            
             stroke-width="1"
             stroke-opacity="${this.connected ? 1 : 0}"
             fill="${fill}"
@@ -127,11 +135,9 @@ export class RadixPopover extends LitElement {
         display: inline-flex;
         background-position: center top;
         background-repeat: no-repeat;
-        width: 500px;
         justify-content: center;
         align-items: flex-start;
-        background-size: cover;
-        padding: 35px 0;
+        padding: 35px 20px 10px;
       }
 
       #radix-popover-content {
@@ -142,8 +148,6 @@ export class RadixPopover extends LitElement {
         flex-direction: column;
         overflow: auto;
         min-height: 215px;
-        max-height: 560px;
-        padding-bottom: 20px;
       }
     `,
   ]

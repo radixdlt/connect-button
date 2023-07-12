@@ -106,6 +106,7 @@ export class RadixButton extends LitElement {
         display: block;
         container-type: inline-size;
         user-select: none;
+        --radix-connect-button-text-color: var(--color-light);
       }
 
       :host([full-width]) > button {

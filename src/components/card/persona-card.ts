@@ -4,6 +4,7 @@ import { styleMap } from 'lit/directives/style-map.js'
 import { classMap } from 'lit/directives/class-map.js'
 import { Mode, themeCSS } from '../../styles/theme'
 import './card'
+import '../account/account'
 import AvatarPlaceholder from '../../assets/avatar-placeholder.svg'
 
 @customElement('radix-persona-card')
@@ -88,9 +89,10 @@ export class RadixPersonaCard extends LitElement {
       }
 
       .persona-card {
-        display: flex;
+        display: grid;
         gap: 20px;
         align-items: flex-start;
+        grid-template-columns: 1fr 255px;
       }
 
       .persona-card.center {
@@ -100,15 +102,21 @@ export class RadixPersonaCard extends LitElement {
       .persona {
         font-size: 18px;
         font-weight: 600;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: block;
+        white-space: nowrap;
       }
 
       ul {
         margin-top: 10px;
         margin-bottom: 0;
+        padding-inline-start: 25px;
       }
 
       li {
         font-size: 14px;
+        word-break: break-word;
       }
     `,
   ]

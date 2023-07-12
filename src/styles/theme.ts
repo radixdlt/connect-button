@@ -42,6 +42,11 @@ export const themeCSS = css`
     --radix-card-text-color: var(--color-grey-1);
 
     --radix-avatar-border-color: var(--color-grey-5);
+
+    --radix-button-background: var(--color-light);
+    --radix-button-text-color: var(--color-radix-blue-2);
+
+    color: var(--color-grey-1);
   }
 
   :host([mode='dark']) {
@@ -62,6 +67,25 @@ export const themeCSS = css`
     --radix-card-text-color: var(--color-light);
 
     --radix-avatar-border-color: #656565;
+
+    --radix-button-background: color-mix(
+      in srgb,
+      var(--color-dark) 40%,
+      transparent
+    );
+    --radix-button-text-color: var(--color-light);
+    color: var(--color-light);
+  }
+
+  button {
+    font-weight: 500;
+    transition: background-color 0.1s cubic-bezier(0.45, 0, 0.55, 1);
+    border-radius: 12px;
+    border: none;
+    background: var(--radix-button-background);
+    color: var(--radix-button-text-color);
+    font-size: 16px;
+    font-weight: 600;
   }
 
   :host([theme='radix-blue']) {

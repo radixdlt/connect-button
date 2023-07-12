@@ -3,8 +3,8 @@ import { customElement, property } from 'lit/decorators.js'
 import { Mode, themeCSS } from '../../styles/theme'
 import { classMap } from 'lit/directives/class-map.js'
 
-@customElement('radix-tabs')
-export class RadixTabs extends LitElement {
+@customElement('radix-tabs-menu')
+export class RadixTabsMenu extends LitElement {
   @property({
     type: String,
     reflect: true,
@@ -116,6 +116,6 @@ export class RadixTabs extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'radix-tabs': RadixTabs
+    'radix-tabs-menu': RadixTabsMenu
   }
 }
