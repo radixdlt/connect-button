@@ -63,17 +63,20 @@ export class RadixAccount extends LitElement {
       :host {
         display: flex;
         width: 100%;
-        padding: 20px 15px;
         box-sizing: border-box;
         justify-content: space-between;
         margin-bottom: 0.5rem;
         border-radius: 12px;
         color: var(--color-light);
         font-size: 16px;
+        height: 50px;
+        align-items: center;
+        padding: 0 20px;
       }
 
       .label {
         font-weight: 600;
+        color: var(--color-light);
       }
 
       a {

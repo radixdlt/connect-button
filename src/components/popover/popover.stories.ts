@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/web-components'
 import './popover'
-import '../tabs/tabs'
+import '../tabs-menu/tabs-menu'
 import '../../styles/fonts.css'
 import '../../styles/variables.css'
 import { html } from 'lit'
@@ -16,11 +16,6 @@ type Story = StoryObj
 export const Primary: Story = {
   render: (args) =>
     html`
-      <style>
-        body {
-          background: #dedede;
-        }
-      </style>
       <radix-popover mode=${args.mode} ?connected=${args.connected}
         ><radix-tabs mode=${args.mode}
       /></radix-popover>

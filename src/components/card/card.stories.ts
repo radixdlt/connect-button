@@ -4,10 +4,10 @@ import './persona-card'
 import '../../styles/fonts.css'
 import '../../styles/variables.css'
 import { html } from 'lit'
+import '../account/account'
 
 const meta: Meta = {
-  title: 'Components / Card',
-  component: 'radix-card',
+  title: 'Components / Cards',
 }
 export default meta
 
@@ -75,22 +75,16 @@ const personaData = [
   'ex, vitae fringilla',
 ]
 
-export const PersonaCard: Story = {
+export const Sharing: Story = {
   render: (args) =>
     html`
-      <style>
-        radix-tabs {
-          margin-bottom: 20px;
-        }
-      </style>
       <radix-popover mode=${args.mode} connected>
-        <radix-tabs mode=${args.mode}></radix-tabs>
         <radix-persona-card
           avatarUrl=${args.avatarUrl}
           mode=${args.mode}
           persona=${args.persona}
           .personaData=${personaData.slice(0, args.personaDataRows)}
-        />
+        ></radix-persona-card>
       </radix-popover>
     `,
   argTypes: {
