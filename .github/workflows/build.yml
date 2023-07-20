@@ -83,6 +83,8 @@ jobs:
     needs:
       - snyk_scan_deps_licences
       - snyk_scan_code
+    outputs:
+      tag: ${{ steps.setup_tags.outputs.tag }}
     steps:
       - uses: actions/checkout@v3
 
@@ -241,7 +243,7 @@ jobs:
           HELM_GH_USER: ${{ secrets.HELM_GH_USER }}
           HELM_GH_PASS: ${{ secrets.HELM_GH_PASS }}
 
-  snyk-container-monitor:
+  snyk_container_monitor:
     runs-on: ubuntu-latest
     #if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
     needs:
