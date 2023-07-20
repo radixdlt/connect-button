@@ -258,13 +258,13 @@ jobs:
       - uses: radixdlt/public-iac-resuable-artifacts/snyk-container-monitor@main
         with:
           role_name: ${{ secrets.AWS_ROLE_NAME_SNYK_SECRET }}
-          app_name: 'signaling-server'
+          app_name: 'connect-button'
           step_name: 'snyk-container-monitor'
           dockerhub_secret_name: ${{ secrets.AWS_SECRET_NAME_DOCKERHUB }}
           snyk_secret_name: ${{ secrets.AWS_SECRET_NAME_SNYK }}
           parse_json: true
           snyk_org_id: ${{ secrets.SNYK_ORG_ID }}
-          image: docker.io/radixdlt/signaling-server:${{ needs.build.outputs.tag }}
+          image: docker.io/radixdlt/connect-button:${{ needs.build.outputs.tag }}
           target_ref: ${{ github.ref_name }}
 
   snyk_monitor:
