@@ -3,6 +3,7 @@ import { customElement, property } from 'lit/decorators.js'
 import { Mode, themeCSS } from '../../styles/theme'
 import './card'
 import '../account/account'
+import '../link/link'
 import { shortenAddress } from '../../helpers/shorten-address'
 import NorthEastArrowIcon from '../../assets/icon-north-east-arrow.svg'
 import { classMap } from 'lit/directives/class-map.js'
@@ -118,14 +119,11 @@ export class RadixRequestCard extends LitElement {
     return this.transactionIntentHash
       ? html`<div class="transaction">
           <span class="text-dimmed mr-5">ID:</span>
-          <a
-            target="_blank"
-            href="${this.transactionExplorerBaseUrl}${this
-              .transactionIntentHash}"
-            class="transaction"
-            >${shortenAddress(this.transactionIntentHash)}
-            <i class="icon-north-east-arrow"></i>
-          </a>
+          <radix-link
+            url="${this.transactionExplorerBaseUrl +
+            this.transactionIntentHash}"
+            displayText="${shortenAddress(this.transactionIntentHash)}"
+          ></radix-link>
         </div>`
       : ''
   }
@@ -141,22 +139,6 @@ export class RadixRequestCard extends LitElement {
 
       .mr-5 {
         margin-right: 5px;
-      }
-
-      .icon-north-east-arrow::before {
-        content: '';
-        display: block;
-        -webkit-mask-size: cover;
-        mask-size: cover;
-        background-color: var(--radix-card-text-dimmed-color);
-        -webkit-mask-image: url(${unsafeCSS(NorthEastArrowIcon)});
-        mask-image: url(${unsafeCSS(NorthEastArrowIcon)});
-        width: 16px;
-        height: 16px;
-      }
-
-      .transaction {
-        color: var(--radix-card-link-color);
       }
 
       .text-dimmed {

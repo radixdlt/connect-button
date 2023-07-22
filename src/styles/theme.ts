@@ -38,10 +38,11 @@ export const themeCSS = css`
     );
     --radix-popover-tabs-button-active-background: var(--color-light);
 
+    --radix-link-color: var(--color-radix-blue-2);
+
     --radix-card-background: var(--color-light);
     --radix-card-text-color: var(--color-grey-1);
     --radix-card-text-dimmed-color: var(--color-grey-2);
-    --radix-card-link-color: var(--color-radix-blue-2);
     --radix-card-inverted-background: var(--color-grey-1);
     --radix-card-inverted-text-color: var(--color-light);
 
@@ -67,10 +68,11 @@ export const themeCSS = css`
     --radix-popover-tabs-button-active-text-color: var(--color-light);
     --radix-popover-tabs-button-active-background: #515151;
 
+    --radix-link-color: var(--color-white);
+
     --radix-card-background: #515151;
     --radix-card-text-color: var(--color-light);
     --radix-card-text-dimmed-color: var(--color-grey-3);
-    --radix-card-link-color: var(--color-white);
     --radix-card-inverted-background: var(--color-grey-5);
     --radix-card-inverted-text-color: var(--color-grey-1);
 
