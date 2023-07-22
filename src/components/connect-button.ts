@@ -10,8 +10,9 @@ import userIcon from '../assets/icon-user.svg'
 import linkIcon from '../assets/icon-link.svg'
 import { color } from '../styles'
 import { filter, fromEvent, Subscription, tap } from 'rxjs'
-import { Account, PersonaData, RequestItem } from '../_types'
+import { Account, ExplorerConfig, PersonaData, RequestItem } from '../_types'
 import { RadixRequestItem } from './request-item'
+import { shortenAddress } from '../helpers/shorten-address'
 
 @customElement(config.elementTag)
 export class ConnectButton extends LitElement {
@@ -46,12 +47,11 @@ export class ConnectButton extends LitElement {
   personaData: PersonaData[] = []
 
   @property({ type: Object })
-  explorer: { baseUrl: string; transactionPath: string; accountsPath: string } =
-    {
-      baseUrl: 'https://betanet-dashboard.radixdlt.com/',
-      transactionPath: 'transaction/',
-      accountsPath: 'account/',
-    }
+  explorer: ExplorerConfig = {
+    baseUrl: 'https://betanet-dashboard.radixdlt.com/',
+    transactionPath: 'transaction/',
+    accountsPath: 'account/',
+  }
 
   @property({ type: String })
   dAppName: string = ''
@@ -129,10 +129,6 @@ export class ConnectButton extends LitElement {
           composed: true,
         })
       )
-  }
-
-  private formatAccountAddress(address: string) {
-    return `${address.slice(0, 4)}...${address.slice(-6)}`
   }
 
   private formatAccountLabel(label: string) {
@@ -265,9 +261,7 @@ export class ConnectButton extends LitElement {
               target="_blank"
               href="${this.explorer.baseUrl}${this.explorer
                 .accountsPath}${account.address}"
-              >${this.formatAccountAddress(account.address)}<span
-                class="icon link"
-              ></span
+              >${shortenAddress(account.address)}<span class="icon link"></span
             ></a>
           </div>`
       )}

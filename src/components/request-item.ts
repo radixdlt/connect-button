@@ -4,6 +4,7 @@ import loadingIcon from '../assets/icon-loading.svg'
 import successIcon from '../assets/icon-success.svg'
 import errorIcon from '../assets/icon-error.svg'
 import { RequestItem, RequestItemType } from '../_types'
+import { shortenAddress } from '../helpers/shorten-address'
 
 const requestItemTypeToHumanReadable = {
   [RequestItemType.dataRequest]: 'Data request',
@@ -50,10 +51,7 @@ export class RadixRequestItem extends LitElement {
         href="${this.transactionExplorerBaseUrl}${this.item
           .transactionIntentHash}"
         class="text transaction"
-        >${this.item.transactionIntentHash.slice(
-          0,
-          6
-        )}...${this.item.transactionIntentHash.slice(-5)}</a
+        >${shortenAddress(this.item.transactionIntentHash)}</a
       >`
     }
 

@@ -7,6 +7,12 @@ export const personaDataField = {
   phoneNumber: 'phoneNumber',
 } as const
 
+export type ExplorerConfig = {
+  baseUrl: string
+  accountsPath: string
+  transactionPath: string
+}
+
 export type PersonaDataField = keyof typeof personaDataField
 
 export type PersonaData = { field: PersonaDataField; value: string }

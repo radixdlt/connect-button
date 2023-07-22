@@ -40,6 +40,10 @@ export const themeCSS = css`
 
     --radix-card-background: var(--color-light);
     --radix-card-text-color: var(--color-grey-1);
+    --radix-card-text-dimmed-color: var(--color-grey-2);
+    --radix-card-link-color: var(--color-radix-blue-2);
+    --radix-card-inverted-background: var(--color-grey-1);
+    --radix-card-inverted-text-color: var(--color-light);
 
     --radix-avatar-border-color: var(--color-grey-5);
 
@@ -65,6 +69,10 @@ export const themeCSS = css`
 
     --radix-card-background: #515151;
     --radix-card-text-color: var(--color-light);
+    --radix-card-text-dimmed-color: var(--color-grey-3);
+    --radix-card-link-color: var(--color-white);
+    --radix-card-inverted-background: var(--color-grey-5);
+    --radix-card-inverted-text-color: var(--color-grey-1);
 
     --radix-avatar-border-color: #656565;
 
