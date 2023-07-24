@@ -1,11 +1,10 @@
-import { html, css, LitElement, unsafeCSS } from 'lit'
+import { html, css, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { Mode, themeCSS } from '../../styles/theme'
 import './card'
 import '../account/account'
 import '../link/link'
 import { shortenAddress } from '../../helpers/shorten-address'
-import NorthEastArrowIcon from '../../assets/icon-north-east-arrow.svg'
 import { classMap } from 'lit/directives/class-map.js'
 @customElement('radix-request-card')
 export class RadixRequestCard extends LitElement {
