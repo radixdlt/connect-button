@@ -1,4 +1,7 @@
+ARG BUILDKIT_SBOM_SCAN_CONTEXT=true
+
 FROM node:20.3.0-alpine AS installer
+ARG BUILDKIT_SBOM_SCAN_STAGE=true
 
 WORKDIR /app
 
@@ -9,6 +12,7 @@ RUN npm ci
 RUN NODE_OPTIONS=--max_old_space_size=4096 npm run build:storybook
 
 FROM nginx:alpine AS storybook
+ARG BUILDKIT_SBOM_SCAN_STAGE=true
 
 WORKDIR /app
 

@@ -133,6 +133,7 @@ jobs:
       provenance: "false"
       enable_gcr: "false"
       scan_image: true
+      snyk_target_ref: ${{ github.ref_name }}
     secrets:
       workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDP }}
       service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
