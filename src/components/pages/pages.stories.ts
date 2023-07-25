@@ -4,6 +4,7 @@ import '../../styles/variables.css'
 import { html } from 'lit'
 import '../account/account'
 import './sharing'
+import './not-connected'
 
 const meta: Meta = {
   title: 'Components / Pages',
@@ -100,5 +101,57 @@ export const Sharing: Story = {
       address,
       appearanceId,
     })),
+  },
+}
+
+export const NotConnected: Story = {
+  render: (args) =>
+    html`<radix-popover mode=${args.mode}>
+      <radix-not-connected-page
+        mode=${args.mode}
+        .requestItems=${args.requestItems}
+        ?connecting=${args.connecting}
+        ?isWalletLinked=${args.isWalletLinked}
+        ?isExtensionAvailable=${args.isExtensionAvailable}
+        ?isMobile=${args.isMobile}
+      >
+      </radix-not-connected-page>
+    </radix-popover>`,
+  argTypes: {
+    mode: {
+      options: ['light', 'dark'],
+      control: 'select',
+    },
+    requestItems: {
+      mapping: {
+        loginRequestWithCancel: [
+          {
+            type: 'loginRequest',
+            status: 'pending',
+            timestamp: '3253425345465',
+            showCancel: true,
+          },
+        ],
+        loginRequestWithoutCancel: [
+          {
+            type: 'loginRequest',
+            status: 'pending',
+            timestamp: '3253425345465',
+            showCancel: false,
+          },
+        ],
+        empty: undefined,
+      },
+      control: 'select',
+      options: ['loginRequestWithCancel', 'loginRequestWithoutCancel', 'empty'],
+    },
+  },
+  args: {
+    mode: 'light',
+    isMobile: false,
+    connecting: false,
+    isExtensionAvailable: false,
+    isWalletLinked: false,
+    requestItems: undefined,
   },
 }

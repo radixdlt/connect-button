@@ -50,6 +50,12 @@ export const themeCSS = css`
 
     --radix-button-background: var(--color-light);
     --radix-button-text-color: var(--color-radix-blue-2);
+    --radix-connect-now-disabled-button-background: color-mix(
+      in srgb,
+      var(--color-light) 40%,
+      transparent
+    );
+    --radix-connect-now-disabled-button-text: var(--color-light);
 
     color: var(--color-grey-1);
   }
@@ -84,6 +90,17 @@ export const themeCSS = css`
       transparent
     );
     --radix-button-text-color: var(--color-light);
+    --radix-connect-now-disabled-button-background: color-mix(
+      in srgb,
+      var(--color-dark) 40%,
+      transparent
+    );
+    --radix-connect-now-disabled-button-text: color-mix(
+      in srgb,
+      var(--color-light) 20%,
+      transparent
+    );
+
     color: var(--color-light);
   }
 
