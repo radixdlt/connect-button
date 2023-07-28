@@ -1,15 +1,16 @@
 import { LitElement, css, html, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { themeCSS, Mode } from '../../styles/theme'
+import { themeCSS } from '../../styles/theme'
 
 import NorthEastArrowIcon from '../../assets/icon-north-east-arrow.svg'
+import { RadixButtonMode } from '../../_types'
 @customElement('radix-link')
 export class RadixLink extends LitElement {
   @property({
     type: String,
     reflect: true,
   })
-  mode: Mode = 'light'
+  mode: RadixButtonMode = RadixButtonMode.light
 
   @property({
     type: String,

@@ -1,11 +1,11 @@
 import { html, css, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { Mode, themeCSS } from '../../styles/theme'
+import { themeCSS } from '../../styles/theme'
 
 import logoGradient from '../../assets/logo-gradient.png'
-import { RequestItem } from '../../_types'
+import { RadixButtonMode, RadixButtonStatus, RequestItem } from '../../_types'
 import { classMap } from 'lit/directives/class-map.js'
-import './request-items'
+import '../card/request-cards'
 
 @customElement('radix-not-connected-page')
 export class RadixNotConnectedPage extends LitElement {
@@ -13,7 +13,7 @@ export class RadixNotConnectedPage extends LitElement {
     type: String,
     reflect: true,
   })
-  mode: Mode = 'light'
+  mode: RadixButtonMode = RadixButtonMode.light
 
   @property({
     type: Boolean,
@@ -21,9 +21,9 @@ export class RadixNotConnectedPage extends LitElement {
   isMobile: boolean = false
 
   @property({
-    type: Boolean,
+    type: String,
   })
-  connecting: boolean = false
+  status: RadixButtonStatus = RadixButtonStatus.default
 
   @property({
     type: Boolean,
@@ -48,7 +48,7 @@ export class RadixNotConnectedPage extends LitElement {
       </div>
       ${this.isMobile
         ? this.renderMobileTemplate()
-        : this.connecting
+        : this.status === RadixButtonStatus.pending
         ? this.renderRequestItemsTemplate()
         : this.renderConnectStepsTemplate()}
     `
@@ -64,10 +64,10 @@ export class RadixNotConnectedPage extends LitElement {
   }
 
   private renderRequestItemsTemplate() {
-    return html`<radix-request-items
+    return html`<radix-request-cards
       mode=${this.mode}
       .requestItems=${this.requestItems}
-    ></radix-request-items>`
+    ></radix-request-cards>`
   }
 
   private connectNowButtonTemplate() {
@@ -153,7 +153,6 @@ export class RadixNotConnectedPage extends LitElement {
 
         height: 48px;
 
-        font-family: 'IBM Plex Sans';
         font-size: 16px;
         font-weight: bold;
       }

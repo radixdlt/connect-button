@@ -1,8 +1,9 @@
 import { html, css, LitElement } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
-import { Mode, themeCSS } from '../../styles/theme'
+import { themeCSS } from '../../styles/theme'
 import '../tabs-menu/tabs-menu'
 import { encodeBase64 } from '../../helpers/encode-base64'
+import { RadixButtonMode } from '../../_types'
 
 @customElement('radix-popover')
 export class RadixPopover extends LitElement {
@@ -10,7 +11,7 @@ export class RadixPopover extends LitElement {
     type: String,
     reflect: true,
   })
-  mode: Mode = 'light'
+  mode: RadixButtonMode = RadixButtonMode.light
 
   @property({
     type: Boolean,
@@ -147,7 +148,7 @@ export class RadixPopover extends LitElement {
         align-items: center;
         flex-direction: column;
         overflow: auto;
-        min-height: 215px;
+        min-height: 170px;
       }
     `,
   ]

@@ -5,6 +5,8 @@ import { html } from 'lit'
 import '../account/account'
 import './sharing'
 import './not-connected'
+import '../popover/popover'
+import { RadixButtonStatus } from '../../_types'
 
 const meta: Meta = {
   title: 'Components / Pages',
@@ -15,14 +17,16 @@ type Story = StoryObj
 
 export const Sharing: Story = {
   render: (args) =>
-    html`<radix-sharing-page
-      mode=${args.mode}
-      avatarUrl=${args.avatarUrl}
-      persona=${args.persona}
-      dAppName=${args.dAppName}
-      .personaData=${args.personaData}
-      .accounts=${args.accounts}
-    /> `,
+    html` <radix-popover>
+      <radix-sharing-page
+        mode=${args.mode}
+        dAppName=${args.dAppName}
+        avatarUrl=${args.avatarUrl}
+        persona=${args.persona}
+        .personaData=${args.personaData}
+        .accounts=${args.accounts}
+      />
+    </radix-popover>`,
   argTypes: {
     mode: {
       options: ['light', 'dark'],
@@ -110,7 +114,7 @@ export const NotConnected: Story = {
       <radix-not-connected-page
         mode=${args.mode}
         .requestItems=${args.requestItems}
-        ?connecting=${args.connecting}
+        status=${args.status}
         ?isWalletLinked=${args.isWalletLinked}
         ?isExtensionAvailable=${args.isExtensionAvailable}
         ?isMobile=${args.isMobile}
@@ -122,13 +126,17 @@ export const NotConnected: Story = {
       options: ['light', 'dark'],
       control: 'select',
     },
+    status: {
+      options: [RadixButtonStatus.default, RadixButtonStatus.pending],
+      control: 'select',
+    },
     requestItems: {
       mapping: {
         loginRequestWithCancel: [
           {
             type: 'loginRequest',
             status: 'pending',
-            timestamp: '3253425345465',
+            timestamp: 1690554318703,
             showCancel: true,
           },
         ],
@@ -136,7 +144,7 @@ export const NotConnected: Story = {
           {
             type: 'loginRequest',
             status: 'pending',
-            timestamp: '3253425345465',
+            timestamp: 1690554318703,
             showCancel: false,
           },
         ],
@@ -149,7 +157,7 @@ export const NotConnected: Story = {
   args: {
     mode: 'light',
     isMobile: false,
-    connecting: false,
+    status: 'default',
     isExtensionAvailable: false,
     isWalletLinked: false,
     requestItems: undefined,

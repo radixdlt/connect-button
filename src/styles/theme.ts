@@ -2,22 +2,6 @@ import { css } from 'lit'
 import './variables.css'
 import './fonts.css'
 
-export const theme = {
-  'radix-blue': 'radix-blue',
-  black: 'black',
-  'white-with-outline': 'white-with-outline',
-  white: 'white',
-} as const
-
-export type Theme = keyof typeof theme
-
-export const mode = {
-  light: 'light',
-  dark: 'dark',
-} as const
-
-export type Mode = keyof typeof mode
-
 export const themeCSS = css`
   :host {
     font-family: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont,

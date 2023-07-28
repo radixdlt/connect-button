@@ -5,35 +5,19 @@ import {
   LoadingSpinner,
   loadingSpinnerCSS,
 } from '../loading-spinner/loading-spinner'
-import { themeCSS, Theme } from '../../styles/theme'
+import { themeCSS } from '../../styles/theme'
 import logo from '../../assets/logo.svg'
 import Gradient from '../../assets/gradient.svg'
 import CompactGradient from '../../assets/compact-gradient.svg'
 import AvatarPlaceholder from '../../assets/button-avatar-placeholder.svg'
 import SuccessIcon from '../../assets/success.svg'
 import ErrorIcon from '../../assets/error.svg'
-
+import { RadixButtonStatus, RadixButtonTheme } from '../../_types'
 import {
   BUTTON_COMPACT_MIN_WIDTH,
   BUTTON_MIN_HEIGHT,
   BUTTON_MIN_WIDTH,
 } from '../../constants'
-
-export const RadixButtonStatus = {
-  pending: 'pending',
-  success: 'success',
-  error: 'error',
-  default: 'default',
-} as const
-
-export type RadixButtonStatus = keyof typeof RadixButtonStatus
-
-export type RadixButtonProps = {
-  status: RadixButtonStatus
-  connected: boolean
-  fullWidth: boolean
-  theme: Theme
-}
 
 @customElement('radix-button')
 export class RadixButton extends LitElement {
@@ -58,7 +42,7 @@ export class RadixButton extends LitElement {
     type: String,
     reflect: true,
   })
-  theme: Theme = 'radix-blue'
+  theme: RadixButtonTheme = 'radix-blue'
 
   private onClick(event: MouseEvent) {
     this.dispatchEvent(
@@ -139,6 +123,7 @@ export class RadixButton extends LitElement {
         align-content: center;
         align-items: center;
         font-family: inherit;
+        cursor: pointer;
         font-weight: 500;
         transition: background-color 0.1s cubic-bezier(0.45, 0, 0.55, 1);
         min-width: ${BUTTON_COMPACT_MIN_WIDTH}px;

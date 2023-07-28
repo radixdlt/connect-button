@@ -1,11 +1,13 @@
 import { html, css, LitElement, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { styleMap } from 'lit/directives/style-map.js'
-import { Mode, themeCSS } from '../../styles/theme'
+import { themeCSS } from '../../styles/theme'
 import UncheckedIcon from '../../assets/unchecked.svg'
 import CheckedIcon from '../../assets/checked.svg'
 import IconLoading from '../../assets/icon-loading.svg'
 import IconFailed from '../../assets/icon-failed.svg'
+import { formatTimestamp } from '../../helpers/format-timestamp'
+import { RadixButtonMode } from '../../_types'
 
 @customElement('radix-card')
 export class RadixCard extends LitElement {
@@ -13,7 +15,7 @@ export class RadixCard extends LitElement {
     type: String,
     reflect: true,
   })
-  mode: Mode = 'light'
+  mode: RadixButtonMode = RadixButtonMode.light
 
   @property({
     type: String,
@@ -27,30 +29,15 @@ export class RadixCard extends LitElement {
   header: string = ''
 
   @property({
-    type: Number,
+    type: String,
     reflect: true,
   })
-  timestamp?: number
-
-  private formatTimestamp(timestamp: number) {
-    const date = new Date(timestamp)
-
-    return `${date.getDate()} ${date.toLocaleString('en-US', {
-      month: 'short',
-    })} ${date.toLocaleTimeString('en-Gb', {
-      // en-GB is causing midnight to be 00:00
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: false,
-    })}`
-  }
+  timestamp?: string
 
   render() {
     const renderDate = () =>
       this.timestamp
-        ? html`<div class="timestamp">
-            ${this.formatTimestamp(this.timestamp)}
-          </div>`
+        ? html`<div class="timestamp">${formatTimestamp(this.timestamp)}</div>`
         : ''
 
     const gridTemplateColumns = `${this.icon ? '30px' : ''} 1fr ${

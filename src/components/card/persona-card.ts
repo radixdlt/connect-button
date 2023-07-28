@@ -2,10 +2,11 @@ import { html, css, LitElement, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { styleMap } from 'lit/directives/style-map.js'
 import { classMap } from 'lit/directives/class-map.js'
-import { Mode, themeCSS } from '../../styles/theme'
+import { themeCSS } from '../../styles/theme'
 import './card'
 import '../account/account'
 import AvatarPlaceholder from '../../assets/avatar-placeholder.svg'
+import { RadixButtonMode } from '../../_types'
 
 @customElement('radix-persona-card')
 export class RadixPersonaCard extends LitElement {
@@ -13,7 +14,7 @@ export class RadixPersonaCard extends LitElement {
     type: String,
     reflect: true,
   })
-  mode: Mode = 'light'
+  mode: RadixButtonMode = RadixButtonMode.light
 
   @property({
     type: String,
@@ -40,7 +41,7 @@ export class RadixPersonaCard extends LitElement {
     return html`<radix-card mode=${this.mode}>
       <div
         class=${classMap({
-          center: this.personaData.length < 2,
+          center: (this.personaData || []).length < 2,
           'persona-card': true,
         })}
       >
@@ -55,7 +56,7 @@ export class RadixPersonaCard extends LitElement {
         <div class="content">
           <span class="persona">${this.persona}</span>
           <ul>
-            ${this.personaData.map((item) => html`<li>${item}</li>`)}
+            ${(this.personaData || []).map((item) => html`<li>${item}</li>`)}
           </ul>
         </div>
       </div></radix-card

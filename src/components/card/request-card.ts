@@ -1,28 +1,34 @@
 import { html, css, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { Mode, themeCSS } from '../../styles/theme'
+import { themeCSS } from '../../styles/theme'
 import './card'
 import '../account/account'
 import '../link/link'
 import { shortenAddress } from '../../helpers/shorten-address'
 import { classMap } from 'lit/directives/class-map.js'
+import { RadixButtonMode, RequestItemType, RequestStatus } from '../../_types'
 @customElement('radix-request-card')
 export class RadixRequestCard extends LitElement {
   @property({
     type: String,
     reflect: true,
   })
-  mode: Mode = 'light'
+  mode: RadixButtonMode = RadixButtonMode.light
 
   @property({
     type: String,
   })
-  type: 'dataRequest' | 'transaction' = 'dataRequest'
+  type: keyof typeof RequestItemType = 'dataRequest'
 
   @property({
     type: String,
   })
-  status: 'pending' | 'failed' | 'success' | 'cancelled' = 'pending'
+  status: keyof typeof RequestStatus = 'pending'
+
+  @property({
+    type: Boolean,
+  })
+  showCancel: boolean = false
 
   @property({
     type: String,
@@ -32,7 +38,7 @@ export class RadixRequestCard extends LitElement {
   @property({
     type: String,
   })
-  interactionId: string = ''
+  id: string = ''
 
   @property({
     type: String,
@@ -48,30 +54,35 @@ export class RadixRequestCard extends LitElement {
     const icon = this.getIconFromStatus()
     const styling = this.getStylingFromStatus()
     const texts = {
-      transaction: {
+      sendTransaction: {
         pending: 'Pending Transaction',
-        failed: 'Transaction Failed',
+        fail: 'Transaction Failed',
         cancelled: 'Transaction Cancelled',
         success: 'Send transaction',
         content: html`
           ${this.renderTxIntentHash()}
-          ${this.status === 'pending'
-            ? `Open your Radix Wallet app to review the transaction`
-            : ''}
+          ${this.getRequestContentTemplate(
+            'Open your Radix Wallet app to review the transaction'
+          )}
         `,
       },
       dataRequest: {
         pending: 'Data Request Pending',
-        failed: 'Data Request Rejected',
+        fail: 'Data Request Rejected',
         cancelled: 'Data Request Rejected',
         success: 'Data Request',
-        content:
-          this.status === 'pending'
-            ? html`<div class="request-content">
-                Open Your Radix Wallet App to complete the request
-                <div class="cancel" @click=${this.onCancel}>Cancel</div>
-              </div>`
-            : '',
+        content: this.getRequestContentTemplate(
+          'Open Your Radix Wallet App to complete the request'
+        ),
+      },
+      loginRequest: {
+        pending: 'Login Request Pending',
+        fail: 'Login Request Rejected',
+        cancelled: 'Login Request Rejected',
+        success: 'Login Request',
+        content: this.getRequestContentTemplate(
+          'Open Your Radix Wallet App to complete the request'
+        ),
       },
     }
 
@@ -86,27 +97,38 @@ export class RadixRequestCard extends LitElement {
     </radix-card>`
   }
 
+  private getRequestContentTemplate(text: string) {
+    return this.status === 'pending'
+      ? html`<div class="request-content">
+          ${text}
+          ${this.showCancel
+            ? html`<div class="cancel" @click=${this.onCancel}>Cancel</div>`
+            : ``}
+        </div>`
+      : ''
+  }
+
   private getIconFromStatus() {
     return this.status === 'pending'
       ? 'pending'
-      : this.status === 'cancelled' || this.status === 'failed'
+      : this.status === 'cancelled' || this.status === 'fail'
       ? 'error'
       : 'checked'
   }
 
   private getStylingFromStatus() {
     return classMap({
-      dimmed: this.status === 'failed' || this.status === 'cancelled',
+      dimmed: this.status === 'fail' || this.status === 'cancelled',
       inverted: this.status === 'pending',
     })
   }
 
   private onCancel(event: MouseEvent) {
     this.dispatchEvent(
-      new CustomEvent('onCancel', {
+      new CustomEvent('onCancelRequestItem', {
         detail: {
           ...event,
-          interactionId: this.interactionId,
+          id: this.id,
         },
         bubbles: true,
         composed: true,
@@ -117,7 +139,7 @@ export class RadixRequestCard extends LitElement {
   private renderTxIntentHash() {
     return this.transactionIntentHash
       ? html`<div class="transaction">
-          <span class="text-dimmed mr-5">ID:</span>
+          <span class="text-dimmed">ID:</span>
           <radix-link
             url="${this.transactionExplorerBaseUrl +
             this.transactionIntentHash}"
@@ -136,12 +158,9 @@ export class RadixRequestCard extends LitElement {
         margin-bottom: 10px;
       }
 
-      .mr-5 {
-        margin-right: 5px;
-      }
-
       .text-dimmed {
         color: var(--radix-card-text-dimmed-color);
+        margin-right: 5px;
       }
 
       .transaction {
@@ -157,6 +176,7 @@ export class RadixRequestCard extends LitElement {
       }
 
       .request-content {
+        margin-top: 5px;
         display: flex;
         flex-direction: column;
         gap: 10px;

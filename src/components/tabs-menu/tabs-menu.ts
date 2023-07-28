@@ -1,7 +1,8 @@
 import { html, css, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { Mode, themeCSS } from '../../styles/theme'
+import { themeCSS } from '../../styles/theme'
 import { classMap } from 'lit/directives/class-map.js'
+import { RadixButtonMode } from '../../_types'
 
 @customElement('radix-tabs-menu')
 export class RadixTabsMenu extends LitElement {
@@ -9,7 +10,7 @@ export class RadixTabsMenu extends LitElement {
     type: String,
     reflect: true,
   })
-  theme: Mode = 'light'
+  theme: RadixButtonMode = RadixButtonMode.light
 
   @property({
     type: String,
@@ -17,7 +18,7 @@ export class RadixTabsMenu extends LitElement {
   })
   active: 'sharing' | 'requests' = 'sharing'
 
-  private onClick(value: string, event: MouseEvent) {
+  private onClick(value: 'sharing' | 'requests', event: MouseEvent) {
     this.dispatchEvent(
       new CustomEvent('onClick', {
         detail: { value, event },
@@ -85,6 +86,10 @@ export class RadixTabsMenu extends LitElement {
         z-index: 1;
         margin: 0;
         padding: 0;
+      }
+
+      button:not(.active) {
+        cursor: pointer;
       }
 
       .active-indicator {

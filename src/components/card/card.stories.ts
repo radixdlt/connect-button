@@ -107,48 +107,50 @@ export const Requests: Story = {
     html`
       <radix-popover mode=${args.mode} connected>
         <radix-request-card
-          type="dataRequest"
-          status="pending"
-          interactionId="testTransactionId"
-          @onCancel=${(event: any) =>
-            console.log('cancel', event.detail.interactionId)}
-          timestamp=${Date.now()}
-          mode=${args.mode}
-        ></radix-request-card>
-        <radix-request-card
-          type="dataRequest"
-          status="cancelled"
-          timestamp=${Date.now()}
-          mode=${args.mode}
-        ></radix-request-card>
-        <radix-request-card
-          type="dataRequest"
-          status="success"
-          timestamp=${Date.now()}
-          mode=${args.mode}
-        ></radix-request-card>
-        <radix-request-card
-          status="success"
-          type="transaction"
-          timestamp=${Date.now()}
-          transactionIntentHash="ace4a492cb42ef23baffb2b"
+          id="${args.id}"
+          status="${args.status}"
+          type="${args.type}"
+          timestamp=${args.timestamp}
+          @onCancel=${(event: any) => {
+            console.log(event)
+          }}
+          ?showCancel="${args.showCancel}"
+          transactionIntentHash="${args.transactionIntentHash}"
           transactionExplorerBaseUrl="https://explorer.radixdlt.com/transaction/"
-          mode=${args.mode}
-        ></radix-request-card>
-        <radix-request-card
-          status="pending"
-          type="transaction"
           mode=${args.mode}
         ></radix-request-card>
       </radix-popover>
     `,
   argTypes: {
+    type: {
+      options: ['dataRequest', 'loginRequest', 'sendTransaction'],
+      control: 'select',
+    },
+    status: {
+      options: ['pending', 'success', 'fail', 'cancelled'],
+      control: 'select',
+    },
     mode: {
       options: ['light', 'dark'],
       control: 'select',
     },
+    timestamp: {
+      control: 'text',
+    },
+    transactionIntentHash: {
+      control: 'text',
+    },
+    showCancel: {
+      control: 'boolean',
+    },
   },
   args: {
+    id: 'abcdefg',
     mode: 'light',
+    type: 'loginRequest',
+    status: 'pending',
+    showCancel: true,
+    timestamp: '123536564234',
+    transactionIntentHash: '2343652434',
   },
 }
