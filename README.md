@@ -95,7 +95,6 @@ type ConnectButtonProperties = {
 - fullWidth - makes the button full width in its container
 - activeTab - changes active tab inside popover
 - mode - set styling of a popover
-- 
 
 ### Events
 
