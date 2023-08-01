@@ -16,9 +16,46 @@ type Story = StoryObj
 export const Primary: Story = {
   render: (args) =>
     html`
-      <radix-popover mode=${args.mode} ?connected=${args.connected}
-        ><radix-tabs mode=${args.mode}
-      /></radix-popover>
+      <radix-popover
+        mode=${args.mode}
+        ?connected=${args.connected}
+      ></radix-popover>
+    `,
+  argTypes: {
+    mode: {
+      options: ['light', 'dark'],
+      control: 'select',
+    },
+  },
+  args: {
+    mode: 'light',
+    connected: true,
+  },
+}
+
+export const WithBackground: Story = {
+  render: (args) =>
+    html`
+      <style>
+        .wrapper {
+          background-image: repeating-linear-gradient(
+            -45deg,
+            transparent 0 20px,
+            black 20px 40px
+          );
+          width: 100%;
+          padding: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      </style>
+      <div class="wrapper">
+        <radix-popover
+          mode=${args.mode}
+          ?connected=${args.connected}
+        ></radix-popover>
+      </div>
     `,
   argTypes: {
     mode: {
