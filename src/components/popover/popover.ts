@@ -106,7 +106,7 @@ export class RadixPopover extends LitElement {
             stroke-width="1"
             stroke-opacity="${this.connected ? 1 : 0}"
             fill="${fill}"
-            fill-opacity="0.5"
+            fill-opacity="0.98"
             stroke="url(#gradient)"
         />
         <defs>
@@ -139,6 +139,7 @@ export class RadixPopover extends LitElement {
         justify-content: center;
         align-items: flex-start;
         padding: 35px 20px 10px;
+        // TODO backdrop-filter: blur(30px);
       }
 
       #radix-popover-content {
