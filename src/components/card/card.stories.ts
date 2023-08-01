@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/web-components'
 import './card'
 import './persona-card'
+import './request-card'
 import '../../styles/fonts.css'
 import '../../styles/variables.css'
 import { html } from 'lit'
@@ -98,5 +99,58 @@ export const Sharing: Story = {
     avatarUrl: 'https://picsum.photos/200',
     personaDataRows: 2,
     persona: 'VanDammeStelea',
+  },
+}
+
+export const Requests: Story = {
+  render: (args) =>
+    html`
+      <radix-popover mode=${args.mode} connected>
+        <radix-request-card
+          id="${args.id}"
+          status="${args.status}"
+          type="${args.type}"
+          timestamp=${args.timestamp}
+          @onCancel=${(event: any) => {
+            console.log(event)
+          }}
+          ?showCancel="${args.showCancel}"
+          transactionIntentHash="${args.transactionIntentHash}"
+          transactionExplorerBaseUrl="https://explorer.radixdlt.com/transaction/"
+          mode=${args.mode}
+        ></radix-request-card>
+      </radix-popover>
+    `,
+  argTypes: {
+    type: {
+      options: ['dataRequest', 'loginRequest', 'sendTransaction'],
+      control: 'select',
+    },
+    status: {
+      options: ['pending', 'success', 'fail', 'cancelled'],
+      control: 'select',
+    },
+    mode: {
+      options: ['light', 'dark'],
+      control: 'select',
+    },
+    timestamp: {
+      control: 'text',
+    },
+    transactionIntentHash: {
+      control: 'text',
+    },
+    showCancel: {
+      control: 'boolean',
+    },
+  },
+  args: {
+    id: 'abcdefg',
+    mode: 'light',
+    type: 'loginRequest',
+    status: 'pending',
+    showCancel: true,
+    timestamp: '123536564234',
+    transactionIntentHash: '2343652434',
   },
 }

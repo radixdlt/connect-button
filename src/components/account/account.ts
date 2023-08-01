@@ -1,6 +1,7 @@
+import { RadixButtonMode } from './../../_types'
 import { html, css, LitElement, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { Mode, themeCSS } from '../../styles/theme'
+import { themeCSS } from '../../styles/theme'
 import CopyIcon from '../../assets/copy.svg'
 
 @customElement('radix-account')
@@ -9,7 +10,7 @@ export class RadixAccount extends LitElement {
     type: String,
     reflect: true,
   })
-  mode: Mode = 'light'
+  mode: RadixButtonMode = RadixButtonMode.light
 
   @property({
     type: String,

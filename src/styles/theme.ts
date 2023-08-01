@@ -2,22 +2,6 @@ import { css } from 'lit'
 import './variables.css'
 import './fonts.css'
 
-export const theme = {
-  'radix-blue': 'radix-blue',
-  black: 'black',
-  'white-with-outline': 'white-with-outline',
-  white: 'white',
-} as const
-
-export type Theme = keyof typeof theme
-
-export const mode = {
-  light: 'light',
-  dark: 'dark',
-} as const
-
-export type Mode = keyof typeof mode
-
 export const themeCSS = css`
   :host {
     font-family: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont,
@@ -38,13 +22,24 @@ export const themeCSS = css`
     );
     --radix-popover-tabs-button-active-background: var(--color-light);
 
+    --radix-link-color: var(--color-radix-blue-2);
+
     --radix-card-background: var(--color-light);
     --radix-card-text-color: var(--color-grey-1);
+    --radix-card-text-dimmed-color: var(--color-grey-2);
+    --radix-card-inverted-background: var(--color-grey-1);
+    --radix-card-inverted-text-color: var(--color-light);
 
     --radix-avatar-border-color: var(--color-grey-5);
 
     --radix-button-background: var(--color-light);
     --radix-button-text-color: var(--color-radix-blue-2);
+    --radix-connect-now-disabled-button-background: color-mix(
+      in srgb,
+      var(--color-light) 40%,
+      transparent
+    );
+    --radix-connect-now-disabled-button-text: var(--color-light);
 
     color: var(--color-grey-1);
   }
@@ -63,8 +58,13 @@ export const themeCSS = css`
     --radix-popover-tabs-button-active-text-color: var(--color-light);
     --radix-popover-tabs-button-active-background: #515151;
 
+    --radix-link-color: var(--color-white);
+
     --radix-card-background: #515151;
     --radix-card-text-color: var(--color-light);
+    --radix-card-text-dimmed-color: var(--color-grey-3);
+    --radix-card-inverted-background: var(--color-grey-5);
+    --radix-card-inverted-text-color: var(--color-grey-1);
 
     --radix-avatar-border-color: #656565;
 
@@ -74,6 +74,17 @@ export const themeCSS = css`
       transparent
     );
     --radix-button-text-color: var(--color-light);
+    --radix-connect-now-disabled-button-background: color-mix(
+      in srgb,
+      var(--color-dark) 40%,
+      transparent
+    );
+    --radix-connect-now-disabled-button-text: color-mix(
+      in srgb,
+      var(--color-light) 20%,
+      transparent
+    );
+
     color: var(--color-light);
   }
 

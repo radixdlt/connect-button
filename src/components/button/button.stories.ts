@@ -5,7 +5,7 @@ import '../../styles/variables.css'
 import './story.css'
 import './button'
 import { BUTTON_MIN_HEIGHT, BUTTON_MIN_WIDTH } from '../../constants'
-import { RadixButtonStatus } from './button'
+import { RadixButtonStatus } from '../../_types'
 
 type Story = StoryObj
 
@@ -21,7 +21,6 @@ const createButton = (args: any) => html`
   <radix-button
     theme=${args.theme}
     ?connected=${args.connected}
-    ?compact=${args.compact}
     ?full-width=${args.fullWidth}
     status=${args.status}
     ><div>${args.text}</div></radix-button
@@ -80,7 +79,6 @@ export const Primary: Story = {
       theme=${args.theme}
       status=${args.status}
       ?connected=${args.connected}
-      ?compact=${args.compact}
       ?full-width=${args.fullWidth}
       ><div>${args.connected ? args.text : 'Connect'}</div></radix-button
     >`,

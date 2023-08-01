@@ -4,6 +4,9 @@ import '../../styles/variables.css'
 import { html } from 'lit'
 import '../account/account'
 import './sharing'
+import './not-connected'
+import '../popover/popover'
+import { RadixButtonStatus } from '../../_types'
 
 const meta: Meta = {
   title: 'Components / Pages',
@@ -14,14 +17,16 @@ type Story = StoryObj
 
 export const Sharing: Story = {
   render: (args) =>
-    html`<radix-sharing-page
-      mode=${args.mode}
-      avatarUrl=${args.avatarUrl}
-      persona=${args.persona}
-      dAppName=${args.dAppName}
-      .personaData=${args.personaData}
-      .accounts=${args.accounts}
-    /> `,
+    html` <radix-popover>
+      <radix-sharing-page
+        mode=${args.mode}
+        dAppName=${args.dAppName}
+        avatarUrl=${args.avatarUrl}
+        persona=${args.persona}
+        .personaData=${args.personaData}
+        .accounts=${args.accounts}
+      />
+    </radix-popover>`,
   argTypes: {
     mode: {
       options: ['light', 'dark'],
@@ -100,5 +105,61 @@ export const Sharing: Story = {
       address,
       appearanceId,
     })),
+  },
+}
+
+export const NotConnected: Story = {
+  render: (args) =>
+    html`<radix-popover mode=${args.mode}>
+      <radix-not-connected-page
+        mode=${args.mode}
+        .requestItems=${args.requestItems}
+        status=${args.status}
+        ?isWalletLinked=${args.isWalletLinked}
+        ?isExtensionAvailable=${args.isExtensionAvailable}
+        ?isMobile=${args.isMobile}
+      >
+      </radix-not-connected-page>
+    </radix-popover>`,
+  argTypes: {
+    mode: {
+      options: ['light', 'dark'],
+      control: 'select',
+    },
+    status: {
+      options: [RadixButtonStatus.default, RadixButtonStatus.pending],
+      control: 'select',
+    },
+    requestItems: {
+      mapping: {
+        loginRequestWithCancel: [
+          {
+            type: 'loginRequest',
+            status: 'pending',
+            timestamp: 1690554318703,
+            showCancel: true,
+          },
+        ],
+        loginRequestWithoutCancel: [
+          {
+            type: 'loginRequest',
+            status: 'pending',
+            timestamp: 1690554318703,
+            showCancel: false,
+          },
+        ],
+        empty: undefined,
+      },
+      control: 'select',
+      options: ['loginRequestWithCancel', 'loginRequestWithoutCancel', 'empty'],
+    },
+  },
+  args: {
+    mode: 'light',
+    isMobile: false,
+    status: 'default',
+    isExtensionAvailable: false,
+    isWalletLinked: false,
+    requestItems: undefined,
   },
 }

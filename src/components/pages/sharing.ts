@@ -1,13 +1,14 @@
 import { html, css, LitElement, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { Mode, themeCSS } from '../../styles/theme'
-import { Account } from '../../_types'
+import { themeCSS } from '../../styles/theme'
+import { Account, RadixButtonMode } from '../../_types'
 import '../account/account'
 import '../card/persona-card'
 import '../popover/popover'
 import '../tabs-menu/tabs-menu'
 import RefreshIcon from '../../assets/refresh.svg'
 import LogoutIcon from '../../assets/logout.svg'
+import { pageStyles } from './styles'
 
 @customElement('radix-sharing-page')
 export class RadixSharingPage extends LitElement {
@@ -15,7 +16,7 @@ export class RadixSharingPage extends LitElement {
     type: String,
     reflect: true,
   })
-  mode: Mode = 'light'
+  mode: RadixButtonMode = RadixButtonMode.light
 
   @property({
     type: String,
@@ -63,9 +64,7 @@ export class RadixSharingPage extends LitElement {
   }
 
   render() {
-    return html` <radix-popover mode=${this.mode} connected>
-      <radix-tabs-menu mode=${this.mode}></radix-tabs-menu>
-      <span class="header">Sharing with ${this.dAppName}</span>
+    return html` <div class="header">Sharing with ${this.dAppName}</div>
       <div class="content">
         <radix-persona-card
           avatarUrl=${this.avatarUrl}
@@ -74,7 +73,7 @@ export class RadixSharingPage extends LitElement {
           .personaData=${this.personaData}
         ></radix-persona-card>
         <div>
-          ${this.accounts.map(
+          ${(this.accounts || []).map(
             ({ label, address, appearanceId }) =>
               html`<radix-account
                 label=${label}
@@ -86,39 +85,21 @@ export class RadixSharingPage extends LitElement {
       </div>
       <div class="buttons">
         <button id="update-data" @click=${this.onUpdateData}>
-          Update data sharing
+          Update Data Sharing
         </button>
-        <button id="logout" @click=${this.onLogout}>Log out</button>
-      </div>
-    </radix-popover>`
+        <button id="logout" @click=${this.onLogout}>Log Out</button>
+      </div>`
   }
 
   static styles = [
     themeCSS,
+    pageStyles,
     css`
-      .header {
-        font-size: 18px;
-        font-weight: 600;
-        margin: 20px 0px;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
+      :host {
         width: 100%;
-        text-align: center;
       }
       .content {
-        max-height: 376px;
-        overflow: auto;
-        width: 100%;
-        margin-bottom: 0px;
-        position: relative;
-        padding-bottom: 10px;
-        -webkit-mask-image: linear-gradient(
-          180deg,
-          black 90%,
-          transparent 100%
-        );
-        mask-image: linear-gradient(180deg, black 90%, transparent 95%);
+        max-height: 320px;
       }
       .buttons {
         display: grid;

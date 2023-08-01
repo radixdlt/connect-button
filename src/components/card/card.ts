@@ -1,9 +1,13 @@
 import { html, css, LitElement, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { styleMap } from 'lit/directives/style-map.js'
-import { Mode, themeCSS } from '../../styles/theme'
+import { themeCSS } from '../../styles/theme'
 import UncheckedIcon from '../../assets/unchecked.svg'
 import CheckedIcon from '../../assets/checked.svg'
+import IconLoading from '../../assets/icon-loading.svg'
+import IconFailed from '../../assets/icon-failed.svg'
+import { formatTimestamp } from '../../helpers/format-timestamp'
+import { RadixButtonMode } from '../../_types'
 
 @customElement('radix-card')
 export class RadixCard extends LitElement {
@@ -11,7 +15,7 @@ export class RadixCard extends LitElement {
     type: String,
     reflect: true,
   })
-  mode: Mode = 'light'
+  mode: RadixButtonMode = RadixButtonMode.light
 
   @property({
     type: String,
@@ -25,21 +29,15 @@ export class RadixCard extends LitElement {
   header: string = ''
 
   @property({
-    type: Number,
+    type: String,
     reflect: true,
   })
-  timestamp?: number
-
-  private formatTimestamp(timestamp: number) {
-    const date = new Date(timestamp)
-
-    return `${date.getDate()} ${date.toLocaleTimeString()}`
-  }
+  timestamp?: string
 
   render() {
     const renderDate = () =>
       this.timestamp
-        ? html`<div class="date">${this.formatTimestamp(this.timestamp)}</div>`
+        ? html`<div class="timestamp">${formatTimestamp(this.timestamp)}</div>`
         : ''
 
     const gridTemplateColumns = `${this.icon ? '30px' : ''} 1fr ${
@@ -68,6 +66,28 @@ export class RadixCard extends LitElement {
         border-radius: 12px;
         width: 100%;
         box-sizing: border-box;
+      }
+
+      :host(.inverted) {
+        background-color: var(--radix-card-inverted-background);
+        color: var(--radix-card-inverted-text-color);
+      }
+
+      :host(.inverted) .card i::before {
+        background-color: var(--radix-card-inverted-text-color);
+      }
+
+      :host(.dimmed) .card i::before {
+        background-color: var(--radix-card-text-dimmed-color);
+      }
+
+      :host(.dimmed) .content {
+        color: var(--radix-card-text-dimmed-color);
+      }
+
+      .timestamp {
+        text-align: right;
+        color: var(--radix-card-text-dimmed-color);
       }
 
       .card {
@@ -101,9 +121,23 @@ export class RadixCard extends LitElement {
         height: 24px;
       }
 
+      :host([icon='pending']) i::before {
+        -webkit-mask-image: url(${unsafeCSS(IconLoading)});
+        mask-image: url(${unsafeCSS(IconLoading)});
+        width: 24px;
+        height: 24px;
+      }
+
       :host([icon='checked']) i::before {
         -webkit-mask-image: url(${unsafeCSS(CheckedIcon)});
         mask-image: url(${unsafeCSS(CheckedIcon)});
+        width: 24px;
+        height: 24px;
+      }
+
+      :host([icon='error']) i::before {
+        -webkit-mask-image: url(${unsafeCSS(IconFailed)});
+        mask-image: url(${unsafeCSS(IconFailed)});
         width: 24px;
         height: 24px;
       }
