@@ -76,7 +76,7 @@ export class RadixNotConnectedPage extends LitElement {
         'connect-now': true,
         disabled: !this.isExtensionAvailable || !this.isWalletLinked,
       })}"
-      @onClick=${() => {
+      @click=${() => {
         this.dispatchEvent(
           new CustomEvent('onConnect', {
             bubbles: true,

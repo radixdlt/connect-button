@@ -94,15 +94,15 @@ const Button = (args: any) => {
           }}
           @onDestroy=${() => {}}
           @onConnect=${() => {
-            getConnectButton().connected = true
+            getConnectButton().status = RadixButtonStatus.pending
             getConnectButton().requestItems = [
               {
                 id: crypto.randomUUID(),
                 type: 'loginRequest',
-                status: 'success',
+                status: 'pending',
                 timestamp: 326575486756987,
+                showCancel: true,
               },
-              ...getConnectButton().requestItems,
             ]
           }}
           @onShowPopover=${() => {}}
