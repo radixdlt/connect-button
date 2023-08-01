@@ -131,6 +131,11 @@ export class RadixSharingPage extends LitElement {
         height: 20px;
       }
 
+      #update-data,
+      #logout {
+        cursor: pointer;
+      }
+
       #update-data::before {
         -webkit-mask-image: url(${unsafeCSS(RefreshIcon)});
         mask-image: url(${unsafeCSS(RefreshIcon)});

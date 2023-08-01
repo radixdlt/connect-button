@@ -1,6 +1,10 @@
 import { css } from 'lit'
 
 export const pageStyles = css`
+  :host {
+    width: 100%;
+  }
+
   .header {
     font-size: 18px;
     font-weight: 600;
