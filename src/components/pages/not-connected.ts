@@ -65,6 +65,7 @@ export class RadixNotConnectedPage extends LitElement {
 
   private renderRequestItemsTemplate() {
     return html`<radix-request-cards
+      class="request-cards"
       mode=${this.mode}
       .requestItems=${this.requestItems}
     ></radix-request-cards>`
@@ -137,6 +138,12 @@ export class RadixNotConnectedPage extends LitElement {
         display: flex;
         align-items: center;
         margin: 1rem 0.5rem;
+      }
+
+      .request-cards {
+        display: block;
+        max-height: 410px;
+        overflow-y: auto;
       }
 
       .card {
