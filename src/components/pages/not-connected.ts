@@ -123,6 +123,7 @@ export class RadixNotConnectedPage extends LitElement {
       <div class="cta-link">
         <radix-link
           mode=${this.mode}
+          href="https://www.radixdlt.com/wallet/"
           displayText="Click here to download and set up"
         ></radix-link>
       </div>`
