@@ -33,7 +33,7 @@ export class RadixRequestsPage extends LitElement {
 
   render() {
     return html`
-      <div class="header">Sharing with ${this.dAppName}</div>
+      <div class="header">Connected to ${this.dAppName}</div>
       <slot name="subheader"></slot>
       ${this.loggedInTimestamp
         ? html`<div class="subheader">
