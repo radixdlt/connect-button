@@ -3,6 +3,7 @@ import { html, css, LitElement, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { themeCSS } from '../../styles/theme'
 import CopyIcon from '../../assets/copy.svg'
+import { shortenAddress } from '../../helpers/shorten-address'
 
 @customElement('radix-account')
 export class RadixAccount extends LitElement {
@@ -33,10 +34,6 @@ export class RadixAccount extends LitElement {
   })
   appearanceId: number = 0
 
-  private formatAccountAddress(address: string) {
-    return `${address.slice(0, 4)}...${address.slice(-8)}`
-  }
-
   private formatAccountLabel(label: string) {
     return label.length > 14 ? `${label.slice(0, 12).trimEnd()}...` : label
   }
@@ -49,7 +46,7 @@ export class RadixAccount extends LitElement {
         class="address"
         target="_blank"
         href=${`${this.explorerAccountPath}/${this.address}`}
-        >${this.formatAccountAddress(this.address)}<i
+        >${shortenAddress(this.address)}<i
           @click=${(ev: MouseEvent) => {
             ev.preventDefault()
             navigator.clipboard.writeText(this.address)
