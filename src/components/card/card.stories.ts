@@ -116,7 +116,6 @@ export const Requests: Story = {
           }}
           ?showCancel="${args.showCancel}"
           transactionIntentHash="${args.transactionIntentHash}"
-          transactionExplorerBaseUrl="https://explorer.radixdlt.com/transaction/"
           mode=${args.mode}
         ></radix-request-card>
       </radix-popover>
