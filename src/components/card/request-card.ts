@@ -144,6 +144,20 @@ export class RadixRequestCard extends LitElement {
             url="${this.transactionExplorerBaseUrl +
             this.transactionIntentHash}"
             displayText="${shortenAddress(this.transactionIntentHash)}"
+            mode=${this.mode}
+            @click=${(event: MouseEvent) => {
+              event.preventDefault()
+              this.dispatchEvent(
+                new CustomEvent('onLinkClick', {
+                  bubbles: true,
+                  composed: true,
+                  detail: {
+                    type: 'transaction',
+                    data: this.transactionIntentHash,
+                  },
+                })
+              )
+            }}
           ></radix-link>
         </div>`
       : ''

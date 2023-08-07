@@ -45,6 +45,13 @@ const defaultArgs = {
 const Button = (args: any) => {
   if (args.render)
     return html`
+      <script>
+        document
+          .querySelector('radix-connect-button')
+          .addEventListener('onLinkClick', (ev) => {
+            console.log('onLinkClick', ev.detail)
+          })
+      </script>
       <style>
         body {
           --radix-connect-button-width: ${args.width

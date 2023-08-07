@@ -10,13 +10,11 @@ import './pages/sharing'
 import './pages/requests'
 import {
   Account,
-  ExplorerConfig,
   PersonaData,
   RadixButtonStatus,
   RadixButtonTheme,
   RequestItem,
 } from '../_types'
-import { defaultExplorerConfig } from '../helpers/default-explorer-config'
 
 @customElement(config.elementTag)
 export class ConnectButton extends LitElement {
@@ -57,9 +55,6 @@ export class ConnectButton extends LitElement {
     type: Array,
   })
   personaData: PersonaData[] = []
-
-  @property({ type: Object })
-  explorer: ExplorerConfig = defaultExplorerConfig
 
   @property({
     type: Boolean,
@@ -201,7 +196,6 @@ export class ConnectButton extends LitElement {
       mode=${this.mode}
       loggedInTimestamp=${this.loggedInTimestamp}
       dAppName=${this.dAppName}
-      .explorer=${this.explorer}
       .requestItems=${this.requestItems}
     ></radix-requests-page>`
   }

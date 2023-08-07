@@ -21,11 +21,6 @@ export class RadixAccount extends LitElement {
   @property({
     type: String,
   })
-  explorerAccountPath = ''
-
-  @property({
-    type: String,
-  })
   label = ''
 
   @property({
@@ -45,14 +40,25 @@ export class RadixAccount extends LitElement {
       <a
         class="address"
         target="_blank"
-        href=${`${this.explorerAccountPath}/${this.address}`}
-        >${shortenAddress(this.address)}<i
+        href=${`${this.address}`}
+        @click=${(event: MouseEvent) => {
+          event.preventDefault()
+          this.dispatchEvent(
+            new CustomEvent('onLinkClick', {
+              bubbles: true,
+              composed: true,
+              detail: { type: 'account', data: this.address },
+            })
+          )
+        }}
+      >
+        ${shortenAddress(this.address)}<i
           @click=${(ev: MouseEvent) => {
             ev.preventDefault()
             navigator.clipboard.writeText(this.address)
           }}
-        ></i
-      ></a>`
+        ></i>
+      </a>`
   }
 
   static styles = [
