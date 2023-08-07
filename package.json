@@ -21,9 +21,18 @@
   "main": "dist/connect-button.mjs",
   "license": "Apache-2.0",
   "exports": {
-    ".": "./dist/connect-button.mjs"
+    ".": {
+      "import": {
+        "types": "./types/index.d.ts",
+        "default": "./dist/connect-button.mjs"
+      },
+      "require": {
+        "types": "./types/index.d.ts",
+        "default": "./dist/connect-button.umd.js"
+      }
+    }
   },
-  "types": "types/index.d.ts",
+  "types": "./types/index.d.ts",
   "files": [
     "dist",
     "types"
