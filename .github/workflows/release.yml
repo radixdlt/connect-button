@@ -41,7 +41,7 @@ jobs:
           echo "release_version=$(grep 'Created tag ' out | awk -F 'Created tag ' '{print $2}')" >> $GITHUB_OUTPUT
 
   snyk-sbom:
-    name: Release
+    name: SBOM
     runs-on: ubuntu-latest
     permissions: write-all
     needs: release
@@ -53,7 +53,7 @@ jobs:
       - name: Generate SBOM
         uses: snyk/actions/node@b98d498629f1c368650224d6d212bf7dfa89e4bf # v0.4.0
         with:
-          args: --all-projects --org=${{ env.SNYK_PROJECTS_ORG_ID }} --format=cyclonedx1.4+json --json-file-output sbom.json
+          args: --all-projects --org=${{ env.SNYK_ORG_ID }} --format=cyclonedx1.4+json --json-file-output sbom.json
           command: sbom
       - name: Upload SBOM
         uses: AButler/upload-release-assets@c94805dc72e4b20745f543da0f62eaee7722df7a # v2.0.2
