@@ -67,7 +67,6 @@ type ConnectButtonProperties = {
   requestItems: RequestItem[]
   accounts: Account[]
   personaData: PersonaData[]
-  explorer: ExplorerConfig
   isMobile: boolean
   isWalletLinked: boolean
   isExtensionAvailable: boolean
@@ -88,7 +87,6 @@ type ConnectButtonProperties = {
 - requestItems - displays a list of maximum 3 request items in the popover
 - accounts - displays a list of connected accounts
 - personaData - list of persona fields together with values
-- explorer - configuration for links clickable inside connect button (transactions & accounts)
 - isMobile - display mobile placeholder
 - isWalletLinked - marks card during onboarding process as completed
 - isExtensionAvailable - marks card during onboarding process as completed

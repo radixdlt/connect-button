@@ -45,11 +45,6 @@ export class RadixRequestCard extends LitElement {
   })
   transactionIntentHash: string = ''
 
-  @property({
-    type: String,
-  })
-  transactionExplorerBaseUrl: string = ''
-
   render() {
     const icon = this.getIconFromStatus()
     const styling = this.getStylingFromStatus()
@@ -141,8 +136,7 @@ export class RadixRequestCard extends LitElement {
       ? html`<div class="transaction">
           <span class="text-dimmed">ID:</span>
           <radix-link
-            url="${this.transactionExplorerBaseUrl +
-            this.transactionIntentHash}"
+            url="${this.transactionIntentHash}"
             displayText="${shortenAddress(this.transactionIntentHash)}"
             mode=${this.mode}
             @click=${(event: MouseEvent) => {
