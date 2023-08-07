@@ -45,7 +45,7 @@ export class RadixPopover extends LitElement {
   }
 
   drawPopover() {
-    const fill = this.mode === 'light' ? '#D9D9D9' : '#000000'
+    const fill = this.mode === 'light' ? '#D9D9D9' : '#808080'
     const height = this.height
     const startX = 13
     const startY = 15
@@ -53,11 +53,6 @@ export class RadixPopover extends LitElement {
     const endY = this.height
     const borderRadius = 12
     const halfBorderRadius = borderRadius / 2
-
-    const shadow = `
-      <filter id="shadow" color-interpolation-filters="sRGB">
-        <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.5"/>
-      </filter>`
 
     const gradient = `
       <linearGradient id="gradient" x1="461.192" y1="52.4476" x2="81.1033" y2="460.678" gradientUnits="userSpaceOnUse">
@@ -73,7 +68,6 @@ export class RadixPopover extends LitElement {
       L ${x} 1
       L ${x + width} ${y}`
 
-    // filter="url(#shadow)"
     const svg = `
     <svg viewBox="0 0 441 ${
       height + 1
@@ -110,7 +104,6 @@ export class RadixPopover extends LitElement {
             stroke="url(#gradient)"
         />
         <defs>
-          ${shadow}
           ${gradient}
         </defs>
      </svg>

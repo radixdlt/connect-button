@@ -1,18 +1,5 @@
 export type Account = { label: string; address: string; appearanceId: number }
 
-export const personaDataField = {
-  givenName: 'givenName',
-  familyName: 'familyName',
-  emailAddress: 'emailAddress',
-  phoneNumber: 'phoneNumber',
-} as const
-
-export type ExplorerConfig = {
-  baseUrl: string
-  accountsPath: string
-  transactionPath: string
-}
-
 export const RadixButtonStatus = {
   pending: 'pending',
   success: 'success',
@@ -38,9 +25,7 @@ export const RadixButtonMode = {
 
 export type RadixButtonMode = keyof typeof RadixButtonMode
 
-export type PersonaDataField = keyof typeof personaDataField
-
-export type PersonaData = { field: PersonaDataField; value: string }
+export type PersonaData = { field: string; value: string }
 
 export const RequestStatus = {
   pending: 'pending',
