@@ -2,8 +2,7 @@ import { css, html, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { themeCSS } from '../../styles/theme'
 import '../card/request-card'
-import { ExplorerConfig, RadixButtonMode, RequestItem } from '../../_types'
-import { defaultExplorerConfig } from '../../helpers/default-explorer-config'
+import { RadixButtonMode, RequestItem } from '../../_types'
 import { pageStyles } from './styles'
 import { formatTimestamp } from '../../helpers/format-timestamp'
 
@@ -28,9 +27,6 @@ export class RadixRequestsPage extends LitElement {
   })
   loggedInTimestamp: string = ''
 
-  @property({ type: Object })
-  explorer: ExplorerConfig = defaultExplorerConfig
-
   render() {
     return html`
       <div class="header">Connected to ${this.dAppName}</div>
@@ -43,8 +39,6 @@ export class RadixRequestsPage extends LitElement {
       <div class="content">
         ${(this.requestItems || []).map(
           (requestItem) => html`<radix-request-card
-            transactionExplorerBaseUrl=${this.explorer.baseUrl +
-            this.explorer.transactionPath}
             type="${requestItem.type}"
             status="${requestItem.status}"
             id="${requestItem.id}"

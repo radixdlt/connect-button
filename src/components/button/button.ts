@@ -86,7 +86,7 @@ export class RadixButton extends LitElement {
     loadingSpinnerCSS,
     css`
       :host {
-        width: var(--radix-connect-button-width, auto);
+        width: var(--radix-connect-button-width, 138px);
         display: block;
         container-type: inline-size;
         user-select: none;
@@ -113,7 +113,7 @@ export class RadixButton extends LitElement {
       }
 
       button {
-        width: var(--radix-connect-button-width, auto);
+        width: var(--radix-connect-button-width, 138px);
         height: var(--radix-connect-button-height, auto);
         border-radius: var(--radix-connect-button-border-radius, 0);
         background-color: var(--radix-connect-button-background);

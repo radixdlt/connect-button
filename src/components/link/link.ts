@@ -23,7 +23,7 @@ export class RadixLink extends LitElement {
   displayText: string = ''
 
   render() {
-    return html`<a target="_blank" href="${this.url}" class="link"
+    return html`<a target="_blank" href=${this.url} class="link"
       >${this.displayText}
       <i class="icon-north-east-arrow"></i>
     </a>`
