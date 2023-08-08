@@ -15,6 +15,7 @@ import {
   RadixButtonTheme,
   RequestItem,
 } from '../_types'
+import { classMap } from 'lit-html/directives/class-map.js'
 
 @customElement(config.elementTag)
 export class ConnectButton extends LitElement {
@@ -215,7 +216,7 @@ export class ConnectButton extends LitElement {
       mode="${this.mode}"
       ?connected=${this.connected}
       ?compact=${this.state.compact}
-      class="popover"
+      class=${classMap({ popover: true, 'show-popover': this.showPopover })}
     >
       ${this.connected
         ? html`
@@ -292,8 +293,40 @@ export class ConnectButton extends LitElement {
     }
     .popover {
       position: absolute;
-      top: calc(100% + 1rem);
+      top: calc(100% + 0.5rem);
       right: 0;
+    }
+
+    @-webkit-keyframes slide-bottom {
+      0% {
+        -webkit-transform: translateY(-20px);
+        transform: translateY(-20px);
+      }
+      100% {
+        -webkit-transform: translateY(0px);
+        transform: translateY(0px);
+        opacity: 1;
+      }
+    }
+    @keyframes slide-bottom {
+      0% {
+        -webkit-transform: translateY(-20px);
+        transform: translateY(-20px);
+      }
+      100% {
+        -webkit-transform: translateY(0px);
+        transform: translateY(0px);
+        opacity: 1;
+      }
+    }
+
+    radix-popover {
+      opacity: 0;
+    }
+    radix-popover.show-popover {
+      -webkit-animation: slide-bottom 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+        both;
+      animation: slide-bottom 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     }
   `
 }
