@@ -51,11 +51,12 @@ export class RadixPopover extends LitElement {
 
   drawPopover() {
     const fill = this.mode === 'light' ? '#D9D9D9' : '#808080'
-    const height = this.height
+    const minHeight = this.height < 250 ? 250 : this.height
+    const height = minHeight
     const startX = 13
     const startY = 15
     const endX = 440
-    const endY = this.height
+    const endY = height
     const borderRadius = 12
     const halfBorderRadius = borderRadius / 2
 
