@@ -18,6 +18,11 @@ export class RadixPopover extends LitElement {
   })
   connected = false
 
+  @property({
+    type: Boolean,
+  })
+  compact = false
+
   @state()
   private height = 0
 
@@ -75,7 +80,7 @@ export class RadixPopover extends LitElement {
         <path
             d="${[
               `M ${startX} ${startY}`,
-              drawArrow(350, startY, 17.5),
+              drawArrow(this.compact ? 400 : 350, startY, 17.5),
               `L ${endX - borderRadius} ${startY}`,
               `C ${endX - halfBorderRadius} ${startY} ${endX} ${
                 startY + halfBorderRadius

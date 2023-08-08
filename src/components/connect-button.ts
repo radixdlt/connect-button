@@ -1,5 +1,5 @@
 import { LitElement, css, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { customElement, property, state } from 'lit/decorators.js'
 import { config } from '../config'
 import './popover/popover'
 import './button/button'
@@ -87,6 +87,11 @@ export class ConnectButton extends LitElement {
   @property({ type: String })
   avatarUrl: string = ''
 
+  @state()
+  state = {
+    compact: false,
+  }
+
   get hasSharedData(): boolean {
     return !!(this.accounts.length || this.personaData.length)
   }
@@ -144,6 +149,9 @@ export class ConnectButton extends LitElement {
       ?connected=${this.connected}
       ?fullWidth=${this.fullWidth}
       @onClick=${this.togglePopover}
+      @onResize=${(event: CustomEvent) => {
+        this.state.compact = event.detail.offsetWidth === 42
+      }}
       ><div>${buttonText}</div></radix-button
     >`
   }
@@ -206,6 +214,7 @@ export class ConnectButton extends LitElement {
     return html` <radix-popover
       mode="${this.mode}"
       ?connected=${this.connected}
+      ?compact=${this.state.compact}
       class="popover"
     >
       ${this.connected
@@ -231,10 +240,55 @@ export class ConnectButton extends LitElement {
   }
 
   static styles = css`
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;400;500;600;700&display=swap');
+
+    :root {
+      font-family: 'IBM Plex Sans';
+      font-weight: 400;
+      margin: 0;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+
+      color-scheme: light dark;
+      color: rgba(255, 255, 255, 0.87);
+
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-text-size-adjust: 100%;
+    }
+
     :host {
       font-family: 'IBM Plex Sans';
       position: relative;
       display: inline-block;
+
+      /* Core colors */
+      --color-radix-green-1: #00ab84;
+      --color-radix-green-2: #00c389;
+      --color-radix-green-3: #21ffbe;
+      --color-radix-blue-1: #060f8f;
+      --color-radix-blue-2: #052cc0;
+      --color-radix-blue-3: #20e4ff;
+      --color-light: #ffffff;
+      --color-dark: #000000;
+
+      /* Accent colors */
+      --color-accent-red: #ef4136;
+      --color-accent-blue: #00aeef;
+      --color-accent-yellow: #fff200;
+      --color-alert: #e59700;
+      --color-radix-error-red-1: #c82020;
+      --color-radix-error-red-2: #fcebeb;
+
+      /* Neutral colors */
+      --color-grey-1: #003057;
+      --color-grey-2: #8a8fa4;
+      --color-grey-3: #ced0d6;
+      --color-grey-4: #e2e5ed;
+      --color-grey-5: #f4f5f9;
     }
     .popover {
       position: absolute;
