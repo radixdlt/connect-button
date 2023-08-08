@@ -55,6 +55,7 @@ export class RadixAccount extends LitElement {
         ${shortenAddress(this.address)}<i
           @click=${(ev: MouseEvent) => {
             ev.preventDefault()
+            ev.stopImmediatePropagation()
             navigator.clipboard.writeText(this.address)
           }}
         ></i>
