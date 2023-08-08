@@ -262,6 +262,7 @@ export class ConnectButton extends LitElement {
     }
 
     :host {
+      text-align: left;
       font-family: 'IBM Plex Sans';
       position: relative;
       display: inline-block;
