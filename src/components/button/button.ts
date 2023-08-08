@@ -54,6 +54,33 @@ export class RadixButton extends LitElement {
     )
   }
 
+  private resizeObserver: undefined | ResizeObserver
+
+  connectedCallback() {
+    super.connectedCallback()
+
+    setTimeout(() => {
+      const button = this.shadowRoot!.querySelector('button')!
+
+      this.resizeObserver = new ResizeObserver(() => {
+        this.dispatchEvent(
+          new CustomEvent('onResize', {
+            bubbles: true,
+            composed: false,
+            detail: button,
+          })
+        )
+      })
+
+      this.resizeObserver.observe(button)
+    })
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    this.resizeObserver?.unobserve(this)
+  }
+
   render() {
     const renderContent = () => {
       if (this.status === RadixButtonStatus.pending && this.connected) {
@@ -86,8 +113,10 @@ export class RadixButton extends LitElement {
     loadingSpinnerCSS,
     css`
       :host {
-        width: var(--radix-connect-button-width, 138px);
-        display: block;
+        width: max(var(--radix-connect-button-width, 138px), 42px);
+        min-width: 42px;
+        display: flex;
+        justify-content: flex-end;
         container-type: inline-size;
         user-select: none;
         --radix-connect-button-text-color: var(--color-light);
@@ -113,7 +142,8 @@ export class RadixButton extends LitElement {
       }
 
       button {
-        width: var(--radix-connect-button-width, 138px);
+        width: max(var(--radix-connect-button-width, 138px), 42px);
+        min-width: 42px;
         height: var(--radix-connect-button-height, auto);
         border-radius: var(--radix-connect-button-border-radius, 0);
         background-color: var(--radix-connect-button-background);
