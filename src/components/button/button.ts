@@ -78,7 +78,8 @@ export class RadixButton extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback()
-    this.resizeObserver?.unobserve(this)
+    const button = this.shadowRoot!.querySelector('button')!
+    this.resizeObserver?.unobserve(button)
   }
 
   render() {
