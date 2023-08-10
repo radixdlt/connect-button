@@ -1,4 +1,4 @@
-import { html, css, LitElement } from 'lit'
+import { html, css, LitElement, TemplateResult } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { themeCSS } from '../../styles/theme'
 
@@ -41,16 +41,21 @@ export class RadixNotConnectedPage extends LitElement {
   requestItems: RequestItem[] = []
 
   render() {
+    let template: TemplateResult<1> = this.renderConnectTemplate()
+
+    if (this.isMobile) template = this.renderMobileTemplate()
+    else if (!this.isExtensionAvailable)
+      template = this.renderCeNotInstalledTemplate()
+    else if (!this.isWalletLinked) template = this.renderCeNotLinkedTemplate()
+    else if (this.status === RadixButtonStatus.pending)
+      template = this.renderRequestItemsTemplate()
+
     return html`
       <div class="wrapper connect-your-wallet">
         <img class="logo" src=${logoGradient} />
         <span class="text connect">Connect Your Radix Wallet</span>
       </div>
-      ${this.isMobile
-        ? this.renderMobileTemplate()
-        : this.status === RadixButtonStatus.pending
-        ? this.renderRequestItemsTemplate()
-        : this.renderConnectStepsTemplate()}
+      ${template}
     `
   }
 
@@ -72,12 +77,14 @@ export class RadixNotConnectedPage extends LitElement {
   }
 
   private connectNowButtonTemplate() {
+    const disabled = !this.isExtensionAvailable || !this.isWalletLinked
     return html`<button
       class="${classMap({
         'connect-now': true,
-        disabled: !this.isExtensionAvailable || !this.isWalletLinked,
+        disabled,
       })}"
       @click=${() => {
+        if (disabled) return
         this.dispatchEvent(
           new CustomEvent('onConnect', {
             bubbles: true,
@@ -90,43 +97,59 @@ export class RadixNotConnectedPage extends LitElement {
     </button>`
   }
 
-  private stepCardTemplate(header: string, condition: boolean, text: string) {
-    return html`<radix-card
-      class="card"
-      mode=${this.mode}
-      header="${header}"
-      icon="${condition ? 'checked' : 'unchecked'}"
-    >
-      ${condition ? '' : html`<span class="subtitle">${text}</span>`}
-    </radix-card>`
-  }
-
-  private renderConnectStepsTemplate() {
-    if (this.isExtensionAvailable && this.isWalletLinked) {
-      return this.connectNowButtonTemplate()
-    }
-
+  private renderCeNotInstalledTemplate() {
     return html`<div class="info">
-        To connect, you’ll need a couple of things first:
+        Before you can connect your Radix Wallet, you need the Radix Connector
+        browser extension.
       </div>
-      ${this.stepCardTemplate(
-        'Radix Wallet mobile app',
-        this.isWalletLinked,
-        'Get the official Radix Wallet mobile app where you can manage your Accounts and Personas.'
-      )}
-      ${this.stepCardTemplate(
-        'Radix Connector browser extension',
-        this.isExtensionAvailable,
-        'Get and link the Radix Connector browser extension to your Radix Wallet to connect securely to dApp websites.'
-      )}
-      ${this.connectNowButtonTemplate()}
+
       <div class="cta-link">
         <radix-link
           mode=${this.mode}
           href="https://www.radixdlt.com/wallet/"
-          displayText="Click here to download and set up"
+          displayText="Download and Setup Guide"
         ></radix-link>
-      </div>`
+      </div>
+
+      ${this.connectNowButtonTemplate()} `
+  }
+
+  private renderCeNotLinkedTemplate() {
+    return html`<div class="info">
+        To connect your Radix Wallet, you need to link it to your Radix
+        Connector browser extension using a QR code.
+      </div>
+
+      <button
+        class="${classMap({
+          'connect-now': true,
+        })}"
+        @click=${() => {
+          this.dispatchEvent(
+            new CustomEvent('onLinkClick', {
+              bubbles: true,
+              composed: true,
+              detail: { type: 'showQrCode' },
+            })
+          )
+        }}
+      >
+        Open QR Code to Link Wallet
+      </button>
+
+      <div class="cta-link">
+        <radix-link
+          mode=${this.mode}
+          href="https://www.radixdlt.com/wallet/"
+          displayText="Download and Setup Guide"
+        ></radix-link>
+      </div>
+
+      ${this.connectNowButtonTemplate()} `
+  }
+
+  private renderConnectTemplate() {
+    return html` ${this.connectNowButtonTemplate()} `
   }
 
   static styles = [
@@ -138,7 +161,8 @@ export class RadixNotConnectedPage extends LitElement {
       .wrapper.connect-your-wallet {
         display: flex;
         align-items: center;
-        margin: 1rem 0.5rem;
+        margin: 1rem 0.5rem 1.5rem;
+        justify-content: center;
       }
 
       .request-cards {
@@ -152,16 +176,16 @@ export class RadixNotConnectedPage extends LitElement {
       }
       .info {
         margin-bottom: 20px;
+        font-size: 14px;
+        text-align: center;
       }
 
       .connect-now {
         width: 100%;
         color: #fff;
         border-radius: 12px;
-
-        height: 48px;
-
-        font-size: 16px;
+        height: 40px;
+        font-size: 14px;
         font-weight: bold;
       }
 
@@ -182,15 +206,14 @@ export class RadixNotConnectedPage extends LitElement {
       }
 
       .logo {
-        width: 4rem;
+        width: 46px;
         align-self: center;
       }
 
       .text.connect {
         color: var(--color-text-primary);
-
-        font-size: 1.5rem;
-        width: 10rem;
+        font-size: 18px;
+        width: 7.2rem;
         margin-left: 1rem;
         font-weight: 600;
         text-align: left;
@@ -206,14 +229,18 @@ export class RadixNotConnectedPage extends LitElement {
         text-align: center;
 
         align-items: center;
-        line-height: 30px;
         margin-bottom: 18px;
         margin-top: 25px;
+        font-size: 14px;
       }
 
       .mobile-wrapper .header {
-        font-size: 18px;
+        font-size: 14px;
         font-weight: 600;
+        margin-bottom: 5px;
+      }
+      button {
+        font-family: 'IBM Plex Sans', sans-serif;
       }
     `,
   ]

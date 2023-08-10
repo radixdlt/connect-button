@@ -70,11 +70,11 @@ export class RadixAccount extends LitElement {
         width: 100%;
         box-sizing: border-box;
         justify-content: space-between;
-        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
         border-radius: 12px;
         color: var(--color-light);
-        font-size: 16px;
-        height: 50px;
+        font-size: 14px;
+        height: 40px;
         align-items: center;
         padding: 0 20px;
       }
@@ -89,6 +89,8 @@ export class RadixAccount extends LitElement {
         display: flex;
         align-items: center;
         gap: 4px;
+        opacity: 0.8;
+        font-size: 12px;
       }
 
       i {

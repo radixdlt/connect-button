@@ -69,7 +69,6 @@ export class RadixPersonaCard extends LitElement {
       :host {
         display: flex;
         width: 100%;
-        margin-bottom: 20px;
       }
 
       .avatar {
@@ -77,15 +76,15 @@ export class RadixPersonaCard extends LitElement {
         background-repeat: no-repeat;
         background-position: center;
         border-radius: 50%;
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
         align-self: center;
         border: 2px solid var(--radix-avatar-border-color);
       }
 
       .placeholder {
-        width: 84px;
-        height: 84px;
+        width: 64px;
+        height: 64px;
         background-image: url(${unsafeCSS(AvatarPlaceholder)});
       }
 
@@ -93,7 +92,7 @@ export class RadixPersonaCard extends LitElement {
         display: grid;
         gap: 20px;
         align-items: flex-start;
-        grid-template-columns: 1fr 255px;
+        grid-template-columns: 1fr 230px;
       }
 
       .persona-card.center {
@@ -101,7 +100,7 @@ export class RadixPersonaCard extends LitElement {
       }
 
       .persona {
-        font-size: 18px;
+        font-size: 14px;
         font-weight: 600;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -110,13 +109,13 @@ export class RadixPersonaCard extends LitElement {
       }
 
       ul {
-        margin-top: 10px;
+        margin-top: 5px;
         margin-bottom: 0;
-        padding-inline-start: 25px;
+        padding-inline-start: 20px;
       }
 
       li {
-        font-size: 14px;
+        font-size: 12px;
         word-break: break-word;
       }
     `,

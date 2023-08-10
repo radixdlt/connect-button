@@ -114,8 +114,8 @@ export class RadixButton extends LitElement {
     loadingSpinnerCSS,
     css`
       :host {
-        width: max(var(--radix-connect-button-width, 138px), 42px);
-        min-width: 42px;
+        width: max(var(--radix-connect-button-width, 138px), 40px);
+        min-width: 40px;
         display: flex;
         justify-content: flex-end;
         container-type: inline-size;
@@ -143,14 +143,14 @@ export class RadixButton extends LitElement {
       }
 
       button {
-        width: max(var(--radix-connect-button-width, 138px), 42px);
-        min-width: 42px;
+        width: max(var(--radix-connect-button-width, 138px), 40px);
+        min-width: 40px;
         height: var(--radix-connect-button-height, auto);
         border-radius: var(--radix-connect-button-border-radius, 0);
         background-color: var(--radix-connect-button-background);
         border: 1px solid var(--radix-connect-button-border-color);
         color: var(--radix-connect-button-text-color);
-        font-size: 16px;
+        font-size: 14px;
         align-content: center;
         align-items: center;
         font-family: inherit;
@@ -168,7 +168,7 @@ export class RadixButton extends LitElement {
         min-height: 0.94em;
         min-width: 1.25em;
         display: block;
-        -webkit-mask-position: center;
+        -webkit-mask-position: center right;
         mask-position: center right;
         mask-repeat: no-repeat;
         -webkit-mask-repeat: no-repeat;
@@ -250,6 +250,10 @@ export class RadixButton extends LitElement {
           max-width: ${BUTTON_MIN_WIDTH}px;
           max-height: ${BUTTON_MIN_WIDTH}px;
           justify-content: center;
+        }
+        button::before {
+          -webkit-mask-position: center;
+          mask-position: center;
         }
         button.gradient {
           background-image: url(${unsafeCSS(CompactGradient)});

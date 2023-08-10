@@ -99,7 +99,7 @@ export class RadixSharingPage extends LitElement {
         width: 100%;
       }
       .content {
-        max-height: 320px;
+        max-height: 193px;
       }
       .buttons {
         display: grid;
@@ -108,11 +108,11 @@ export class RadixSharingPage extends LitElement {
         grid-template-columns: 1fr 143px;
         grid-gap: 10px;
         width: 100%;
-        padding: 10px 0;
+        padding-top: 5px;
         align-items: end;
       }
       button {
-        padding: 12px 0;
+        padding: 11px 0;
         display: flex;
         align-items: center;
         justify-content: center;

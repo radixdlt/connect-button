@@ -66,9 +66,11 @@ export class RadixRequestsPage extends LitElement {
     pageStyles,
     css`
       .subheader {
+        color: var(--color-grey-2);
         margin-top: -12px;
         margin-bottom: 15px;
         text-align: center;
+        font-size: 12px;
       }
     `,
   ]

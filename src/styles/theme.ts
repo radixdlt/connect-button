@@ -95,7 +95,7 @@ export const themeCSS = css`
     border: none;
     background: var(--radix-button-background);
     color: var(--radix-button-text-color);
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
   }
 

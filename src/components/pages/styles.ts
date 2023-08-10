@@ -6,9 +6,9 @@ export const pageStyles = css`
   }
 
   .header {
-    font-size: 18px;
-    font-weight: 600;
-    margin: 20px 0px;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 15px 0px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -19,7 +19,7 @@ export const pageStyles = css`
     max-height: 360px;
     overflow: auto;
     width: 100%;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     position: relative;
     padding-bottom: 10px;
     -webkit-mask-image: linear-gradient(180deg, black 90%, transparent 100%);
