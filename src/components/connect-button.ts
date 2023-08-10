@@ -1,5 +1,5 @@
 import { LitElement, css, html } from 'lit'
-import { customElement, property, state } from 'lit/decorators.js'
+import { customElement, property } from 'lit/decorators.js'
 import { config } from '../config'
 import './popover/popover'
 import './button/button'
@@ -88,10 +88,8 @@ export class ConnectButton extends LitElement {
   @property({ type: String })
   avatarUrl: string = ''
 
-  @state()
-  state = {
-    compact: false,
-  }
+  @property({ type: Boolean, state: true })
+  compact = false
 
   get hasSharedData(): boolean {
     return !!(this.accounts.length || this.personaData.length)
@@ -151,7 +149,7 @@ export class ConnectButton extends LitElement {
       ?fullWidth=${this.fullWidth}
       @onClick=${this.togglePopover}
       @onResize=${(event: CustomEvent) => {
-        this.state.compact = event.detail.offsetWidth === 42
+        this.compact = event.detail.offsetWidth === 40
       }}
       ><div>${buttonText}</div></radix-button
     >`
@@ -211,11 +209,10 @@ export class ConnectButton extends LitElement {
 
   private popoverTemplate() {
     if (!this.showPopover) return ''
-
     return html` <radix-popover
       mode="${this.mode}"
       ?connected=${this.connected}
-      ?compact=${this.state.compact}
+      ?compact=${this.compact}
       class=${classMap({ popover: true, 'show-popover': this.showPopover })}
     >
       ${this.connected
