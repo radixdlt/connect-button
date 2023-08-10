@@ -61,7 +61,7 @@ export class RadixCard extends LitElement {
         background-color: var(--radix-card-background);
         color: var(--radix-card-text-color);
         display: block;
-        padding: 18px 20px;
+        padding: 11px 20px;
         user-select: none;
         border-radius: 12px;
         width: 100%;
@@ -109,7 +109,6 @@ export class RadixCard extends LitElement {
         display: block;
         font-weight: 600;
         font-size: 14px;
-        margin-bottom: 5px;
       }
 
       p {
