@@ -38,6 +38,7 @@ export class RadixLink extends LitElement {
         text-decoration: none;
         display: flex;
         align-items: center;
+        font-size: 14px;
       }
 
       .icon-north-east-arrow::before {

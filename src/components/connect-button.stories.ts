@@ -168,26 +168,17 @@ const personaData: PersonaData[] = [
   },
 ]
 
-export const initial = Template.bind({})
-// More on args: https://storybook.js.org/docs/web-components/writing-stories/args
-initial.args = {
+export const connectorExtensionNotInstalled = Template.bind({})
+connectorExtensionNotInstalled.args = {
   ...defaultArgs,
-  status: RadixButtonStatus.default,
-  isMobile: false,
-  isWalletLinked: false,
   isExtensionAvailable: false,
-  connected: false,
-  requestItems: [],
-  accounts,
-  personaLabel: '',
-  render: true,
 }
-initial.argTypes = argTypes
 
-export const connectorExtensionInstalled = Template.bind({})
-connectorExtensionInstalled.args = {
+export const connectorExtensionNotLinked = Template.bind({})
+connectorExtensionNotLinked.args = {
   ...defaultArgs,
   isExtensionAvailable: true,
+  isWalletLinked: false,
 }
 
 export const readyToConnect = Template.bind({})

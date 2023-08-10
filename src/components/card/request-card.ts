@@ -176,6 +176,7 @@ export class RadixRequestCard extends LitElement {
         text-decoration: none;
         display: flex;
         align-items: center;
+        font-size: 14px;
       }
 
       .cancel {
@@ -188,6 +189,7 @@ export class RadixRequestCard extends LitElement {
         display: flex;
         flex-direction: column;
         gap: 10px;
+        font-size: 14px;
       }
     `,
   ]

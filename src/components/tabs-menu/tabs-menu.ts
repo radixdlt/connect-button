@@ -74,7 +74,7 @@ export class RadixTabsMenu extends LitElement {
 
       button {
         border: unset;
-        font-size: 16px;
+        font-size: 14px;
         background: transparent;
         text-align: center;
         flex: 1;
@@ -82,7 +82,7 @@ export class RadixTabsMenu extends LitElement {
         font-weight: 600;
         color: var(--radix-popover-text-color);
         width: 100%;
-        height: 48px;
+        height: 32px;
         z-index: 1;
         margin: 0;
         padding: 0;
@@ -93,8 +93,8 @@ export class RadixTabsMenu extends LitElement {
       }
 
       .active-indicator {
-        width: calc(50% - 15px);
-        height: 48px;
+        width: calc(50% - 5px);
+        height: 32px;
         border-radius: 8px;
         position: absolute;
         box-shadow: 0px 4px 5px 0px #0000001a;
@@ -108,7 +108,7 @@ export class RadixTabsMenu extends LitElement {
       }
 
       :host([active='requests']) .active-indicator {
-        transform: translateX(calc(100% + 25px));
+        transform: translateX(calc(100% + 5px));
       }
 
       button:focus,

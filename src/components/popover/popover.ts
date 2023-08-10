@@ -51,11 +51,10 @@ export class RadixPopover extends LitElement {
 
   drawPopover() {
     const fill = this.mode === 'light' ? '#D9D9D9' : '#808080'
-    const minHeight = this.height < 250 ? 250 : this.height
-    const height = minHeight
+    const height = this.height
     const startX = 13
-    const startY = 15
-    const endX = 440
+    const startY = 8
+    const endX = 344
     const endY = height
     const borderRadius = 12
     const halfBorderRadius = borderRadius / 2
@@ -74,14 +73,16 @@ export class RadixPopover extends LitElement {
       L ${x} 1
       L ${x + width} ${y}`
 
+    const arrowXPosition = this.compact ? endX - 30 : 300
+
     const svg = `
-    <svg viewBox="0 0 441 ${
+    <svg viewBox="0 0 345 ${
       height + 1
     }"  fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"  >
         <path
             d="${[
               `M ${startX} ${startY}`,
-              drawArrow(this.compact ? 400 : 350, startY, 17.5),
+              drawArrow(arrowXPosition, startY, 7),
               `L ${endX - borderRadius} ${startY}`,
               `C ${endX - halfBorderRadius} ${startY} ${endX} ${
                 startY + halfBorderRadius
@@ -137,18 +138,18 @@ export class RadixPopover extends LitElement {
         background-repeat: no-repeat;
         justify-content: center;
         align-items: flex-start;
-        padding: 35px 20px 10px;
+        padding: 18px 12px 10px;
         // TODO backdrop-filter: blur(30px);
       }
 
       #radix-popover-content {
-        width: 400px;
+        width: 344px;
         display: flex;
         justify-content: flex-start;
         align-items: center;
         flex-direction: column;
         overflow: auto;
-        min-height: 170px;
+        min-height: 130px;
       }
     `,
   ]

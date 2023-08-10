@@ -88,6 +88,7 @@ export class RadixCard extends LitElement {
       .timestamp {
         text-align: right;
         color: var(--radix-card-text-dimmed-color);
+        font-size: 12px;
       }
 
       .card {
@@ -107,7 +108,8 @@ export class RadixCard extends LitElement {
       span {
         display: block;
         font-weight: 600;
-        font-size: 18px;
+        font-size: 14px;
+        margin-bottom: 5px;
       }
 
       p {
