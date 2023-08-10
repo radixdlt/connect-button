@@ -160,7 +160,7 @@ export class RadixButton extends LitElement {
         min-width: ${BUTTON_COMPACT_MIN_WIDTH}px;
         min-height: ${BUTTON_MIN_HEIGHT}px;
         display: flex;
-        gap: 5px;
+        gap: 3px;
         justify-content: center;
       }
 
@@ -172,10 +172,8 @@ export class RadixButton extends LitElement {
         mask-position: center right;
         mask-repeat: no-repeat;
         -webkit-mask-repeat: no-repeat;
-        mask-size: contain;
-        -webkit-mask-size: contain;
         background-color: var(--radix-connect-button-text-color);
-        width: 32px;
+        width: 16px;
       }
 
       button:hover {
@@ -186,7 +184,6 @@ export class RadixButton extends LitElement {
         content: '';
         mask-image: url(${unsafeCSS(logo)});
         -webkit-mask-image: url(${unsafeCSS(logo)});
-        font-size: 16px;
       }
 
       button.gradient.logo::before {
@@ -254,9 +251,14 @@ export class RadixButton extends LitElement {
         button::before {
           -webkit-mask-position: center;
           mask-position: center;
+          mask-size: contain;
+          -webkit-mask-size: contain;
         }
         button.gradient {
           background-image: url(${unsafeCSS(CompactGradient)});
+        }
+        button.logo::before {
+          font-size: 16px;
         }
         ::slotted(*) {
           display: none;
