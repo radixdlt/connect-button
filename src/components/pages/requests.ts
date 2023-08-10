@@ -66,7 +66,7 @@ export class RadixRequestsPage extends LitElement {
     pageStyles,
     css`
       .subheader {
-        color: var(--color-grey-2);
+        color: var(--radix-card-text-dimmed-color);
         margin-top: -12px;
         margin-bottom: 15px;
         text-align: center;
