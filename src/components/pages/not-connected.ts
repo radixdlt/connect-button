@@ -106,8 +106,17 @@ export class RadixNotConnectedPage extends LitElement {
       <div class="cta-link">
         <radix-link
           mode=${this.mode}
-          href="https://www.radixdlt.com/wallet/"
+          href="/setup-guide"
           displayText="Download and Setup Guide"
+          @click=${() => {
+            this.dispatchEvent(
+              new CustomEvent('onLinkClick', {
+                bubbles: true,
+                composed: true,
+                detail: { type: 'setupGuide' },
+              })
+            )
+          }}
         ></radix-link>
       </div>
 
@@ -140,8 +149,17 @@ export class RadixNotConnectedPage extends LitElement {
       <div class="cta-link">
         <radix-link
           mode=${this.mode}
-          href="https://www.radixdlt.com/wallet/"
+          href="/setup-guide"
           displayText="Download and Setup Guide"
+          @click=${() => {
+            this.dispatchEvent(
+              new CustomEvent('onLinkClick', {
+                bubbles: true,
+                composed: true,
+                detail: { type: 'setupGuide' },
+              })
+            )
+          }}
         ></radix-link>
       </div>
 
