@@ -139,7 +139,6 @@ export class RadixButton extends LitElement {
         text-overflow: ellipsis;
         text-align: left;
         width: auto;
-        padding-right: 6px;
       }
 
       button {
@@ -203,6 +202,7 @@ export class RadixButton extends LitElement {
         background-color: var(--color-radix-blue-2);
         color: var(--color-light);
         background-image: url(${unsafeCSS(Gradient)});
+        padding-right: 7px;
       }
 
       button.gradient::before {
