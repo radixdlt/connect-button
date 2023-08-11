@@ -4,7 +4,7 @@ import { Account, PersonaData, RadixButtonStatus, RequestItem } from '../_types'
 import './connect-button'
 import { ConnectButton } from './connect-button'
 import './connect-button.stories.css'
-import { BUTTON_MIN_HEIGHT, BUTTON_MIN_WIDTH } from '../constants'
+import { BUTTON_MIN_WIDTH } from '../constants'
 
 export default {
   title: 'Radix/Connect button states',
@@ -36,10 +36,10 @@ const argTypes = {
 const defaultArgs = {
   render: true,
   mode: 'light',
-  borderRadius: 0,
+  borderRadius: 10,
   showPopover: true,
   width: BUTTON_MIN_WIDTH,
-  height: BUTTON_MIN_HEIGHT,
+  height: 40,
 }
 
 const Button = (args: any) => {
@@ -366,12 +366,12 @@ export const connected = Template.bind({})
 connected.args = {
   mode: 'light',
   width: BUTTON_MIN_WIDTH,
-  height: BUTTON_MIN_HEIGHT,
-  borderRadius: 0,
+  height: 40,
+  borderRadius: 20,
   dAppName: 'Radix Dashboard',
   activeTab: 'sharing',
   showPopover: true,
-  loggedInTimestamp: 1690554318703,
+  loggedInTimestamp: Date.now(),
   status: RadixButtonStatus.success,
   connected: true,
   avatarUrl:
@@ -381,7 +381,7 @@ connected.args = {
       id: crypto.randomUUID(),
       type: 'sendTransaction',
       status: 'pending',
-      timestamp: 1690154318703,
+      timestamp: Date.now(),
       showCancel: true,
     },
     {
