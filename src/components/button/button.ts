@@ -115,8 +115,6 @@ export class RadixButton extends LitElement {
     css`
       :host {
         width: max(var(--radix-connect-button-width, 138px), 40px);
-        height: max(var(--radix-connect-button-height, 40px), 40px);
-        min-height: 0px;
         min-width: 40px;
         display: flex;
         justify-content: flex-end;
@@ -149,10 +147,9 @@ export class RadixButton extends LitElement {
 
       button {
         width: max(var(--radix-connect-button-width, 138px), 40px);
-        height: max(var(--radix-connect-button-height, 40px), 40px);
-        min-height: 0px;
-        min-width: 40px;
-        height: var(--radix-connect-button-height, auto);
+        height: var(--radix-connect-button-height, 40px);
+        min-width: ${BUTTON_COMPACT_MIN_WIDTH}px;
+        min-height: ${BUTTON_MIN_HEIGHT}px;
         border-radius: var(--radix-connect-button-border-radius, 0);
         background-color: var(--radix-connect-button-background);
         border: 1px solid var(--radix-connect-button-border-color);
@@ -164,8 +161,7 @@ export class RadixButton extends LitElement {
         cursor: pointer;
         font-weight: 500;
         transition: background-color 0.1s cubic-bezier(0.45, 0, 0.55, 1);
-        min-width: ${BUTTON_COMPACT_MIN_WIDTH}px;
-        min-height: ${BUTTON_MIN_HEIGHT}px;
+
         display: flex;
         gap: 3px;
         justify-content: center;
