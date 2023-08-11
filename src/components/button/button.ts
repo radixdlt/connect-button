@@ -88,7 +88,8 @@ export class RadixButton extends LitElement {
         return html`${LoadingSpinner} <slot></slot>`
       } else if (this.status === RadixButtonStatus.pending) {
         return LoadingSpinner
-      }
+      } else if (!this.connected && ['success', 'error'].includes(this.status))
+        return ''
 
       return html`<slot></slot>`
     }
@@ -256,7 +257,7 @@ export class RadixButton extends LitElement {
 
       @container (width < ${BUTTON_MIN_WIDTH}px) {
         button {
-          width: var(--radix-connect-button-height, ${BUTTON_MIN_HEIGHT}px);
+          width: var(--radix-connect-button-height, 40px);
           max-width: ${BUTTON_MIN_WIDTH}px;
           max-height: ${BUTTON_MIN_WIDTH}px;
           justify-content: center;
