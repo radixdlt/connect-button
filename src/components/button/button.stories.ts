@@ -37,9 +37,8 @@ const createRow = (args: Args) => {
               ? `${borderRadius[index]}px`
               : undefined};
           }
-
           .button-${index}-${args!.theme} radix-button:first-child {
-            --radix-connect-button-width: 46px;
+            --radix-connect-button-width: 40px;
           }
           .button-${index}-${args!.theme} radix-button:last-child {
             --radix-connect-button-width: 139px;
