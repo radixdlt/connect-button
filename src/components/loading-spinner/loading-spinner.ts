@@ -8,8 +8,6 @@ export const LoadingSpinner = html`<div class="loading-spinner-container">
 export const loadingSpinnerCSS = css`
   .loading-spinner-container {
     display: flex;
-    margin-left: 5px;
-    margin-right: 4px;
   }
 
   @container (max-width: ${BUTTON_MIN_WIDTH - 16}px) {
@@ -31,10 +29,10 @@ export const loadingSpinnerCSS = css`
   }
 
   .loading-spinner {
-    width: 23.5px;
-    height: 23.5px;
-    min-width: 23.5px;
-    min-height: 23.5px;
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    min-height: 22px;
     border: 2px solid var(--radix-connect-button-text-color);
     border-left-color: color-mix(
       in srgb,

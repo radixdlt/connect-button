@@ -115,6 +115,8 @@ export class RadixButton extends LitElement {
     css`
       :host {
         width: max(var(--radix-connect-button-width, 138px), 40px);
+        height: max(var(--radix-connect-button-height, 40px), 40px);
+        min-height: 0px;
         min-width: 40px;
         display: flex;
         justify-content: flex-end;
@@ -141,8 +143,14 @@ export class RadixButton extends LitElement {
         width: auto;
       }
 
+      .gradient ::slotted(*) {
+        padding: 0 4px;
+      }
+
       button {
         width: max(var(--radix-connect-button-width, 138px), 40px);
+        height: max(var(--radix-connect-button-height, 40px), 40px);
+        min-height: 0px;
         min-width: 40px;
         height: var(--radix-connect-button-height, auto);
         border-radius: var(--radix-connect-button-border-radius, 0);
@@ -161,6 +169,7 @@ export class RadixButton extends LitElement {
         display: flex;
         gap: 3px;
         justify-content: center;
+        padding: 0 10px;
       }
 
       button::before {
@@ -213,23 +222,31 @@ export class RadixButton extends LitElement {
       :host([status='default']) > button.gradient::before {
         mask-image: url(${unsafeCSS(AvatarPlaceholder)});
         -webkit-mask-image: url(${unsafeCSS(AvatarPlaceholder)});
-        mask-size: contain;
-        -webkit-mask-size: contain;
-        mask-position: center;
+        width: 22px;
+        min-width: 22px;
+        height: 22px;
         -webkit-mask-position: center;
-        font-size: 26px;
+        mask-position: center;
       }
 
       :host([status='success']) > button::before {
         mask-image: url(${unsafeCSS(SuccessIcon)});
         -webkit-mask-image: url(${unsafeCSS(SuccessIcon)});
-        font-size: 26px;
+        width: 22px;
+        min-width: 22px;
+        height: 22px;
+        -webkit-mask-position: center;
+        mask-position: center;
       }
 
       :host([status='error']) > button::before {
         mask-image: url(${unsafeCSS(ErrorIcon)});
         -webkit-mask-image: url(${unsafeCSS(ErrorIcon)});
-        font-size: 26px;
+        width: 22px;
+        min-width: 22px;
+        height: 22px;
+        -webkit-mask-position: center;
+        mask-position: center;
       }
 
       button.gradient:hover {
@@ -247,15 +264,15 @@ export class RadixButton extends LitElement {
           max-width: ${BUTTON_MIN_WIDTH}px;
           max-height: ${BUTTON_MIN_WIDTH}px;
           justify-content: center;
+          padding: 0;
         }
         button::before {
           -webkit-mask-position: center;
           mask-position: center;
-          mask-size: contain;
-          -webkit-mask-size: contain;
         }
         button.gradient {
           background-image: url(${unsafeCSS(CompactGradient)});
+          padding: 0;
         }
         button.logo::before {
           font-size: 16px;
