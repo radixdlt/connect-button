@@ -49,7 +49,7 @@
     "pre-push": "npm run prettier && npm run build && npm run build:storybook"
   },
   "engines": {
-    "node": "20.3.0"
+    "node": ">=16.0.0"
   },
   "dependencies": {
     "lit": "^2.7.5"
