@@ -262,6 +262,7 @@ export class ConnectButton extends LitElement {
       text-align: left;
       font-family: 'IBM Plex Sans';
       position: relative;
+      z-index: 1000;
       display: inline-block;
 
       /* Core colors */
