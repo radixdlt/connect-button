@@ -255,7 +255,7 @@ export class RadixButton extends LitElement {
         outline: 0px auto -webkit-focus-ring-color;
       }
 
-      @container (width < ${BUTTON_MIN_WIDTH}px) {
+      @container (width < ${BUTTON_MIN_WIDTH - 0.1}px) {
         button {
           width: var(--radix-connect-button-height, 40px);
           max-width: ${BUTTON_MIN_WIDTH}px;
