@@ -200,6 +200,7 @@ export class RadixPopover extends LitElement {
         height: 24px;
         position: absolute;
         right: 1rem;
+        background-repeat: no-repeat;
       }
       #close-button:hover {
         opacity: 0.8;
