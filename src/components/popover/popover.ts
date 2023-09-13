@@ -1,9 +1,10 @@
-import { html, css, LitElement } from 'lit'
+import { html, css, LitElement, unsafeCSS } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import { themeCSS } from '../../styles/theme'
 import '../tabs-menu/tabs-menu'
 import { encodeBase64 } from '../../helpers/encode-base64'
 import { RadixButtonMode } from '../../_types'
+import CloseIcon from '../../assets/icon-close.svg'
 
 @customElement('radix-popover')
 export class RadixPopover extends LitElement {
@@ -22,6 +23,11 @@ export class RadixPopover extends LitElement {
     type: Boolean,
   })
   compact = false
+
+  @property({
+    type: Boolean,
+  })
+  isMobile = false
 
   @state()
   private height = 0
@@ -47,6 +53,15 @@ export class RadixPopover extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback()
     this.resizeObserver?.unobserve(this)
+  }
+
+  closePopover() {
+    this.dispatchEvent(
+      new CustomEvent('onClosePopover', {
+        bubbles: true,
+        composed: true,
+      })
+    )
   }
 
   drawPopover() {
@@ -120,12 +135,24 @@ export class RadixPopover extends LitElement {
   }
 
   render() {
-    return html`<style>
-        :host {
-          background-image: url(${this.drawPopover()});
-        }
-      </style>
-      <div id="radix-popover-content"><slot /></div>`
+    return this.isMobile
+      ? html`<div id="radix-mobile-popover-content">
+          <button
+            id="close-button"
+            @click=${() => {
+              this.closePopover()
+            }}
+          ></button>
+          <slot />
+        </div>`
+      : html`<style>
+            :host {
+              background-image: url(${this.drawPopover()});
+            }
+          </style>
+          <div id="radix-popover-content">
+            <slot />
+          </div>`
   }
 
   static styles = [
@@ -142,6 +169,11 @@ export class RadixPopover extends LitElement {
         // TODO backdrop-filter: blur(30px);
       }
 
+      :host(.mobile) {
+        background-color: var(--radix-popover-background);
+        width: 100vw;
+      }
+
       #radix-popover-content {
         width: 344px;
         display: flex;
@@ -150,6 +182,27 @@ export class RadixPopover extends LitElement {
         flex-direction: column;
         overflow: auto;
         min-height: 130px;
+      }
+      #radix-mobile-popover-content {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        overflow: auto;
+        min-height: 130px;
+      }
+
+      #close-button {
+        -webkit-mask-image: url(${unsafeCSS(CloseIcon)});
+        mask-image: url(${unsafeCSS(CloseIcon)});
+        background-color: var(--radix-card-text-color);
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        right: 1rem;
+      }
+      #close-button:hover {
+        opacity: 0.8;
       }
     `,
   ]

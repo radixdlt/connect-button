@@ -139,6 +139,10 @@ export class ConnectButton extends LitElement {
       )
   }
 
+  private closePopover() {
+    this.showPopover = false
+  }
+
   private connectButtonTemplate() {
     const buttonText = this.connected ? this.personaLabel : 'Connect'
 
@@ -213,7 +217,15 @@ export class ConnectButton extends LitElement {
       mode="${this.mode}"
       ?connected=${this.connected}
       ?compact=${this.compact}
-      class=${classMap({ popover: true, 'show-popover': this.showPopover })}
+      ?isMobile=${this.isMobile}
+      @onClosePopover=${() => {
+        this.closePopover()
+      }}
+      class=${classMap({
+        popover: true,
+        'show-popover': this.showPopover,
+        mobile: this.isMobile,
+      })}
     >
       ${this.connected
         ? html`
@@ -234,7 +246,7 @@ export class ConnectButton extends LitElement {
   }
 
   render() {
-    return html` ${this.connectButtonTemplate()} ${this.popoverTemplate()} `
+    return html`${this.connectButtonTemplate()} ${this.popoverTemplate()}`
   }
 
   static styles = css`
@@ -290,10 +302,22 @@ export class ConnectButton extends LitElement {
       --color-grey-4: #e2e5ed;
       --color-grey-5: #f4f5f9;
     }
+
     .popover {
       position: absolute;
       top: calc(100% + 0.5rem);
       right: 0;
+    }
+
+    .mobile.popover {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: unset;
+      height: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 16px;
     }
 
     @-webkit-keyframes slide-bottom {
