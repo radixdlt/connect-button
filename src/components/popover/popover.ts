@@ -170,7 +170,7 @@ export class RadixPopover extends LitElement {
       }
 
       :host(.mobile) {
-        background-color: var(--radix-popover-background);
+        background-color: var(--radix-card-background);
         width: 100vw;
       }
 
