@@ -316,6 +316,8 @@ export class ConnectButton extends LitElement {
       box-sizing: border-box;
       padding: 14px;
       backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      background-color: rgba(0, 0, 0, 0.4);
     }
 
     @-webkit-keyframes slide-bottom {
