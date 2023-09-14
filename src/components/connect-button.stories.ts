@@ -37,7 +37,7 @@ const defaultArgs = {
   render: true,
   mode: 'light',
   borderRadius: 10,
-  showPopover: true,
+  showPopoverMenu: true,
   width: BUTTON_MIN_WIDTH,
   height: 40,
 }
@@ -81,7 +81,7 @@ const Button = (args: any) => {
           ?isMobile=${args.isMobile}
           ?isWalletLinked=${args.isWalletLinked}
           ?isExtensionAvailable=${args.isExtensionAvailable}
-          ?showPopover=${args.showPopover}
+          ?showPopoverMenu=${args.showPopoverMenu}
           .requestItems=${args.requestItems}
           .accounts=${args.accounts}
           .personaData=${args.personaData}
@@ -370,7 +370,7 @@ connected.args = {
   borderRadius: 20,
   dAppName: 'Radix Dashboard',
   activeTab: 'sharing',
-  showPopover: true,
+  showPopoverMenu: true,
   loggedInTimestamp: Date.now(),
   status: RadixButtonStatus.success,
   connected: true,
