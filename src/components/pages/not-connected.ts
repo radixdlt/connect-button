@@ -253,8 +253,12 @@ export class RadixNotConnectedPage extends LitElement {
       }
 
       .mobile-wrapper .header {
-        font-size: 14px;
+        font-size: 18px;
         font-weight: 600;
+        margin-bottom: 5px;
+      }
+      .mobile-wrapper .content {
+        font-size: 16px;
         margin-bottom: 5px;
       }
       button {

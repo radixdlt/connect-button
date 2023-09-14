@@ -43,7 +43,8 @@ export class RadixPopover extends LitElement {
       )!
 
       this.resizeObserver = new ResizeObserver(() => {
-        this.height = popoverContent.scrollHeight
+        if (popoverContent && popoverContent.scrollHeight)
+          this.height = popoverContent.scrollHeight
       })
 
       this.resizeObserver.observe(this)
@@ -143,7 +144,15 @@ export class RadixPopover extends LitElement {
               this.closePopover()
             }}
           ></button>
-          <slot />
+          <div id="content"><slot></slot></div>
+          <button
+            id="close-button-blue"
+            @click=${() => {
+              this.closePopover()
+            }}
+          >
+            Close
+          </button>
         </div>`
       : html`<style>
             :host {
@@ -170,8 +179,6 @@ export class RadixPopover extends LitElement {
       }
 
       :host(.mobile) {
-        background-color: var(--radix-card-background);
-        width: 100vw;
       }
 
       #radix-popover-content {
@@ -183,6 +190,9 @@ export class RadixPopover extends LitElement {
         overflow: auto;
         min-height: 130px;
       }
+      #content {
+        width: 288px;
+      }
       #radix-mobile-popover-content {
         display: flex;
         justify-content: flex-start;
@@ -190,6 +200,10 @@ export class RadixPopover extends LitElement {
         flex-direction: column;
         overflow: auto;
         min-height: 130px;
+        background-color: var(--radix-card-background);
+        padding: 1rem;
+        border-radius: 12px;
+        max-width: 344px;
       }
 
       #close-button {
@@ -198,12 +212,22 @@ export class RadixPopover extends LitElement {
         background-color: var(--radix-card-text-color);
         width: 24px;
         height: 24px;
-        position: absolute;
-        right: 1rem;
         background-repeat: no-repeat;
+        align-self: flex-start;
+        cursor: pointer;
       }
       #close-button:hover {
         opacity: 0.8;
+      }
+
+      #close-button-blue {
+        background-color: var(--color-radix-blue-2);
+        color: var(--color-light);
+        padding: 0.7rem 1rem;
+        font-size: 14px;
+        width: 100%;
+        cursor: pointer;
+        max-width: 236px;
       }
     `,
   ]

@@ -1,6 +1,5 @@
 import { LitElement, css, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { config } from '../config'
 import './popover/popover'
 import './button/button'
 import './card/card'
@@ -17,7 +16,7 @@ import {
 } from '../_types'
 import { classMap } from 'lit-html/directives/class-map.js'
 
-@customElement(config.elementTag)
+@customElement('radix-connect-button')
 export class ConnectButton extends LitElement {
   @property({
     type: String,
@@ -41,10 +40,8 @@ export class ConnectButton extends LitElement {
   @property({ type: String })
   loggedInTimestamp: string = ''
 
-  @property({
-    type: Boolean,
-  })
-  showPopover: boolean = false
+  @property({ type: Boolean })
+  showPopoverMenu: boolean = false
 
   @property({ type: Array })
   requestItems: RequestItem[] = []
@@ -101,9 +98,9 @@ export class ConnectButton extends LitElement {
     super()
 
     this.windowClickEventHandler = (event) => {
-      if (!this.showPopover) return
+      if (!this.showPopoverMenu) return
       if (this.contains(event.target as HTMLElement)) return
-      this.showPopover = false
+      this.showPopoverMenu = false
     }
     document.addEventListener('click', this.windowClickEventHandler)
   }
@@ -128,11 +125,11 @@ export class ConnectButton extends LitElement {
     )
   }
 
-  private togglePopover() {
-    this.showPopover = !this.showPopover
-    if (this.showPopover)
+  private togglePopoverMenu() {
+    this.showPopoverMenu = !this.showPopoverMenu
+    if (this.showPopoverMenu)
       this.dispatchEvent(
-        new CustomEvent('onShowPopover', {
+        new CustomEvent('onShowPopoverMenu', {
           bubbles: true,
           composed: true,
         })
@@ -140,7 +137,7 @@ export class ConnectButton extends LitElement {
   }
 
   private closePopover() {
-    this.showPopover = false
+    this.showPopoverMenu = false
   }
 
   private connectButtonTemplate() {
@@ -151,7 +148,7 @@ export class ConnectButton extends LitElement {
       theme=${this.theme}
       ?connected=${this.connected}
       ?fullWidth=${this.fullWidth}
-      @onClick=${this.togglePopover}
+      @onClick=${this.togglePopoverMenu}
       @onResize=${(event: CustomEvent) => {
         this.compact = event.detail.offsetWidth === 40
       }}
@@ -212,7 +209,7 @@ export class ConnectButton extends LitElement {
   }
 
   private popoverTemplate() {
-    if (!this.showPopover) return ''
+    if (!this.showPopoverMenu) return ''
     return html` <radix-popover
       mode="${this.mode}"
       ?connected=${this.connected}
@@ -223,7 +220,7 @@ export class ConnectButton extends LitElement {
       }}
       class=${classMap({
         popover: true,
-        'show-popover': this.showPopover,
+        'show-popover': this.showPopoverMenu,
         mobile: this.isMobile,
       })}
     >
@@ -317,7 +314,8 @@ export class ConnectButton extends LitElement {
       height: 100%;
       width: 100%;
       box-sizing: border-box;
-      padding: 16px;
+      padding: 14px;
+      backdrop-filter: blur(2px);
     }
 
     @-webkit-keyframes slide-bottom {
