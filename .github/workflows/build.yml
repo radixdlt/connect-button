@@ -3,11 +3,11 @@ name: Build
 on:
   pull_request:
     branches:
-    - develop
+      - develop
   push:
     branches:
-    - develop
-    - main
+      - develop
+      - main
 
 jobs:
   snyk_scan_deps_licences:
@@ -91,7 +91,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.3.0'
+          node-version: '18.x'
 
       - name: Setup tags for docker image
         id: setup_tags
@@ -113,9 +113,9 @@ jobs:
     uses: radixdlt/public-iac-resuable-artifacts/.github/workflows/docker-build.yml@main
     with:
       runs_on: ubuntu-latest
-      image_registry: "docker.io"
-      image_organization: "radixdlt"
-      image_name: "connect-button-storybook"
+      image_registry: 'docker.io'
+      image_organization: 'radixdlt'
+      image_name: 'connect-button-storybook'
       tag: ${{ needs.build.outputs.tag }}
       tags: |
         type=sha,priority=601
@@ -124,11 +124,11 @@ jobs:
         type=semver,pattern={{version}}
         type=semver,pattern={{major}}.{{minor}}
         type=semver,pattern={{major}}
-      context: "."
-      dockerfile: "./Dockerfile"
-      platforms: "linux/amd64"
-      provenance: "false"
-      enable_gcr: "false"
+      context: '.'
+      dockerfile: './Dockerfile'
+      platforms: 'linux/amd64'
+      provenance: 'false'
+      enable_gcr: 'false'
       scan_image: true
       snyk_target_ref: ${{ github.ref_name }}
     secrets:
@@ -153,14 +153,14 @@ jobs:
       - name: Setup helmfile and helm
         uses: mamezou-tech/setup-helmfile@55ae2a66c5af4883148b7a50cc6ddc9b61042184
         with:
-          helm-diff-plugin-version: "v3.1.3"
-          helmfile-version: "v0.144.0"
-          helm-version: "v3.11.0"
+          helm-diff-plugin-version: 'v3.1.3'
+          helmfile-version: 'v0.144.0'
+          helm-version: 'v3.11.0'
           install-kubectl: no
       - name: Install kubectl
         uses: azure/setup-kubectl@901a10e89ea615cf61f57ac05cecdf23e7de06d8 #v3.2
         with:
-          version: "v1.25.6"
+          version: 'v1.25.6'
       - name: Configure AWS credentials for deployment
         uses: aws-actions/configure-aws-credentials@bab55d3830fe69833c9fecaa51fe2c829a7508f3
         with:
@@ -211,14 +211,14 @@ jobs:
       - name: Setup helmfile and helm
         uses: mamezou-tech/setup-helmfile@55ae2a66c5af4883148b7a50cc6ddc9b61042184
         with:
-          helm-diff-plugin-version: "v3.1.3"
-          helmfile-version: "v0.144.0"
-          helm-version: "v3.11.0"
+          helm-diff-plugin-version: 'v3.1.3'
+          helmfile-version: 'v0.144.0'
+          helm-version: 'v3.11.0'
           install-kubectl: no
       - name: Install kubectl
         uses: azure/setup-kubectl@901a10e89ea615cf61f57ac05cecdf23e7de06d8 #v3.2
         with:
-          version: "v1.25.6"
+          version: 'v1.25.6'
       - name: Configure AWS credentials for deployment
         uses: aws-actions/configure-aws-credentials@bab55d3830fe69833c9fecaa51fe2c829a7508f3
         with:
@@ -259,14 +259,14 @@ jobs:
       - name: Setup helmfile and helm
         uses: mamezou-tech/setup-helmfile@55ae2a66c5af4883148b7a50cc6ddc9b61042184
         with:
-          helm-diff-plugin-version: "v3.1.3"
-          helmfile-version: "v0.144.0"
-          helm-version: "v3.11.0"
+          helm-diff-plugin-version: 'v3.1.3'
+          helmfile-version: 'v0.144.0'
+          helm-version: 'v3.11.0'
           install-kubectl: no
       - name: Install kubectl
         uses: azure/setup-kubectl@901a10e89ea615cf61f57ac05cecdf23e7de06d8 #v3.2
         with:
-          version: "v1.25.6"
+          version: 'v1.25.6'
       - name: Configure AWS credentials for deployment
         uses: aws-actions/configure-aws-credentials@bab55d3830fe69833c9fecaa51fe2c829a7508f3
         with:
