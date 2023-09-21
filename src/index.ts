@@ -1,2 +1,6 @@
 export * from './components/connect-button'
+export * from './components/modal/modal'
+export * from './components/modal/modal-button'
+export * from './components/modal/modal-close-button'
+export * from './components/checkbox/checkbox'
 export * from './_types'
