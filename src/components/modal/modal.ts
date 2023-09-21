@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { themeCSS } from '../../styles/theme'
+import { themeCSS, variablesCSS } from '../../styles/theme'
 import { RadixButtonMode } from '../../_types'
 
 @customElement('radix-modal')
@@ -41,6 +41,7 @@ export class RadixModal extends LitElement {
   }
 
   static styles = [
+    variablesCSS,
     themeCSS,
     css`
       :host(:not([show])) {
