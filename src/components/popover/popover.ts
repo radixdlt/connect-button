@@ -175,10 +175,6 @@ export class RadixPopover extends LitElement {
         justify-content: center;
         align-items: flex-start;
         padding: 18px 12px 10px;
-        // TODO backdrop-filter: blur(30px);
-      }
-
-      :host(.mobile) {
       }
 
       #radix-popover-content {
