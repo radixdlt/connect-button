@@ -9,6 +9,7 @@ It appears as a consistent, Radix-branded UI element that helps users identify y
   - [Getting started](#getting-started)
     - [Properties](#properties)
     - [Events](#events)
+- [License](#license)
 
 # Installation
 
@@ -113,3 +114,7 @@ type ConnectButtonEvents = {
 - onDestroy - triggers when button is removed from the DOM. Useful for cleaning up registered event listeners and subscriptions.
 - onShowPopover - triggers when users clicks on radix button and popover is being shown
 - onUpdateSharedData - triggers when users clicks on "Update Shared Data" button
+
+# License
+
+The √ Connect Button code is released under [Apache 2.0 license](LICENSE). Binaries are licensed under the [Radix Software EULA](http://www.radixdlt.com/terms/genericEULA)
