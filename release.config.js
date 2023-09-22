@@ -19,6 +19,10 @@ module.exports = {
             release: 'patch',
           },
           {
+            type: 'major',
+            release: 'major',
+          },
+          {
             type: 'docs',
             scope: 'README',
             release: 'patch',
@@ -78,6 +82,10 @@ module.exports = {
               type: 'fix',
               section: ':bug: Fixes',
               hidden: false,
+            },
+            {
+              type: 'major',
+              hidden: true,
             },
             {
               type: 'docs',

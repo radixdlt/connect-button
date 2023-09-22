@@ -106,7 +106,7 @@ export class RadixNotConnectedPage extends LitElement {
       <div class="cta-link">
         <radix-link
           mode=${this.mode}
-          href="/setup-guide"
+          href="http://wallet.radixdlt.com/"
           displayText="Download and Setup Guide"
           @click=${() => {
             this.dispatchEvent(
@@ -149,7 +149,7 @@ export class RadixNotConnectedPage extends LitElement {
       <div class="cta-link">
         <radix-link
           mode=${this.mode}
-          href="/setup-guide"
+          href="http://wallet.radixdlt.com/"
           displayText="Download and Setup Guide"
           @click=${() => {
             this.dispatchEvent(
