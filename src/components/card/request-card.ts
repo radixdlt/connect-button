@@ -136,7 +136,6 @@ export class RadixRequestCard extends LitElement {
       ? html`<div class="transaction">
           <span class="text-dimmed">ID:</span>
           <radix-link
-            href="${this.transactionIntentHash}"
             displayText="${shortenAddress(this.transactionIntentHash)}"
             mode=${this.mode}
             @click=${(event: MouseEvent) => {

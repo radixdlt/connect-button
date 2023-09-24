@@ -6,9 +6,6 @@ on:
       - develop
   workflow_dispatch:
 
-env:
-  NODE_VERSION: "20.3.0"
-
 jobs:
   release:
     name: Release
@@ -24,7 +21,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: '18.x'
       - name: Authenticate with private NPM package
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMJS_TOKEN }}" > ~/.npmrc
       - name: Install dependencies
