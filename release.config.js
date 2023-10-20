@@ -133,5 +133,13 @@ module.exports = {
     ],
     '@semantic-release/npm',
     '@semantic-release/github',
+    [
+      '@saithodev/semantic-release-backmerge',
+      {
+        backmergeBranches: [{ from: 'main', to: 'develop' }],
+        backmergeStrategy: 'merge',
+        fastForwardMode: 'ff',
+      },
+    ],
   ],
 }

@@ -61,6 +61,7 @@
     "@commitlint/cli": "^17.6.6",
     "@commitlint/config-conventional": "^17.6.6",
     "@playwright/test": "^1.35.1",
+    "@saithodev/semantic-release-backmerge": "^3.2.1",
     "@storybook/addon-actions": "^7.0.24",
     "@storybook/addon-essentials": "^7.0.24",
     "@storybook/addon-links": "^7.0.24",
