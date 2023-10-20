@@ -47,7 +47,9 @@ export class RadixPersonaCard extends LitElement {
       >
         <div class="placeholder">
           <div
-            class="avatar"
+            class=${classMap({
+              avatar: !!this.avatarUrl,
+            })}
             style=${styleMap({
               backgroundImage: `url(${unsafeCSS(this.avatarUrl)})`,
             })}
