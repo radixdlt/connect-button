@@ -6,7 +6,7 @@ export const pageStyles = css`
   }
 
   .header {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     margin: 15px 0px;
     white-space: nowrap;
