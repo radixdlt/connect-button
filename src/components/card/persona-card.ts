@@ -119,6 +119,7 @@ export class RadixPersonaCard extends LitElement {
       li {
         font-size: 12px;
         word-break: break-word;
+        line-height: 18px;
       }
     `,
   ]
