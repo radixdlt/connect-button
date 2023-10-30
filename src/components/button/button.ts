@@ -1,101 +1,101 @@
-import { LitElement, css, html, unsafeCSS } from 'lit'
-import { classMap } from 'lit/directives/class-map.js'
-import { customElement, property } from 'lit/decorators.js'
+import { LitElement, css, html, unsafeCSS } from "lit";
+import { classMap } from "lit/directives/class-map.js";
+import { customElement, property } from "lit/decorators.js";
 import {
   LoadingSpinner,
   loadingSpinnerCSS,
-} from '../loading-spinner/loading-spinner'
-import { themeCSS } from '../../styles/theme'
-import logo from '../../assets/logo.svg'
-import Gradient from '../../assets/gradient.svg'
-import CompactGradient from '../../assets/compact-gradient.svg'
-import AvatarPlaceholder from '../../assets/button-avatar-placeholder.svg'
-import SuccessIcon from '../../assets/success.svg'
-import ErrorIcon from '../../assets/error.svg'
-import { RadixButtonStatus, RadixButtonTheme } from '../../_types'
+} from "../loading-spinner/loading-spinner";
+import { themeCSS } from "../../styles/theme";
+import logo from "../../assets/logo.svg";
+import Gradient from "../../assets/gradient.svg";
+import CompactGradient from "../../assets/compact-gradient.svg";
+import AvatarPlaceholder from "../../assets/button-avatar-placeholder.svg";
+import SuccessIcon from "../../assets/success.svg";
+import ErrorIcon from "../../assets/error.svg";
+import { RadixButtonStatus, RadixButtonTheme } from "../../_types";
 import {
   BUTTON_COMPACT_MIN_WIDTH,
   BUTTON_MIN_HEIGHT,
   BUTTON_MIN_WIDTH,
-} from '../../constants'
+} from "../../constants";
 
-@customElement('radix-button')
+@customElement("radix-button")
 export class RadixButton extends LitElement {
   @property({
     type: String,
     reflect: true,
   })
-  status: RadixButtonStatus = RadixButtonStatus.default
+  status: RadixButtonStatus = RadixButtonStatus.default;
 
   @property({
     type: Boolean,
   })
-  connected = false
+  connected = false;
 
   @property({
     type: Boolean,
     reflect: true,
   })
-  fullWidth = false
+  fullWidth = false;
 
   @property({
     type: String,
     reflect: true,
   })
-  theme: RadixButtonTheme = 'radix-blue'
+  theme: RadixButtonTheme = "radix-blue";
 
   private onClick(event: MouseEvent) {
     this.dispatchEvent(
-      new CustomEvent('onClick', {
+      new CustomEvent("onClick", {
         detail: event,
         bubbles: true,
         composed: true,
       })
-    )
+    );
   }
 
-  private resizeObserver: undefined | ResizeObserver
+  private resizeObserver: undefined | ResizeObserver;
 
   connectedCallback() {
-    super.connectedCallback()
+    super.connectedCallback();
 
     setTimeout(() => {
-      const button = this.shadowRoot!.querySelector('button')!
+      const button = this.shadowRoot!.querySelector("button")!;
 
       this.resizeObserver = new ResizeObserver(() => {
         this.dispatchEvent(
-          new CustomEvent('onResize', {
+          new CustomEvent("onResize", {
             bubbles: true,
             composed: false,
             detail: button,
           })
-        )
-      })
+        );
+      });
 
-      this.resizeObserver.observe(button)
-    })
+      this.resizeObserver.observe(button);
+    });
   }
 
   disconnectedCallback() {
-    super.disconnectedCallback()
-    const button = this.shadowRoot!.querySelector('button')!
-    this.resizeObserver?.unobserve(button)
+    super.disconnectedCallback();
+    const button = this.shadowRoot!.querySelector("button")!;
+    this.resizeObserver?.unobserve(button);
   }
 
   render() {
     const renderContent = () => {
       if (this.status === RadixButtonStatus.pending && this.connected) {
-        return html`${LoadingSpinner} <slot></slot>`
+        return html`${LoadingSpinner} <slot></slot>`;
       } else if (this.status === RadixButtonStatus.pending) {
-        return LoadingSpinner
-      } else if (!this.connected && ['success', 'error'].includes(this.status))
-        return ''
+        return LoadingSpinner;
+      } else if (!this.connected && ["success", "error"].includes(this.status))
+        return "";
 
-      return html`<slot></slot>`
-    }
+      return html`<slot></slot>`;
+    };
 
-    const showLogo = this.status !== 'pending' && !this.connected
-    const showGradient = this.connected
+    const showLogo = this.status !== "pending" && !this.connected;
+    const showGradient = this.connected;
 
     return html`
       <button
@@ -104,10 +104,11 @@ export class RadixButton extends LitElement {
           logo: showLogo,
           gradient: showGradient,
         })}
+        aria-label="Radix Connect Button"
       >
         ${renderContent()}
       </button>
-    `
+    `;
   }
 
   static styles = [
@@ -279,11 +280,11 @@ export class RadixButton extends LitElement {
         }
       }
     `,
-  ]
+  ];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'radix-button': RadixButton
+    "radix-button": RadixButton;
   }
 }
