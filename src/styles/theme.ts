@@ -46,7 +46,7 @@ export const themeCSS = css`
 
     --radix-popover-tabs-background: color-mix(
       in srgb,
-      var(--color-grey-2) 30%,
+      var(--color-grey-2) 15%,
       transparent
     );
     --radix-popover-tabs-button-active-background: var(--color-light);

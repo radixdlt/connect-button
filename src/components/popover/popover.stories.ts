@@ -37,7 +37,7 @@ export const WithBackground: Story = {
   render: (args) =>
     html`
       <style>
-        .wrapper {
+        .wrapper-1 {
           background-image: repeating-linear-gradient(
             -45deg,
             transparent 0 20px,
@@ -49,8 +49,22 @@ export const WithBackground: Story = {
           align-items: center;
           justify-content: center;
         }
+        .wrapper-2 {
+          background: #427be5;
+          width: 100%;
+          padding: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
       </style>
-      <div class="wrapper">
+      <div class="wrapper-1">
+        <radix-popover
+          mode=${args.mode}
+          ?connected=${args.connected}
+        ></radix-popover>
+      </div>
+      <div class="wrapper-2">
         <radix-popover
           mode=${args.mode}
           ?connected=${args.connected}

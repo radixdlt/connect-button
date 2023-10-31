@@ -47,7 +47,9 @@ export class RadixPersonaCard extends LitElement {
       >
         <div class="placeholder">
           <div
-            class="avatar"
+            class=${classMap({
+              avatar: !!this.avatarUrl,
+            })}
             style=${styleMap({
               backgroundImage: `url(${unsafeCSS(this.avatarUrl)})`,
             })}
@@ -117,6 +119,7 @@ export class RadixPersonaCard extends LitElement {
       li {
         font-size: 12px;
         word-break: break-word;
+        line-height: 18px;
       }
     `,
   ]

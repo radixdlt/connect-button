@@ -66,7 +66,7 @@ export class RadixPopover extends LitElement {
   }
 
   drawPopover() {
-    const fill = this.mode === 'light' ? '#D9D9D9' : '#808080'
+    const fill = this.mode === 'light' ? '#E7E7E7' : '#808080'
     const height = this.height
     const startX = 13
     const startY = 8
