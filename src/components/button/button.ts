@@ -104,6 +104,7 @@ export class RadixButton extends LitElement {
           logo: showLogo,
           gradient: showGradient,
         })}
+        aria-label="Radix Connect Button"
       >
         ${renderContent()}
       </button>
