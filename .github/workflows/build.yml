@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - develop
+      - main
   push:
     branches:
       - develop
@@ -105,6 +106,9 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Prettier
+        run: npm run prettier
 
   build_push_container:
     needs:
