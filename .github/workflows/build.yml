@@ -147,11 +147,11 @@ jobs:
       pull-requests: read
     steps:
       - uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
-      - uses: unfor19/install-aws-cli-action@457b7980b125044247e455d87b9a26fc2299b787
+      - uses: RDXWorks-actions/install-aws-cli-action@master
         with:
           version: 2
       - name: Setup helmfile and helm
-        uses: mamezou-tech/setup-helmfile@55ae2a66c5af4883148b7a50cc6ddc9b61042184
+        uses: RDXWorks-actions/setup-helmfile@master
         with:
           helm-diff-plugin-version: 'v3.1.3'
           helmfile-version: 'v0.144.0'
@@ -205,11 +205,11 @@ jobs:
       pull-requests: read
     steps:
       - uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
-      - uses: unfor19/install-aws-cli-action@457b7980b125044247e455d87b9a26fc2299b787
+      - uses: RDXWorks-actions/install-aws-cli-action@master
         with:
           version: 2
       - name: Setup helmfile and helm
-        uses: mamezou-tech/setup-helmfile@55ae2a66c5af4883148b7a50cc6ddc9b61042184
+        uses: RDXWorks-actions/setup-helmfile@master
         with:
           helm-diff-plugin-version: 'v3.1.3'
           helmfile-version: 'v0.144.0'
@@ -253,11 +253,11 @@ jobs:
       pull-requests: read
     steps:
       - uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
-      - uses: unfor19/install-aws-cli-action@457b7980b125044247e455d87b9a26fc2299b787
+      - uses: RDXWorks-actions/install-aws-cli-action@master
         with:
           version: 2
       - name: Setup helmfile and helm
-        uses: mamezou-tech/setup-helmfile@55ae2a66c5af4883148b7a50cc6ddc9b61042184
+        uses: RDXWorks-actions/setup-helmfile@master
         with:
           helm-diff-plugin-version: 'v3.1.3'
           helmfile-version: 'v0.144.0'
