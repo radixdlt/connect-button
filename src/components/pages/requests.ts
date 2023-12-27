@@ -72,6 +72,10 @@ export class RadixRequestsPage extends LitElement {
         text-align: center;
         font-size: 12px;
       }
+
+      .content {
+        padding-bottom: 25px;
+      }
     `,
   ]
 }

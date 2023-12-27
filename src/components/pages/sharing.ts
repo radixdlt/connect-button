@@ -101,6 +101,7 @@ export class RadixSharingPage extends LitElement {
       .content {
         max-height: 193px;
         overflow-x: hidden;
+        padding-bottom: 19px;
       }
       .buttons {
         display: grid;
