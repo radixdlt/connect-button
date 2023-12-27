@@ -19,7 +19,7 @@
   ],
   "bugs": "https://github.com/radixdlt/connect-button/issues",
   "main": "dist/connect-button.mjs",
-  "license": "Apache-2.0",
+  "license": "SEE LICENSE IN RADIX-SOFTWARE-EULA",
   "exports": {
     ".": {
       "import": {
@@ -34,6 +34,7 @@
   },
   "types": "./types/index.d.ts",
   "files": [
+    "RADIX-SOFTWARE-EULA",
     "dist",
     "types"
   ],
