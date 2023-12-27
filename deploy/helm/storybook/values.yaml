@@ -6,7 +6,7 @@ image:
   tag: ""
 
 imagePullSecrets:
-  - name: docker-hub-dev
+  - name: dockerhub-dev
 
 nameOverride: "connect-button-storybook"
 fullnameOverride: "connect-button-storybook"
@@ -48,3 +48,7 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+docker:
+  secrets:
+    name: docker.io/radixdlt
