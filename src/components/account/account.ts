@@ -29,14 +29,8 @@ export class RadixAccount extends LitElement {
   })
   appearanceId: number = 0
 
-  private formatAccountLabel(label: string) {
-    return label.length > 14 ? `${label.slice(0, 12).trimEnd()}...` : label
-  }
-
   render() {
-    return html` <span class="label"
-        >${this.formatAccountLabel(this.label)}</span
-      >
+    return html` <span class="label">${this.label}</span>
       <a
         class="address"
         target="_blank"
@@ -82,6 +76,10 @@ export class RadixAccount extends LitElement {
       .label {
         font-weight: 600;
         color: var(--color-light);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding-right: 10px;
       }
 
       a {

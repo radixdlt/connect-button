@@ -58,7 +58,7 @@ const accounts = [
     'account_tdx_21_12yg7c2752f4uwy6ayljg3g5pvj36xxdy690hj7fpllsed53jsgczz4',
   ],
   [
-    'VeryLongAccountName',
+    'VeryLongAccountNameVeryLongAccountNameVeryLongAccountName',
     'account_tdx_21_129vzduy6q5ufxxekf66eqdjy2vrm6ezdl0sh5kjhgrped9p5k6t9nf',
   ],
 ]
@@ -66,14 +66,16 @@ const accounts = [
 export const Primary: Story = {
   render: () =>
     html`
-      ${accounts.map(
-        ([label, address], index) =>
-          html`<radix-account
-              address=${address}
-              appearanceId=${index}
-              label=${label}
-            />
-            >`
-      )}
+      <div style="max-width: 500px">
+        ${accounts.map(
+          ([label, address], index) =>
+            html`<radix-account
+                address=${address}
+                appearanceId=${index}
+                label=${label}
+              />
+              >`
+        )}
+      </div>
     `,
 }
