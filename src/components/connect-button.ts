@@ -129,7 +129,7 @@ export class ConnectButton extends LitElement {
     this.showPopoverMenu = !this.showPopoverMenu
     if (this.showPopoverMenu)
       this.dispatchEvent(
-        new CustomEvent('onShowPopoverMenu', {
+        new CustomEvent('onShowPopover', {
           bubbles: true,
           composed: true,
         })
