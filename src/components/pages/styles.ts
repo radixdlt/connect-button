@@ -21,7 +21,6 @@ export const pageStyles = css`
     width: 100%;
     margin-bottom: 0;
     position: relative;
-    padding-bottom: 10px;
     -webkit-mask-image: linear-gradient(180deg, black 90%, transparent 100%);
     mask-image: linear-gradient(180deg, black 90%, transparent 95%);
   }

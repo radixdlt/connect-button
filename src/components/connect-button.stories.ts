@@ -112,7 +112,9 @@ const Button = (args: any) => {
               },
             ]
           }}
-          @onShowPopover=${() => {}}
+          @onShowPopover=${() => {
+            console.log('onShowPopover')
+          }}
         >
         </radix-connect-button>
       </div>
