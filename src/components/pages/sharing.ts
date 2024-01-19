@@ -85,7 +85,7 @@ export class RadixSharingPage extends LitElement {
       </div>
       <div class="buttons">
         <button id="update-data" @click=${this.onUpdateData}>
-          Update Data Sharing
+          Update Account Sharing
         </button>
         <button id="logout" @click=${this.onLogout}>Log Out</button>
       </div>`
@@ -107,7 +107,7 @@ export class RadixSharingPage extends LitElement {
         display: grid;
         bottom: 0;
         width: 100%;
-        grid-template-columns: 1fr 143px;
+        grid-template-columns: 1fr 115px;
         grid-gap: 10px;
         width: 100%;
         padding-top: 5px;
