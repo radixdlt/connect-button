@@ -81,6 +81,10 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      id-token: write
+      pull-requests: write
     needs:
       - snyk_scan_deps_licences
       - snyk_scan_code
