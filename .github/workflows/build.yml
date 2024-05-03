@@ -184,7 +184,7 @@ jobs:
 
           kubectl apply -f namespace.yaml
 
-          helmfile --environment pr --namespace connect-button-pr-${{ github.event.number }} \
+          HELM_DIFF_COLOR=true helmfile --environment pr --namespace connect-button-pr-${{ github.event.number }} \
                     --state-values-set "ci.tag=${{ env.CI_TAG }}" \
                     --state-values-set "ci.ingressDomain=${{ env.INGRESS_DOMAIN }}" \
                     apply
@@ -224,7 +224,7 @@ jobs:
                                     --alias ${{ secrets.CLUSTER_NAME }} \
                                     --region eu-west-2
 
-          helmfile --environment dev --namespace connect-button-dev \
+          HELM_DIFF_COLOR=true helmfile --environment dev --namespace connect-button-dev \
                     --state-values-set "ci.tag=${{ env.CI_TAG }}" \
                     --state-values-set "ci.ingressDomain=${{ env.INGRESS_DOMAIN }}" \
                     apply
@@ -264,7 +264,7 @@ jobs:
                                     --alias ${{ secrets.CLUSTER_NAME }} \
                                     --region eu-west-2
 
-          helmfile --environment prod --namespace connect-button-prod \
+          HELM_DIFF_COLOR=true helmfile --environment prod --namespace connect-button-prod \
                     --state-values-set "ci.tag=${{ env.CI_TAG }}" \
                     --state-values-set "ci.ingressDomain=${{ env.INGRESS_DOMAIN }}" \
                     apply
