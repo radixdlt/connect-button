@@ -81,10 +81,6 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      id-token: write
-      pull-requests: write
     needs:
       - snyk_scan_deps_licences
       - snyk_scan_code
@@ -117,6 +113,10 @@ jobs:
   build_push_container:
     needs:
       - build
+    permissions:
+      packages: write
+      id-token: write
+      pull-requests: write
     name: Build and push docker image
     uses: radixdlt/public-iac-resuable-artifacts/.github/workflows/docker-build.yml@main
     with:
