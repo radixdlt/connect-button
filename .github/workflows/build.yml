@@ -117,6 +117,7 @@ jobs:
       packages: write
       id-token: write
       pull-requests: write
+      contents: read
     name: Build and push docker image
     uses: radixdlt/public-iac-resuable-artifacts/.github/workflows/docker-build.yml@main
     with:
