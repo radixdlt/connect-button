@@ -113,6 +113,11 @@ jobs:
   build_push_container:
     needs:
       - build
+    permissions:
+      packages: write
+      id-token: write
+      pull-requests: write
+      contents: read
     name: Build and push docker image
     uses: radixdlt/public-iac-resuable-artifacts/.github/workflows/docker-build.yml@main
     with:
@@ -156,15 +161,7 @@ jobs:
           version: 2
       - name: Setup helmfile and helm
         uses: RDXWorks-actions/setup-helmfile@master
-        with:
-          helm-diff-plugin-version: 'v3.1.3'
-          helmfile-version: 'v0.144.0'
-          helm-version: 'v3.11.0'
-          install-kubectl: no
-      - name: Install kubectl
-        uses: azure/setup-kubectl@901a10e89ea615cf61f57ac05cecdf23e7de06d8
-        with:
-          version: 'v1.25.6'
+
       - name: Configure AWS credentials for deployment
         uses: RDXWorks-actions/configure-aws-credentials@main
         with:
@@ -187,7 +184,7 @@ jobs:
 
           kubectl apply -f namespace.yaml
 
-          helmfile --environment pr --namespace connect-button-pr-${{ github.event.number }} \
+          HELM_DIFF_COLOR=true helmfile --environment pr --namespace connect-button-pr-${{ github.event.number }} \
                     --state-values-set "ci.tag=${{ env.CI_TAG }}" \
                     --state-values-set "ci.ingressDomain=${{ env.INGRESS_DOMAIN }}" \
                     apply
@@ -214,15 +211,7 @@ jobs:
           version: 2
       - name: Setup helmfile and helm
         uses: RDXWorks-actions/setup-helmfile@master
-        with:
-          helm-diff-plugin-version: 'v3.1.3'
-          helmfile-version: 'v0.144.0'
-          helm-version: 'v3.11.0'
-          install-kubectl: no
-      - name: Install kubectl
-        uses: azure/setup-kubectl@901a10e89ea615cf61f57ac05cecdf23e7de06d8
-        with:
-          version: 'v1.25.6'
+
       - name: Configure AWS credentials for deployment
         uses: RDXWorks-actions/configure-aws-credentials@main
         with:
@@ -235,7 +224,7 @@ jobs:
                                     --alias ${{ secrets.CLUSTER_NAME }} \
                                     --region eu-west-2
 
-          helmfile --environment dev --namespace connect-button-dev \
+          HELM_DIFF_COLOR=true helmfile --environment dev --namespace connect-button-dev \
                     --state-values-set "ci.tag=${{ env.CI_TAG }}" \
                     --state-values-set "ci.ingressDomain=${{ env.INGRESS_DOMAIN }}" \
                     apply
@@ -262,15 +251,7 @@ jobs:
           version: 2
       - name: Setup helmfile and helm
         uses: RDXWorks-actions/setup-helmfile@master
-        with:
-          helm-diff-plugin-version: 'v3.1.3'
-          helmfile-version: 'v0.144.0'
-          helm-version: 'v3.11.0'
-          install-kubectl: no
-      - name: Install kubectl
-        uses: azure/setup-kubectl@901a10e89ea615cf61f57ac05cecdf23e7de06d8
-        with:
-          version: 'v1.25.6'
+
       - name: Configure AWS credentials for deployment
         uses: RDXWorks-actions/configure-aws-credentials@main
         with:
@@ -283,7 +264,7 @@ jobs:
                                     --alias ${{ secrets.CLUSTER_NAME }} \
                                     --region eu-west-2
 
-          helmfile --environment prod --namespace connect-button-prod \
+          HELM_DIFF_COLOR=true helmfile --environment prod --namespace connect-button-prod \
                     --state-values-set "ci.tag=${{ env.CI_TAG }}" \
                     --state-values-set "ci.ingressDomain=${{ env.INGRESS_DOMAIN }}" \
                     apply
