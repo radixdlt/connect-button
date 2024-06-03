@@ -1,0 +1,7 @@
+id: 580a4aa3-8b35-4efa-b51d-d871b2ded1a1
+name: connect-button
+created_at: 2024-06-03T08:52:12.847425+02:00
+group_name: dApp-engineering
+depfiles:
+- path: ./package-lock.json
+  type: npm
