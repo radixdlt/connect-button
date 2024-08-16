@@ -1,3 +1,9 @@
+## This repository is archived
+
+Please check [Radix dApp Toolkit](https://github.com/radixdlt/radix-dapp-toolkit) repository for most up to date code
+
+---
+
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
 The √ Connect Button is a framework agnostic web component to help developers connect users and their Radix Wallet to their dApps.
